@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://wxqvxfhsjc62"]
+
+[ext_resource type="Script" uid="uid://dhyaagledo26r" path="res://scripts/main.gd" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://cqvn1mqtdtgta" path="res://scenes/player.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://w1riop0s5qr6" path="res://scenes/target.tscn" id="3_sugp2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sgp6g"]
+size = Vector2(144.5, 259.5)
+
+[node name="Main" type="Node2D" unique_id=1153814589]
+script = ExtResource("1_o5qli")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1601724220]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=589227368]
+position = Vector2(576, 517.75)
+shape = SubResource("RectangleShape2D_sgp6g")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=89998519]
+offset_left = 504.0
+offset_top = 388.0
+offset_right = 648.0
+offset_bottom = 649.0
+color = Color(0.6194887, 0.61948866, 0.6194887, 1)
+
+[node name="Player" parent="." unique_id=1910543735 instance=ExtResource("2_0wfyh")]
+unique_name_in_owner = true
+position = Vector2(574, 357)
+
+[node name="Target" parent="." unique_id=1544860670 instance=ExtResource("3_sugp2")]
+position = Vector2(221, 196)
+
+[node name="Target2" parent="." unique_id=1621121702 instance=ExtResource("3_sugp2")]
+position = Vector2(923, 197)
+
+[node name="Target3" parent="." unique_id=109241039 instance=ExtResource("3_sugp2")]
+position = Vector2(218, 507)
+
+[node name="Target4" parent="." unique_id=343001639 instance=ExtResource("3_sugp2")]
+position = Vector2(921, 489)
