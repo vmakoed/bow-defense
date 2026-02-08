@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bhjeyryx5fkkc" path="res://scripts/arrow.gd" id="1_umosx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wyax8"]
-size = Vector2(60, 27)
+size = Vector2(32, 6)
 
 [node name="Arrow" type="Area2D" unique_id=272067978]
 script = ExtResource("1_umosx")
@@ -14,19 +14,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -13.5
-offset_right = 30.0
-offset_bottom = 13.5
+offset_left = -16.0
+offset_top = -3.0
+offset_right = 16.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.34067947, 0.17130923, 0, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1636116430]
-position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_wyax8")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=279184070]
+rect = Rect2(-16, -3, 32, 6)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
