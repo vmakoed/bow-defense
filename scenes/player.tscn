@@ -1,9 +1,16 @@
 [gd_scene format=3 uid="uid://cqvn1mqtdtgta"]
 
+[ext_resource type="PackedScene" uid="uid://chys2hmjno4mv" path="res://scenes/hitbox_component.tscn" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://bed2cye321c03" path="res://scripts/player.gd" id="1_g2els"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o5qli"]
 size = Vector2(31.653122, 119.52252)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3vyb7"]
+size = Vector2(48, 120)
+
 [node name="Player" type="CharacterBody2D" unique_id=1910543735]
+script = ExtResource("1_g2els")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=298674143]
 anchors_preset = 8
@@ -18,9 +25,14 @@ offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
-color = Color(0.2784314, 1, 0.14509805, 1)
+color = Color(0, 1, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=747502585]
 position = Vector2(-0.10586239, 8.940697e-07)
 scale = Vector2(1.5231271, 1.0039948)
 shape = SubResource("RectangleShape2D_o5qli")
+
+[node name="HitboxComponent" parent="." unique_id=1382423482 instance=ExtResource("1_3vyb7")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1289029587]
+shape = SubResource("RectangleShape2D_3vyb7")

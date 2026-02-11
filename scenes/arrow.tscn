@@ -6,6 +6,8 @@
 size = Vector2(32, 6)
 
 [node name="Arrow" type="Area2D" unique_id=272067978]
+collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_umosx")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=557322220]

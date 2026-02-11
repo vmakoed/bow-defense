@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://chys2hmjno4mv"]
+
+[ext_resource type="Script" uid="uid://dvego2xg2ditv" path="res://scripts/hitbox_component.gd" id="1_0rji1"]
+
+[node name="HitboxComponent" type="Area2D" unique_id=1382423482]
+script = ExtResource("1_0rji1")
