@@ -1,15 +1,20 @@
 extends Area2D
+class_name Arrow
+
+
+const MAX_POWER = 600.0
 
 
 var direction: Vector2 = Vector2.RIGHT
 var speed := 1200.0
 var gravity_modifier := 800
 var drag_factor := 0.98
+var power := 0.0
 var velocity: Vector2
 
 
 func _ready() -> void:
-	velocity = speed * direction
+	velocity = speed * (power / MAX_POWER) * direction
 
 
 func _process(delta: float) -> void:
