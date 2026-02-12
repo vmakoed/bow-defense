@@ -6,13 +6,14 @@ var arrow_scene: Resource
 
 @onready var player: CharacterBody2D = %Player
 @onready var aim_indicator: Line2D = %AimIndicator
-@onready var enemy: Area2D = %Enemy
+@onready var enemies: Node2D = %Enemies
 
 
 func _ready() -> void:
 	arrow_scene = preload("res://scenes/arrow.tscn")
-	var direction := enemy.global_position.direction_to(player.global_position)
-	enemy.move_to(direction)
+	for enemy: Enemy in enemies.get_children():
+		var direction := enemy.global_position.direction_to(player.global_position)
+		enemy.move_to(direction)
 
 func _input(event: InputEvent) -> void:
 	if !is_instance_valid(player):

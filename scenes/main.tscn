@@ -11,8 +11,11 @@ size = Vector2(240.25, 264)
 [node name="Main" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_o5qli")
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
+position = Vector2(576, 324)
+
 [node name="Tower" type="StaticBody2D" parent="." unique_id=1601724220]
-position = Vector2(572, 517)
+position = Vector2(576, 517)
 
 [node name="ColorRect" type="ColorRect" parent="Tower" unique_id=89998519]
 anchors_preset = 8
@@ -49,7 +52,7 @@ shape = SubResource("RectangleShape2D_sgp6g")
 
 [node name="Player" parent="." unique_id=1910543735 instance=ExtResource("2_0wfyh")]
 unique_name_in_owner = true
-position = Vector2(572, 324)
+position = Vector2(576, 324)
 
 [node name="AimIndicator" type="Line2D" parent="." unique_id=923205895]
 unique_name_in_owner = true
@@ -60,6 +63,17 @@ default_color = Color(2.0335242e-06, 0.31445736, 1.4439226e-07, 1)
 [node name="Target" parent="." unique_id=1544860670 instance=ExtResource("3_sugp2")]
 position = Vector2(198, 137)
 
-[node name="Enemy" parent="." unique_id=492934886 instance=ExtResource("4_jyhfs")]
+[node name="Enemies" type="Node2D" parent="." unique_id=247757543]
 unique_name_in_owner = true
+
+[node name="Enemy" parent="Enemies" unique_id=492934886 instance=ExtResource("4_jyhfs")]
 position = Vector2(980, 137)
+
+[node name="Enemy2" parent="Enemies" unique_id=21661547 instance=ExtResource("4_jyhfs")]
+position = Vector2(1094, 591)
+
+[node name="Enemy3" parent="Enemies" unique_id=612662479 instance=ExtResource("4_jyhfs")]
+position = Vector2(39, 622)
+
+[node name="Enemy4" parent="Enemies" unique_id=979313860 instance=ExtResource("4_jyhfs")]
+position = Vector2(282, 137)
