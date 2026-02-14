@@ -1,18 +1,24 @@
 extends Node2D
 
 
+@export var arrow_speed_baseline := 1200.0
+@export var arrow_gravity_modifier := 800
+@export var power_baseline := 600.0
+
+
 var arrow_scene: Resource
-var pull_position: Vector2
 var aiming: bool = false
 
 
 @onready var player: CharacterBody2D = %Player
+@onready var bow: Bow = %Bow
 @onready var aim_indicator: Line2D = %AimIndicator
 @onready var enemies: Node2D = %Enemies
 
 
 func _ready() -> void:
 	arrow_scene = preload("res://scenes/arrow.tscn")
+	_start_enemy_movement()
 
 
 func _input(event: InputEvent) -> void:
@@ -21,41 +27,28 @@ func _input(event: InputEvent) -> void:
 		return
 			
 	if event is InputEventMouseButton: _perform_bow_action(event)
-	if event is InputEventMouseMotion and aiming: _refresh_aim_indicator(event)
-		
+	if event is InputEventMouseMotion and aiming: 
+		_refresh_aim_indicator(event) 
+		bow.refresh_trajectory(event.position)
+
+
+func _start_enemy_movement() -> void:
+	for enemy: Enemy in enemies.get_children():
+		var direction := enemy.global_position.direction_to(player.global_position)
+		enemy.move_to(direction)
+
 
 func _perform_bow_action(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		_pull_bow(event)
+		aiming = true
+		bow.pull(event.position)
 	elif event.button_index == MOUSE_BUTTON_LEFT and !event.pressed:
-		_release_bow(event)
+		aiming = false
+		aim_indicator.clear_points()
+		bow.release()
 
 
 func _refresh_aim_indicator(event: InputEventMouseMotion) -> void:
 	aim_indicator.clear_points()
-	aim_indicator.add_point(pull_position)
+	aim_indicator.add_point(bow.pull_position)
 	aim_indicator.add_point(event.position)
-
-
-func _pull_bow(event: InputEventMouseButton) -> void:
-	aiming = true
-	pull_position = event.position
-
-
-func _release_bow(event: InputEventMouseButton) -> void:
-	aim_indicator.clear_points()
-	aiming = false
-	_shoot_arrow(event.position)
-
-
-func _shoot_arrow(release_position: Vector2) -> void:
-	var arrow := arrow_scene.instantiate() as Arrow
-	var drag_direction : Vector2 = (pull_position - release_position)
-	var direction = drag_direction.normalized()
-	var power = drag_direction.length()
-
-	arrow.power = power
-	arrow.direction = direction
-	arrow.global_position = player.global_position
-
-	add_child(arrow)

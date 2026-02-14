@@ -4,7 +4,7 @@ class_name Enemy
 
 var target_position: Vector2
 var velocity: Vector2
-var speed := 150.0
+var speed := 75.0
 
 
 func _process(delta: float) -> void:

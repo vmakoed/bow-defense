@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cqvn1mqtdtgta" path="res://scenes/player.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://w1riop0s5qr6" path="res://scenes/target.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_tbgi4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sgp6g"]
 size = Vector2(240.25, 264)
@@ -53,6 +54,10 @@ shape = SubResource("RectangleShape2D_sgp6g")
 [node name="Player" parent="." unique_id=1910543735 instance=ExtResource("2_0wfyh")]
 unique_name_in_owner = true
 position = Vector2(576, 324)
+
+[node name="Bow" parent="." unique_id=304452323 instance=ExtResource("5_tbgi4")]
+unique_name_in_owner = true
+position = Vector2(520, 304)
 
 [node name="AimIndicator" type="Line2D" parent="." unique_id=923205895]
 unique_name_in_owner = true

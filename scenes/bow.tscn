@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c5gxrtcm8bbed"]
+
+[ext_resource type="Script" uid="uid://bll5iy4y4a0nv" path="res://scripts/bow.gd" id="1_vt0lb"]
+
+[node name="Bow" type="Node2D" unique_id=304452323]
+script = ExtResource("1_vt0lb")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=812768501]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -40.0
+offset_right = 12.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Trajectory" type="Line2D" parent="." unique_id=239984618]
+unique_name_in_owner = true
+width = 6.0
+default_color = Color(0.6741099, 0.6741099, 0.6741099, 1)
