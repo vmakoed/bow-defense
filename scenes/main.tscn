@@ -82,3 +82,5 @@ position = Vector2(39, 622)
 
 [node name="Enemy4" parent="Enemies" unique_id=979313860 instance=ExtResource("4_jyhfs")]
 position = Vector2(282, 137)
+
+[connection signal="facing_changed" from="Bow" to="." method="_on_bow_facing_changed"]
