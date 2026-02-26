@@ -14,7 +14,8 @@ var arrow_scene: Resource
 var aiming: bool = false
 
 
-@onready var player: CharacterBody2D = %Player
+@onready var player: CharacterBody2D = %Player	
+@onready var tower: StaticBody2D = %Tower
 @onready var bow: Bow = %Bow
 @onready var aim_indicator: Line2D = %AimIndicator
 @onready var enemies: Node2D = %Enemies
@@ -38,7 +39,7 @@ func _input(event: InputEvent) -> void:
 
 func _setup_enemy_movement() -> void:
 	for enemy: Enemy in enemies.get_children():
-		enemy.attack_target_position = player.global_position
+		enemy.attack_target_position = Vector2(tower.global_position.x, enemy.global_position.y)
 
 
 func _perform_bow_action(event: InputEventMouseButton) -> void:

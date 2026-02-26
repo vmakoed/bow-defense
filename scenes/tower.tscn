@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://ccyfs1kg2hmvq"]
+
+[ext_resource type="Script" uid="uid://dvego2xg2ditv" path="res://scripts/hurtbox_component.gd" id="1_2x682"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2x682"]
+size = Vector2(236, 605)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ay4al"]
+size = Vector2(240, 612)
+
+[node name="Tower" type="StaticBody2D" unique_id=58816153]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1660070826]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -320.0
+offset_right = 120.0
+offset_bottom = 292.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.6194887, 0.61948866, 0.6194887, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=661470531]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = 24.0
+offset_right = 120.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=737427270]
+script = ExtResource("1_2x682")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=912733530]
+position = Vector2(0, -13.5)
+shape = SubResource("RectangleShape2D_2x682")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1766948387]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_ay4al")

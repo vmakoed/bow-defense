@@ -2,30 +2,33 @@ class_name Enemy
 extends Area2D
 
 
-enum State { HOVERING, ATTACKING, RETREATING }
+enum State { NULL, HOVERING, ATTACKING, RETREATING }
 
 
 const MAX_OVERSHOOT_DISTANCE = 1.0
-const MAX_HOVER_DISTANCE = 50.0
+const MAX_HOVER_DISTANCE = 25.0
 
 
-var state: set = _set_state
+@export var initial_state: State
+
+
+var state: State = State.NULL: set = _set_state
 var home_position: Vector2
 var attack_target_position: Vector2
 var moving_towards_target := false
-var move_target_position: Vector2
+var move_target_position := Vector2.DOWN
 var velocity: Vector2
 var attacking_speed := 125.0
 var hovering_speed := 25.0
+var hover_direction = Vector2.UP
 
 
-@onready var hover_point_timer: Timer = %HoverPointTimer
 @onready var attacking_timer: Timer = %AttackingTimer
 
 
 func _ready() -> void:
 	home_position = global_position
-	state = State.HOVERING
+	state = initial_state
 
 
 func _process(delta: float) -> void:
@@ -34,31 +37,14 @@ func _process(delta: float) -> void:
 	if moving_towards_target && _at_move_target_position():
 		match state:
 			State.HOVERING:
-				print("reached")
 				_stop_moving()
-				hover_point_timer.start()
+				_on_hover_point_reached()
 			State.ATTACKING:
 				_stop_moving()
 				state = State.RETREATING
 			State.RETREATING:
 				_stop_moving()
 				state = State.HOVERING
-
-
-func _at_move_target_position() -> bool:
-	return global_position.distance_to(move_target_position) <= MAX_OVERSHOOT_DISTANCE
-
-
-func _start_moving_towards(target_global_position: Vector2, speed: float) -> void:
-	print("started moving")
-	moving_towards_target = true
-	move_target_position = target_global_position
-	velocity = speed * global_position.direction_to(move_target_position)
-
-
-func _stop_moving() -> void:
-	velocity = Vector2.ZERO
-	moving_towards_target = false
 
 
 func _set_state(new_value = State) -> void:
@@ -76,8 +62,37 @@ func _set_state(new_value = State) -> void:
 	state = new_value
 
 
+func _at_move_target_position() -> bool:
+	return global_position.distance_to(move_target_position) <= MAX_OVERSHOOT_DISTANCE
+
+
+func _is_at_home_position() -> bool:
+	return global_position.distance_to(home_position) <= MAX_OVERSHOOT_DISTANCE
+
+
+func _start_moving_towards(target_global_position: Vector2, speed: float) -> void:
+	moving_towards_target = true
+	move_target_position = target_global_position
+	velocity = speed * global_position.direction_to(move_target_position)
+
+
+func _stop_moving() -> void:
+	velocity = Vector2.ZERO
+	moving_towards_target = false
+
+
+func _refresh_hover_direction() -> void:
+	if not _is_at_home_position():
+		hover_direction = hover_direction * Vector2.UP
+
+
+func _on_hitbox_component_area_entered(area: Area2D) -> void:
+	if area is HurtboxComponent:
+		area.damage()
+
+
 func _on_hovering_state_entered() -> void:
-	hover_point_timer.start()
+	_move_to_hover_point()
 	attacking_timer.start()
 
 
@@ -96,15 +111,11 @@ func _on_retreating_state_entered() -> void:
 
 
 func _on_hovering_state_exited() -> void:
-	hover_point_timer.stop()
 	velocity = Vector2.ZERO
 		
 
 func _move_to_hover_point() -> void:
-	var direction = Vector2.from_angle(randf() * 2 * PI).normalized()
-	var distance = randf() * MAX_HOVER_DISTANCE
-	var offset: Vector2 = direction * distance
-	var hover_point: Vector2 = home_position + offset
+	var hover_point : Vector2 = home_position + hover_direction * MAX_HOVER_DISTANCE
 
 	_start_moving_towards(
 		hover_point,
@@ -112,7 +123,8 @@ func _move_to_hover_point() -> void:
 	)
 
 
-func _on_hover_point_timer_timeout() -> void:
+func _on_hover_point_reached() -> void:
+	_refresh_hover_direction()
 	_move_to_hover_point()
 
 

@@ -35,15 +35,9 @@ collision_layer = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1009602491]
 shape = SubResource("RectangleShape2D_sugp2")
 
-[node name="HoverPointTimer" type="Timer" parent="." unique_id=458273713]
-unique_name_in_owner = true
-wait_time = 0.5
-one_shot = true
-
 [node name="AttackingTimer" type="Timer" parent="." unique_id=559864249]
 unique_name_in_owner = true
 wait_time = 5.0
 one_shot = true
 
-[connection signal="timeout" from="HoverPointTimer" to="." method="_on_hover_point_timer_timeout"]
 [connection signal="timeout" from="AttackingTimer" to="." method="_on_attacking_timer_timeout"]
