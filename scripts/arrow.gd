@@ -1,9 +1,12 @@
-extends Area2D
 class_name Arrow
+extends Area2D
 
 
 var gravity_modifier: float
 var velocity: Vector2
+
+
+@onready var clear_timer: Timer = %ClearTimer
 
 
 func _process(delta: float) -> void:
@@ -13,12 +16,16 @@ func _process(delta: float) -> void:
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	queue_free()
-
+	clear_timer.start()
+	
 
 func _on_area_entered(area: Area2D) -> void:
-	if area is HitboxComponent:
+	if area is HurtboxComponent:
 		area.damage()
 		queue_free()
+
+
+func _on_clear_timer_timeout() -> void:
+	queue_free()
 
 	

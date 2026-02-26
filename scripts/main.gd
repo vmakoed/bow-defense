@@ -22,7 +22,7 @@ var aiming: bool = false
 
 func _ready() -> void:
 	arrow_scene = preload("res://scenes/arrow.tscn")
-	_start_enemy_movement()
+	_setup_enemy_movement()
 
 
 func _input(event: InputEvent) -> void:
@@ -36,10 +36,9 @@ func _input(event: InputEvent) -> void:
 		bow.refresh_trajectory(event.position)
 
 
-func _start_enemy_movement() -> void:
+func _setup_enemy_movement() -> void:
 	for enemy: Enemy in enemies.get_children():
-		var direction := enemy.global_position.direction_to(player.global_position)
-		enemy.move_to(direction)
+		enemy.attack_target_position = player.global_position
 
 
 func _perform_bow_action(event: InputEventMouseButton) -> void:
@@ -63,3 +62,7 @@ func _on_bow_facing_changed(facing: Bow.Facing) -> void:
 		bow.position.x = LEFT_BOW_POSITION
 	else:
 		bow.position.x = RIGHT_BOW_POSITION
+
+
+func _on_player_tree_exited() -> void:
+	bow.queue_free()

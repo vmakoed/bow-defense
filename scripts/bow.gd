@@ -1,14 +1,14 @@
-extends Node2D
 class_name Bow
+extends Node2D
 
 
 const ARROW_START_POSITION = Vector2.ZERO
 
 
-enum Facing { LEFT, RIGHT }
-
-
 signal facing_changed
+
+
+enum Facing { LEFT, RIGHT }
 
 
 @export var arrow_speed_baseline := 1200.0
@@ -19,8 +19,6 @@ signal facing_changed
 var arrow_scene: Resource
 var pull_position: Vector2
 var arrow_velocity: Vector2
-
-
 var facing: Facing = Facing.LEFT: set = _set_facing
 
 

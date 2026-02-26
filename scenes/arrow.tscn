@@ -30,5 +30,11 @@ shape = SubResource("RectangleShape2D_wyax8")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=279184070]
 rect = Rect2(-16, -3, 32, 6)
 
+[node name="ClearTimer" type="Timer" parent="." unique_id=73996554]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="ClearTimer" to="." method="_on_clear_timer_timeout"]
