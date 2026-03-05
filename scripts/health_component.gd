@@ -21,7 +21,6 @@ func _ready() -> void:
 
 func damage(value: float) -> void:
     health -= value
-    
 
 
 func _set_health(value: float) -> void:

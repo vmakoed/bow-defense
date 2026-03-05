@@ -23,6 +23,8 @@ var facing: Facing = Facing.LEFT: set = _set_facing
 
 
 @onready var trajectory: Line2D = %Trajectory
+@onready var pull_audio_player: AudioStreamPlayer2D = %PullAudioPlayer
+@onready var release_audio_player: AudioStreamPlayer2D = %ReleaseAudioPlayer
 
 
 func _ready() -> void:
@@ -30,10 +32,13 @@ func _ready() -> void:
 
 
 func pull(hand_position: Vector2) -> void:
+	pull_audio_player.play(0.1)
 	pull_position = hand_position
 
 
 func release() -> void:
+	pull_audio_player.stop()
+	release_audio_player.play(0.25)
 	trajectory.clear_points()
 	_shoot_arrow()
 
@@ -62,7 +67,6 @@ func _set_facing(new_value: Facing) -> void:
 	if facing != new_value:
 		facing = new_value
 		facing_changed.emit(facing)
-		
 
 
 func _shoot_arrow() -> void:

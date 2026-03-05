@@ -14,7 +14,6 @@ const MAX_HOVER_DISTANCE = 50.0
 const ATTACKING_SPEED = 350.0
 const ACCELERATION = 4.0
 const HOVERING_SPEED = 50.0
-const DAMAGE = 50.0
 const ATTACK_DIRECTION_VECTORS: Dictionary[AttackDirection, Vector2] = {
 	AttackDirection.LEFT: Vector2.LEFT,
 	AttackDirection.RIGHT: Vector2.RIGHT
@@ -22,6 +21,7 @@ const ATTACK_DIRECTION_VECTORS: Dictionary[AttackDirection, Vector2] = {
 
 
 @export var initial_state: State
+@export var damage := 25.0
 
 
 var state: State = State.NULL: set = _set_state
@@ -180,5 +180,5 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is not HurtboxComponent: return
 	if state != State.ATTACKING: return
 
-	area.damage(DAMAGE)
+	area.damage(damage)
 	_on_target_reached()

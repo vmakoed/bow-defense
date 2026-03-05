@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ch128lon4556l"]
 
 [ext_resource type="Script" uid="uid://bhjeyryx5fkkc" path="res://scripts/arrow.gd" id="1_umosx"]
+[ext_resource type="AudioStream" uid="uid://cksj4unolq721" path="res://assets/audio/harsh_thud.wav" id="2_23jat"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wyax8"]
 size = Vector2(32, 6)
@@ -26,6 +27,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1636116430]
+unique_name_in_owner = true
 shape = SubResource("RectangleShape2D_wyax8")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=279184070]
@@ -36,6 +38,12 @@ unique_name_in_owner = true
 wait_time = 5.0
 one_shot = true
 
+[node name="HitSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=305342995]
+unique_name_in_owner = true
+stream = ExtResource("2_23jat")
+volume_db = -10.0
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="ClearTimer" to="." method="_on_clear_timer_timeout"]
+[connection signal="finished" from="HitSoundPlayer" to="." method="_on_hit_sound_player_finished"]
