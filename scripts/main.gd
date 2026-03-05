@@ -10,8 +10,8 @@ const RIGHT_BOW_POSITION = 632.0
 @export var power_baseline := 600.0
 
 
-var arrow_scene: Resource
 var aiming: bool = false
+var enemies_count: int
 
 
 @onready var player: CharacterBody2D = %Player	
@@ -19,11 +19,11 @@ var aiming: bool = false
 @onready var bow: Bow = %Bow
 @onready var aim_indicator: Line2D = %AimIndicator
 @onready var enemies: Node2D = %Enemies
+@onready var spawner: Spawner = %Spawner
 
 
 func _ready() -> void:
-	arrow_scene = preload("res://scenes/arrow.tscn")
-	_setup_enemy_movement()
+	_spawn_next_wave()
 
 
 func _input(event: InputEvent) -> void:
@@ -35,11 +35,6 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and aiming: 
 		_refresh_aim_indicator(event) 
 		bow.refresh_trajectory(event.position)
-
-
-func _setup_enemy_movement() -> void:
-	for enemy: Enemy in enemies.get_children():
-		enemy.attack_target_position = Vector2(tower.global_position.x, enemy.global_position.y)
 
 
 func _perform_bow_action(event: InputEventMouseButton) -> void:
@@ -56,6 +51,10 @@ func _refresh_aim_indicator(event: InputEventMouseMotion) -> void:
 	aim_indicator.clear_points()
 	aim_indicator.add_point(bow.pull_position)
 	aim_indicator.add_point(event.position)
+	
+
+func _spawn_next_wave() -> void:
+	enemies_count = spawner.spawn_next_wave()
 
 
 func _on_bow_facing_changed(facing: Bow.Facing) -> void:
@@ -67,3 +66,18 @@ func _on_bow_facing_changed(facing: Bow.Facing) -> void:
 
 func _on_player_tree_exited() -> void:
 	bow.queue_free()
+
+
+func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
+	enemy.attack_target_position = Vector2(tower.global_position.x, enemy.global_position.y)
+	enemy.died.connect(_on_enemy_died)
+
+
+func _on_enemy_died() -> void:
+	enemies_count -= 1
+	if enemies_count != 0: return
+
+	if spawner.all_waves_spawned():
+		print("you win")
+	else:
+		_spawn_next_wave()

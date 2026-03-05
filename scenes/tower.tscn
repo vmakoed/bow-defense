@@ -28,20 +28,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.6194887, 0.61948866, 0.6194887, 1)
 
-[node name="ColorRect2" type="ColorRect" parent="." unique_id=661470531]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -120.0
-offset_top = 24.0
-offset_right = 120.0
-offset_bottom = 120.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=737427270 node_paths=PackedStringArray("health_component")]
 collision_layer = 8
 collision_mask = 0

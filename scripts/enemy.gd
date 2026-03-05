@@ -2,7 +2,10 @@ class_name Enemy
 extends Area2D
 
 
-enum State { NULL, HOVERING, ATTACKING, RETREATING }
+signal died
+
+
+enum State { NULL, FLYING_IN, HOVERING, ATTACKING, RETREATING }
 enum AttackDirection { LEFT, RIGHT }
 
 
@@ -36,7 +39,6 @@ var hover_direction = Vector2.UP
 
 
 func _ready() -> void:
-	home_position = global_position
 	state = initial_state
 
 
@@ -52,6 +54,7 @@ func _set_state(new_value: State) -> void:
 	if state == new_value: return
 
 	match new_value:
+		State.FLYING_IN: _on_flying_in_state_entered()
 		State.HOVERING: _on_hovering_state_entered()
 		State.ATTACKING: _on_attacking_state_entered()
 		State.RETREATING: _on_retreating_state_entered()
@@ -123,6 +126,13 @@ func _move_towards_target(delta) -> void:
 		)
 
 
+func _on_flying_in_state_entered() -> void:
+	_start_moving_towards(
+		home_position,
+		ATTACKING_SPEED
+	)
+
+
 func _on_hovering_state_entered() -> void:
 	_move_to_hover_point()
 	attacking_timer.start()
@@ -150,18 +160,19 @@ func _on_attacking_timer_timeout() -> void:
 
 func _on_target_reached() -> void:
 	match state:
+		State.FLYING_IN, State.RETREATING:
+			global_position = move_target_position
+			_stop_moving()
+			state = State.HOVERING
 		State.HOVERING:
 			_on_hover_point_reached()
 		State.ATTACKING:
 			_stop_moving()
 			state = State.RETREATING
-		State.RETREATING:
-			global_position = move_target_position
-			_stop_moving()
-			state = State.HOVERING
 
 
 func _on_health_component_health_below_minimum() -> void:
+	died.emit()
 	queue_free()
 
 
