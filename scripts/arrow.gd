@@ -2,6 +2,9 @@ class_name Arrow
 extends Area2D
 
 
+@export var damage := 40.0
+
+
 var gravity_modifier: float
 var velocity: Vector2
 
@@ -21,11 +24,9 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area is HurtboxComponent:
-		area.damage()
+		area.damage(damage)
 		queue_free()
 
 
 func _on_clear_timer_timeout() -> void:
 	queue_free()
-
-	

@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://w1riop0s5qr6"]
 
-[ext_resource type="Script" uid="uid://dl33g4c23f6j5" path="res://scripts/target.gd" id="1_b37e2"]
-[ext_resource type="PackedScene" uid="uid://chys2hmjno4mv" path="res://scenes/hitbox_component.tscn" id="2_b5a2r"]
+[ext_resource type="Script" uid="uid://ce241cbrexxv2" path="res://scripts/target.gd" id="1_b37e2"]
+[ext_resource type="PackedScene" uid="uid://chys2hmjno4mv" path="res://scenes/hurtbox_component.tscn" id="2_b5a2r"]
+[ext_resource type="PackedScene" uid="uid://blywxglkpxl7t" path="res://scenes/health_component.tscn" id="3_nlbrr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
 size = Vector2(48, 48)
@@ -25,9 +26,15 @@ grow_vertical = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1681031780]
 shape = SubResource("RectangleShape2D_0wfyh")
 
-[node name="HitboxComponent" parent="." unique_id=1382423482 instance=ExtResource("2_b5a2r")]
+[node name="HurtboxComponent" parent="." unique_id=1382423482 node_paths=PackedStringArray("health_component") instance=ExtResource("2_b5a2r")]
 collision_layer = 4
 collision_mask = 0
+health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=103701923]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=103701923]
 shape = SubResource("RectangleShape2D_0wfyh")
+
+[node name="HealthComponent" parent="." unique_id=105572739 instance=ExtResource("3_nlbrr")]
+max_health = 40.0
+
+[connection signal="health_below_minimum" from="HealthComponent" to="." method="_on_health_component_health_below_minimum"]

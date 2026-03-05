@@ -3,13 +3,19 @@ extends Area2D
 
 
 enum State { NULL, HOVERING, ATTACKING, RETREATING }
+enum AttackDirection { LEFT, RIGHT }
 
 
 const MAX_OVERSHOOT_DISTANCE = 3.0
 const MAX_HOVER_DISTANCE = 50.0
 const ATTACKING_SPEED = 350.0
-const ACCELERATION = 8.0
-const HOVERING_SPEED = 25.0
+const ACCELERATION = 4.0
+const HOVERING_SPEED = 50.0
+const DAMAGE = 50.0
+const ATTACK_DIRECTION_VECTORS: Dictionary[AttackDirection, Vector2] = {
+	AttackDirection.LEFT: Vector2.LEFT,
+	AttackDirection.RIGHT: Vector2.RIGHT
+}
 
 
 @export var initial_state: State
@@ -17,7 +23,8 @@ const HOVERING_SPEED = 25.0
 
 var state: State = State.NULL: set = _set_state
 var home_position: Vector2
-var attack_target_position: Vector2
+var attack_target_position: Vector2: set = _set_attack_target_position
+var attack_direction: AttackDirection
 var moving_towards_target := false
 var move_target_position := Vector2.DOWN
 var target_speed: float
@@ -36,15 +43,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	position += velocity * delta
 
-	if not moving_towards_target: return
-
-	if _is_reached(move_target_position):
-		_on_target_reached()
-	else:
-		_update_moving_speed(delta)
+	match state:
+		State.ATTACKING: _move_in_attack_direction(delta)
+		_: _move_towards_target(delta)
 
 
-func _set_state(new_value = State) -> void:
+func _set_state(new_value: State) -> void:
 	if state == new_value: return
 
 	match new_value:
@@ -53,6 +57,16 @@ func _set_state(new_value = State) -> void:
 		State.RETREATING: _on_retreating_state_entered()
 
 	state = new_value
+
+
+func _set_attack_target_position(new_value: Vector2) -> void:
+	if attack_target_position == new_value: return
+	attack_target_position = new_value
+	
+	if attack_target_position.x > home_position.x:
+		attack_direction = AttackDirection.RIGHT
+	else:
+		attack_direction = AttackDirection.LEFT
 
 
 func _is_reached(target_position: Vector2) -> bool:
@@ -82,14 +96,31 @@ func _refresh_hover_direction() -> void:
 		hover_direction = hover_direction * Vector2.UP
 
 
-func _update_moving_speed(delta) -> void:
-	var direction := global_position.direction_to(move_target_position)
-	velocity = velocity.lerp(direction * target_speed, 1 - exp(-ACCELERATION * delta))
+func _target_direction_vector() -> Vector2:
+	return global_position.direction_to(move_target_position)
 
 
-func _on_hitbox_component_area_entered(area: Area2D) -> void:
-	if area is HurtboxComponent:
-		area.damage()
+func _move_in_direction(direction: Vector2, delta: float) -> void:
+	velocity = velocity.lerp(direction * target_speed, ACCELERATION * delta)
+
+
+func _move_in_attack_direction(delta) -> void:
+	_move_in_direction(
+		 ATTACK_DIRECTION_VECTORS.get(attack_direction, Vector2.ZERO),
+		 delta
+	)
+
+
+func _move_towards_target(delta) -> void:
+	if not moving_towards_target: return
+
+	if _is_reached(move_target_position):
+		_on_target_reached()
+	else:
+		_move_in_direction(
+			_target_direction_vector(),
+			delta
+		)
 
 
 func _on_hovering_state_entered() -> void:
@@ -98,10 +129,7 @@ func _on_hovering_state_entered() -> void:
 
 
 func _on_attacking_state_entered() -> void:
-	_start_moving_towards(
-		attack_target_position,
-		ATTACKING_SPEED
-	)
+	target_speed = ATTACKING_SPEED
 
 
 func _on_retreating_state_entered() -> void:
@@ -125,10 +153,21 @@ func _on_target_reached() -> void:
 		State.HOVERING:
 			_on_hover_point_reached()
 		State.ATTACKING:
-			global_position = move_target_position
 			_stop_moving()
 			state = State.RETREATING
 		State.RETREATING:
 			global_position = move_target_position
 			_stop_moving()
 			state = State.HOVERING
+
+
+func _on_health_component_health_below_minimum() -> void:
+	queue_free()
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if area is not HurtboxComponent: return
+	if state != State.ATTACKING: return
+
+	area.damage(DAMAGE)
+	_on_target_reached()

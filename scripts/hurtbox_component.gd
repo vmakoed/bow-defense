@@ -2,5 +2,8 @@ extends Area2D
 class_name HurtboxComponent
 
 
-func damage():
-	get_parent().queue_free()
+@export var health_component: HealthComponent
+
+
+func damage(value: float):
+	health_component.damage(value)

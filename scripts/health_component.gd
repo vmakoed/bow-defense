@@ -1,0 +1,38 @@
+extends Node
+class_name HealthComponent
+
+
+signal health_below_minimum
+
+
+const MIN_HEALTH = 0.0
+
+
+@export var max_health: float
+@export var health_bar: ProgressBar: set = _set_health_bar
+
+
+var health: float: set = _set_health
+
+
+func _ready() -> void:
+    health = max_health
+
+
+func damage(value: float) -> void:
+    health -= value
+    
+
+
+func _set_health(value: float) -> void:
+    if value == health: return
+    health = value
+    if health_bar: health_bar.value = health
+    if health <= MIN_HEALTH: health_below_minimum.emit()
+
+
+func _set_health_bar(value: ProgressBar) -> void:
+    if value == health_bar: return
+    health_bar = value
+    health_bar.max_value = max_health
+    health_bar.value = health

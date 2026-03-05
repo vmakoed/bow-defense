@@ -13,9 +13,10 @@ script = ExtResource("1_o5qli")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
 position = Vector2(576, 324)
 
-[node name="Tower" parent="." unique_id=58816153 instance=ExtResource("2_tefeu")]
+[node name="Tower" parent="." unique_id=58816153 node_paths=PackedStringArray("health_bar") instance=ExtResource("2_tefeu")]
 unique_name_in_owner = true
 position = Vector2(576, 356)
+health_bar = NodePath("../CanvasLayer/MarginContainer/HealthBar")
 
 [node name="Player" parent="." unique_id=1910543735 instance=ExtResource("2_0wfyh")]
 unique_name_in_owner = true
@@ -40,6 +41,27 @@ unique_name_in_owner = true
 [node name="Enemy" parent="Enemies" unique_id=492934886 instance=ExtResource("4_jyhfs")]
 position = Vector2(114, 331)
 initial_state = 1
+
+[node name="Enemy2" parent="Enemies" unique_id=335727681 instance=ExtResource("4_jyhfs")]
+position = Vector2(957, 331)
+initial_state = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1788648438]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=2134818107]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/MarginContainer" unique_id=2090477709]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+show_percentage = false
 
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
 [connection signal="facing_changed" from="Bow" to="." method="_on_bow_facing_changed"]

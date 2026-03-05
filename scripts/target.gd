@@ -1,6 +1,5 @@
 extends Area2D
-class_name Target
 
 
-func damage() -> void:
+func _on_health_component_health_below_minimum() -> void:
 	queue_free()
