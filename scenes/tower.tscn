@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dvego2xg2ditv" path="res://scripts/hurtbox_component.gd" id="1_2x682"]
 [ext_resource type="Script" uid="uid://crqyw3m3qiabq" path="res://scripts/tower.gd" id="1_ktxwe"]
 [ext_resource type="PackedScene" uid="uid://blywxglkpxl7t" path="res://scenes/health_component.tscn" id="2_ay4al"]
+[ext_resource type="AudioStream" uid="uid://bja0266m0s7jx" path="res://assets/audio/impactMetal_heavy_002.ogg" id="4_qrbg1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2x682"]
 size = Vector2(236, 605)
@@ -46,4 +47,9 @@ shape = SubResource("RectangleShape2D_ay4al")
 unique_name_in_owner = true
 max_health = 500.0
 
+[node name="HitSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=7380262]
+unique_name_in_owner = true
+stream = ExtResource("4_qrbg1")
+
+[connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]
 [connection signal="health_below_minimum" from="HealthComponent" to="." method="_on_health_component_health_below_minimum"]

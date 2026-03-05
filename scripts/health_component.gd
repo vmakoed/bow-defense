@@ -3,6 +3,7 @@ class_name HealthComponent
 
 
 signal health_below_minimum
+signal damaged
 
 
 const MIN_HEALTH = 0.0
@@ -20,6 +21,7 @@ func _ready() -> void:
 
 
 func damage(value: float) -> void:
+    damaged.emit()
     health -= value
 
 

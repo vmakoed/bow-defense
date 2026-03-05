@@ -8,6 +8,7 @@ signal destroyed
 
 
 @onready var health_component: HealthComponent = %HealthComponent
+@onready var hit_sound_player: AudioStreamPlayer2D = %HitSoundPlayer
 
 
 func _ready() -> void:
@@ -16,3 +17,7 @@ func _ready() -> void:
 
 func _on_health_component_health_below_minimum() -> void:
 	destroyed.emit()
+
+
+func _on_health_component_damaged() -> void:
+	hit_sound_player.play()
