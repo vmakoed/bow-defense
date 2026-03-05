@@ -21,7 +21,7 @@ const ATTACK_DIRECTION_VECTORS: Dictionary[AttackDirection, Vector2] = {
 
 
 @export var initial_state: State
-@export var damage := 25.0
+@export var damage_amount := 45.0
 
 
 var state: State = State.NULL: set = _set_state
@@ -126,6 +126,12 @@ func _move_towards_target(delta) -> void:
 		)
 
 
+func _get_damage() -> Damage:
+	var damage = Damage.new()
+	damage.amount = damage_amount
+	return damage
+
+
 func _on_flying_in_state_entered() -> void:
 	_start_moving_towards(
 		home_position,
@@ -180,5 +186,9 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is not HurtboxComponent: return
 	if state != State.ATTACKING: return
 
-	area.damage(damage)
+	area.damage(_get_damage())
 	_on_target_reached()
+
+
+func _on_health_component_damaged(damage: Damage) -> void:
+	velocity += damage.knockback

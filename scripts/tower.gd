@@ -19,5 +19,5 @@ func _on_health_component_health_below_minimum() -> void:
 	destroyed.emit()
 
 
-func _on_health_component_damaged() -> void:
+func _on_health_component_damaged(_damage: Damage) -> void:
 	hit_sound_player.play()

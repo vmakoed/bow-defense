@@ -5,5 +5,5 @@ class_name HurtboxComponent
 @export var health_component: HealthComponent
 
 
-func damage(value: float):
+func damage(value: Damage):
 	health_component.damage(value)

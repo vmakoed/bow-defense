@@ -20,9 +20,9 @@ func _ready() -> void:
     health = max_health
 
 
-func damage(value: float) -> void:
-    damaged.emit()
-    health -= value
+func damage(value: Damage) -> void:
+    damaged.emit(value)
+    health -= value.amount
 
 
 func _set_health(value: float) -> void:

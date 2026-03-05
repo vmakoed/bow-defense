@@ -2,7 +2,8 @@ class_name Arrow
 extends Area2D
 
 
-@export var damage := 40.0
+@export var damage_amount := 40.0
+@export var knockback_factor := 0.2
 
 
 var gravity_modifier: float
@@ -20,6 +21,13 @@ func _process(delta: float) -> void:
 	position += velocity * delta
 
 
+func _get_damage() -> Damage:
+	var damage = Damage.new()
+	damage.amount = damage_amount
+	damage.knockback = velocity * knockback_factor
+	return damage
+
+
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	clear_timer.start()
 	
@@ -30,7 +38,7 @@ func _on_area_entered(area: Area2D) -> void:
 		hit_sound_player.play()
 		visible = false
 		collision_shape.set_deferred("disabled", true)
-		area.damage(damage)
+		area.damage(_get_damage())
 
 
 func _on_clear_timer_timeout() -> void:
