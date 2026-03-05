@@ -5,6 +5,9 @@ class_name Spawner
 signal enemy_spawned
 
 
+@onready var timer: Timer = %Timer
+
+
 enum RelativePosition { 
 	TOP_LEFT, CENTER_LEFT, BOTTOM_LEFT, 
 	TOP_RIGHT, CENTER_RIGHT, BOTTOM_RIGHT
@@ -29,6 +32,7 @@ const WAVE_CONFIGURATIONS: Array[Array] = [
 var current_wave := -1
 var current_enemy_count: int
 var enemy_scene: Resource 
+var spawn_queue: Array
 
 
 @onready var top_left_spawn_marker: Marker2D = %TopLeftSpawnMarker
@@ -61,25 +65,32 @@ var enemy_scene: Resource
 	RelativePosition.BOTTOM_RIGHT: bottom_right_home_marker
 }
 
+
 func _ready() -> void:
 	enemy_scene = preload("res://scenes/enemy.tscn")
 	
 
 func spawn_next_wave() -> int:
 	current_wave += 1
-
-	var wave_configuration := WAVE_CONFIGURATIONS[current_wave]
-	
-	for enemy_spawn_position: RelativePosition in wave_configuration:
-		var enemy = enemy_scene.instantiate() as Enemy
-		enemy.initial_state = Enemy.State.FLYING_IN
-		enemy.global_position = spawn_markers[enemy_spawn_position].global_position
-		enemy.home_position = home_markers[enemy_spawn_position].global_position
-		add_child(enemy)
-		enemy_spawned.emit(enemy)
-
-	return wave_configuration.size()
+	spawn_queue = WAVE_CONFIGURATIONS[current_wave].duplicate()
+	timer.start()
+	return spawn_queue.size()
 
 
 func all_waves_spawned() -> bool:
 	return current_wave == WAVE_CONFIGURATIONS.size() - 1
+
+
+func _spawn_enemy(enemy_spawn_position: RelativePosition) -> void:
+	var enemy = enemy_scene.instantiate() as Enemy
+	enemy.initial_state = Enemy.State.FLYING_IN
+	enemy.global_position = spawn_markers[enemy_spawn_position].global_position
+	enemy.home_position = home_markers[enemy_spawn_position].global_position
+	add_child(enemy)
+	enemy_spawned.emit(enemy)
+
+
+func _on_timer_timeout() -> void:
+	_spawn_enemy(spawn_queue.pop_front())
+	if spawn_queue.is_empty(): return
+	timer.start()

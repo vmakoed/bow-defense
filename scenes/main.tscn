@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="2_tefeu"]
 [ext_resource type="PackedScene" uid="uid://w1riop0s5qr6" path="res://scenes/target.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_tbgi4"]
-[ext_resource type="Script" uid="uid://bmre1y301j572" path="res://scripts/spawner.gd" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://dlhbjvanv1tga" path="res://scenes/spawner.tscn" id="6_tefeu"]
 
 [node name="Main" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_o5qli")
@@ -121,9 +121,8 @@ position = Vector2(1024, 352)
 unique_name_in_owner = true
 position = Vector2(1024, 512)
 
-[node name="Spawner" type="Node" parent="." unique_id=589546792]
+[node name="Spawner" parent="." unique_id=1204811195 instance=ExtResource("6_tefeu")]
 unique_name_in_owner = true
-script = ExtResource("6_tefeu")
 
 [connection signal="destroyed" from="Tower" to="." method="_on_tower_destroyed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
