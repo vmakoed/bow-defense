@@ -1,6 +1,9 @@
 extends StaticBody2D
 
 
+signal destroyed
+
+
 @export var health_bar: ProgressBar
 
 
@@ -9,3 +12,7 @@ extends StaticBody2D
 
 func _ready() -> void:
 	health_component.health_bar = health_bar
+
+
+func _on_health_component_health_below_minimum() -> void:
+	destroyed.emit()

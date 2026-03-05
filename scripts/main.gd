@@ -1,6 +1,10 @@
 extends Node2D
 
 
+signal game_won
+signal game_lost
+
+
 const LEFT_BOW_POSITION = 520.0
 const RIGHT_BOW_POSITION = 632.0
 
@@ -78,6 +82,10 @@ func _on_enemy_died() -> void:
 	if enemies_count != 0: return
 
 	if spawner.all_waves_spawned():
-		print("you win")
+		game_won.emit()
 	else:
-		_spawn_next_wave()
+		call_deferred("_spawn_next_wave")
+
+
+func _on_tower_destroyed() -> void:
+	game_lost.emit()

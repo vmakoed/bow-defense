@@ -125,6 +125,7 @@ position = Vector2(1024, 512)
 unique_name_in_owner = true
 script = ExtResource("6_tefeu")
 
+[connection signal="destroyed" from="Tower" to="." method="_on_tower_destroyed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
 [connection signal="facing_changed" from="Bow" to="." method="_on_bow_facing_changed"]
 [connection signal="enemy_spawned" from="Spawner" to="." method="_on_spawner_enemy_spawned"]

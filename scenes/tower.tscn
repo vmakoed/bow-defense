@@ -45,3 +45,5 @@ shape = SubResource("RectangleShape2D_ay4al")
 [node name="HealthComponent" parent="." unique_id=105572739 instance=ExtResource("2_ay4al")]
 unique_name_in_owner = true
 max_health = 500.0
+
+[connection signal="health_below_minimum" from="HealthComponent" to="." method="_on_health_component_health_below_minimum"]
