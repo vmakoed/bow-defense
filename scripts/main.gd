@@ -5,56 +5,22 @@ signal game_won
 signal game_lost
 
 
-const LEFT_BOW_POSITION = 520.0
-const RIGHT_BOW_POSITION = 632.0
+const BOW_POSITIONS: Dictionary[Bow.Facing, float] = {
+	Bow.Facing.LEFT: 520.0,
+	Bow.Facing.RIGHT: 632.0
+}
 
 
-@export var arrow_speed_baseline := 1200.0
-@export var arrow_gravity_modifier := 800
-@export var power_baseline := 600.0
-
-
-var aiming: bool = false
 var enemies_count: int
 
 
-@onready var player: CharacterBody2D = %Player	
 @onready var tower: StaticBody2D = %Tower
 @onready var bow: Bow = %Bow
-@onready var aim_indicator: Line2D = %AimIndicator
-@onready var enemies: Node2D = %Enemies
 @onready var spawner: Spawner = %Spawner
 
 
 func _ready() -> void:
-	_spawn_next_wave()
-
-
-func _input(event: InputEvent) -> void:
-	if !is_instance_valid(player):
-		aim_indicator.clear_points()
-		return
-			
-	if event is InputEventMouseButton: _perform_bow_action(event)
-	if event is InputEventMouseMotion and aiming: 
-		_refresh_aim_indicator(event) 
-		bow.refresh_trajectory(event.position)
-
-
-func _perform_bow_action(event: InputEventMouseButton) -> void:
-	if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		aiming = true
-		bow.pull(event.position)
-	elif event.button_index == MOUSE_BUTTON_LEFT and !event.pressed:
-		aiming = false
-		aim_indicator.clear_points()
-		bow.release()
-
-
-func _refresh_aim_indicator(event: InputEventMouseMotion) -> void:
-	aim_indicator.clear_points()
-	aim_indicator.add_point(bow.pull_position)
-	aim_indicator.add_point(event.position)
+	if not spawner.all_waves_spawned(): _spawn_next_wave()
 	
 
 func _spawn_next_wave() -> void:
@@ -62,10 +28,7 @@ func _spawn_next_wave() -> void:
 
 
 func _on_bow_facing_changed(facing: Bow.Facing) -> void:
-	if facing == Bow.Facing.LEFT:
-		bow.position.x = LEFT_BOW_POSITION
-	else:
-		bow.position.x = RIGHT_BOW_POSITION
+	bow.position.x = BOW_POSITIONS[facing]
 
 
 func _on_player_tree_exited() -> void:
@@ -80,7 +43,6 @@ func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
 func _on_enemy_died() -> void:
 	enemies_count -= 1
 	if enemies_count != 0: return
-
 	if spawner.all_waves_spawned():
 		game_won.emit()
 	else:
@@ -89,3 +51,22 @@ func _on_enemy_died() -> void:
 
 func _on_tower_destroyed() -> void:
 	game_lost.emit()
+
+
+func _on_virtual_joystick_plus_analogic_changed(
+	value: Vector2, 
+	distance: float, 
+	_angle: float, 
+	_angle_clockwise: float, 
+	_angle_not_clockwise: float
+) -> void:
+	if distance == 0:return
+	bow.aim(value * Vector2(-1, -1), distance)
+
+
+func _on_virtual_joystick_plus_released() -> void:
+	bow.release()
+
+
+func _on_virtual_joystick_plus_pressed() -> void:
+	bow.pull()

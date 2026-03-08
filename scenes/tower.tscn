@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dvego2xg2ditv" path="res://scripts/hurtbox_component.gd" id="1_2x682"]
 [ext_resource type="Script" uid="uid://crqyw3m3qiabq" path="res://scripts/tower.gd" id="1_ktxwe"]
 [ext_resource type="PackedScene" uid="uid://blywxglkpxl7t" path="res://scenes/health_component.tscn" id="2_ay4al"]
-[ext_resource type="AudioStream" uid="uid://bja0266m0s7jx" path="res://assets/audio/impactMetal_heavy_002.ogg" id="4_qrbg1"]
+[ext_resource type="AudioStream" uid="uid://ca8bopdgfvjdj" path="res://assets/audio/shot_muffled.wav" id="4_qrbg1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2x682"]
 size = Vector2(236, 605)
