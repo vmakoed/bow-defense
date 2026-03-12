@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 
+signal damaged
 signal destroyed
 
 
@@ -8,7 +9,7 @@ signal destroyed
 
 
 @onready var health_component: HealthComponent = %HealthComponent
-@onready var hit_sound_player: AudioStreamPlayer2D = %HitSoundPlayer
+@onready var damaged_sound_player: AudioStreamPlayer2D = %DamagedSoundPlayer
 
 
 func _ready() -> void:
@@ -20,4 +21,5 @@ func _on_health_component_health_below_minimum() -> void:
 
 
 func _on_health_component_damaged(_damage: Damage) -> void:
-	hit_sound_player.play()
+	damaged.emit()
+	damaged_sound_player.play()

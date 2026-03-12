@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3 uid="uid://b6185n700er36"]
+
+[ext_resource type="Script" uid="uid://cbfylekssnf7m" path="res://scripts/enemy_stats.gd" id="1_3fur8"]
+
+[resource]
+script = ExtResource("1_3fur8")
+color = Color(0.3527628, 0.5527516, 1, 1)

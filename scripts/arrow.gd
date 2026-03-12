@@ -2,8 +2,8 @@ class_name Arrow
 extends Area2D
 
 
-@export var damage_amount := 40.0
-@export var knockback_factor := 0.2
+@export var damage_amount := 50.0
+@export var knockback_factor := 0.5
 
 
 var gravity_modifier: float

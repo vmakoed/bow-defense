@@ -9,7 +9,7 @@ signal damaged
 const MIN_HEALTH = 0.0
 
 
-@export var max_health: float
+@export var max_health: float: set = _set_max_health
 @export var health_bar: ProgressBar: set = _set_health_bar
 
 
@@ -23,6 +23,12 @@ func _ready() -> void:
 func damage(value: Damage) -> void:
     damaged.emit(value)
     health -= value.amount
+
+
+func _set_max_health(value: float) -> void:
+    if value == max_health: return
+    max_health = value
+    if health_bar: health_bar.max_value = max_health
 
 
 func _set_health(value: float) -> void:

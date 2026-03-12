@@ -45,9 +45,9 @@ shape = SubResource("RectangleShape2D_ay4al")
 
 [node name="HealthComponent" parent="." unique_id=105572739 instance=ExtResource("2_ay4al")]
 unique_name_in_owner = true
-max_health = 500.0
+max_health = 1000.0
 
-[node name="HitSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=7380262]
+[node name="DamagedSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=7380262]
 unique_name_in_owner = true
 stream = ExtResource("4_qrbg1")
 

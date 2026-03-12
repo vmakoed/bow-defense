@@ -11,7 +11,6 @@ enum AttackDirection { LEFT, RIGHT }
 
 const MAX_OVERSHOOT_DISTANCE = 3.0
 const MAX_HOVER_DISTANCE = 50.0
-const ATTACKING_SPEED = 350.0
 const ACCELERATION = 4.0
 const HOVERING_SPEED = 50.0
 const ATTACK_DIRECTION_VECTORS: Dictionary[AttackDirection, Vector2] = {
@@ -20,9 +19,12 @@ const ATTACK_DIRECTION_VECTORS: Dictionary[AttackDirection, Vector2] = {
 }
 
 
+@export var enemy_stats: EnemyStats
 @export var initial_state: State
-@export var damage_amount := 45.0
 
+
+var attacking_speed: float
+var damage_amount: float
 
 var state: State = State.NULL: set = _set_state
 var home_position: Vector2
@@ -36,9 +38,22 @@ var hover_direction = Vector2.UP
 
 
 @onready var attacking_timer: Timer = %AttackingTimer
+@onready var color_rect: ColorRect = %ColorRect
+@onready var health_component: HealthComponent = %HealthComponent
+@onready var hitbox_shape: CollisionShape2D = %HitboxShape
+@onready var hurtbox_shape: CollisionShape2D = %HurtboxShape
 
 
 func _ready() -> void:
+	attacking_speed = enemy_stats.attacking_speed
+	attacking_timer.wait_time = enemy_stats.attack_cooldown
+	color_rect.color = enemy_stats.color
+	color_rect.scale = enemy_stats.scale
+	damage_amount = enemy_stats.damage
+	health_component.max_health = enemy_stats.max_health
+	health_component.health = enemy_stats.max_health
+	hitbox_shape.scale = enemy_stats.scale
+	hurtbox_shape.scale = enemy_stats.scale
 	state = initial_state
 
 
@@ -135,7 +150,7 @@ func _get_damage() -> Damage:
 func _on_flying_in_state_entered() -> void:
 	_start_moving_towards(
 		home_position,
-		ATTACKING_SPEED
+		attacking_speed
 	)
 
 
@@ -145,13 +160,13 @@ func _on_hovering_state_entered() -> void:
 
 
 func _on_attacking_state_entered() -> void:
-	target_speed = ATTACKING_SPEED
+	target_speed = attacking_speed
 
 
 func _on_retreating_state_entered() -> void:
 	_start_moving_towards(
 		home_position,
-		ATTACKING_SPEED
+		attacking_speed
 	)
 
 

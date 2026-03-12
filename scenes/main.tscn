@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dhyaagledo26r" path="res://scripts/main.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://cqvn1mqtdtgta" path="res://scenes/player.tscn" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://lmlne1n4jqd7" path="res://scripts/camera_2d.gd" id="2_85g3d"]
 [ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="2_tefeu"]
 [ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://dyn0vhb2q3omi" path="res://addons/virtual_joystick_plus/virtual_joystick_plus.gd" id="5_tipki"]
@@ -13,7 +14,9 @@
 script = ExtResource("1_o5qli")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
+unique_name_in_owner = true
 position = Vector2(576, 324)
+script = ExtResource("2_85g3d")
 
 [node name="Tower" parent="." unique_id=58816153 node_paths=PackedStringArray("health_bar") instance=ExtResource("2_tefeu")]
 unique_name_in_owner = true
@@ -139,6 +142,7 @@ position = Vector2(1024, 512)
 [node name="Spawner" parent="." unique_id=1204811195 instance=ExtResource("6_tefeu")]
 unique_name_in_owner = true
 
+[connection signal="damaged" from="Tower" to="." method="_on_tower_damaged"]
 [connection signal="destroyed" from="Tower" to="." method="_on_tower_destroyed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
 [connection signal="facing_changed" from="Bow" to="." method="_on_bow_facing_changed"]

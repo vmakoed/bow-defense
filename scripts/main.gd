@@ -17,6 +17,7 @@ var enemies_count: int
 @onready var tower: StaticBody2D = %Tower
 @onready var bow: Bow = %Bow
 @onready var spawner: Spawner = %Spawner
+@onready var camera: Camera2D = %Camera2D
 
 
 func _ready() -> void:
@@ -70,3 +71,7 @@ func _on_virtual_joystick_plus_released() -> void:
 
 func _on_virtual_joystick_plus_pressed() -> void:
 	bow.pull()
+
+
+func _on_tower_damaged() -> void:
+	camera.shake()
