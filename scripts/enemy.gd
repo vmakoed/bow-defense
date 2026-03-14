@@ -48,12 +48,10 @@ func _ready() -> void:
 	attacking_speed = enemy_stats.attacking_speed
 	attacking_timer.wait_time = enemy_stats.attack_cooldown
 	color_rect.color = enemy_stats.color
-	color_rect.scale = enemy_stats.scale
 	damage_amount = enemy_stats.damage
 	health_component.max_health = enemy_stats.max_health
 	health_component.health = enemy_stats.max_health
-	hitbox_shape.scale = enemy_stats.scale
-	hurtbox_shape.scale = enemy_stats.scale
+	scale = enemy_stats.scale
 	state = initial_state
 
 

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3 uid="uid://356v3rcijw8c"]
+
+[ext_resource type="Script" uid="uid://cbfylekssnf7m" path="res://scripts/enemy_stats.gd" id="1_is74h"]
+
+[resource]
+script = ExtResource("1_is74h")
+max_health = 50.0
+attacking_speed = 500.0
+attack_cooldown = 3.0
+color = Color(0.88050604, 0.0029389358, 5.7756904e-07, 1)
+scale = Vector2(0.5, 0.5)
+metadata/_custom_type_script = "uid://cbfylekssnf7m"

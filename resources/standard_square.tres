@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_3fur8")
+attack_cooldown = 4.0
 color = Color(0.3527628, 0.5527516, 1, 1)

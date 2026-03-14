@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3 uid="uid://becwsycgsju67"]
+
+[ext_resource type="Script" uid="uid://cbfylekssnf7m" path="res://scripts/enemy_stats.gd" id="1_wf2uc"]
+
+[resource]
+script = ExtResource("1_wf2uc")
+max_health = 300.0
+attacking_speed = 200.0
+damage = 75.0
+color = Color(0.90588236, 0.35686275, 0.8117647, 1)
+scale = Vector2(1.5, 1.5)
+metadata/_custom_type_script = "uid://cbfylekssnf7m"

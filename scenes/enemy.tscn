@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dn1ncqsekomrb"]
 
 [ext_resource type="Script" uid="uid://jqpu0afh5v2f" path="res://scripts/enemy.gd" id="1_7p1mj"]
-[ext_resource type="Resource" uid="uid://b6185n700er36" path="res://resources/standard_square.tres" id="2_5uy6h"]
+[ext_resource type="Resource" uid="uid://356v3rcijw8c" path="res://resources/speedy_square.tres" id="2_5uy6h"]
 [ext_resource type="PackedScene" uid="uid://chys2hmjno4mv" path="res://scenes/hurtbox_component.tscn" id="2_md0e3"]
 [ext_resource type="PackedScene" uid="uid://blywxglkpxl7t" path="res://scenes/health_component.tscn" id="3_4ra3w"]
 
