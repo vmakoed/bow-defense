@@ -44,9 +44,11 @@ position = Vector2(576, 372)
 [node name="Bow" parent="." unique_id=304452323 instance=ExtResource("5_tbgi4")]
 unique_name_in_owner = true
 position = Vector2(520, 352)
+recharge_duration = 0.6
 
 [node name="AimIndicator" type="Line2D" parent="." unique_id=923205895]
 unique_name_in_owner = true
+visible = false
 points = PackedVector2Array(1241, 337)
 width = 6.0
 default_color = Color(2.0335242e-06, 0.31445736, 1.4439226e-07, 1)

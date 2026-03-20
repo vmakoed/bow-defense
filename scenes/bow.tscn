@@ -34,3 +34,10 @@ stream = SubResource("AudioStreamMP3_prjx1")
 [node name="ReleaseAudioPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1137464307]
 unique_name_in_owner = true
 stream = ExtResource("2_prjx1")
+
+[node name="RechargeTimer" type="Timer" parent="." unique_id=760807142]
+unique_name_in_owner = true
+wait_time = 0.8
+one_shot = true
+
+[connection signal="timeout" from="RechargeTimer" to="." method="_on_recharge_timer_timeout"]
