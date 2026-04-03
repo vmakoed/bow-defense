@@ -9,4 +9,5 @@ attacking_speed = 500.0
 attack_cooldown = 3.0
 color = Color(0.88050604, 0.0029389358, 5.7756904e-07, 1)
 scale = Vector2(0.5, 0.5)
+weight = 0.5
 metadata/_custom_type_script = "uid://cbfylekssnf7m"

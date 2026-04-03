@@ -32,6 +32,7 @@ var charge: float: set = _set_charge
 
 
 @onready var trajectory: Line2D = %Trajectory
+@onready var charged_audio_player: AudioStreamPlayer2D = %ChargedAudioPlayer
 @onready var pull_audio_player: AudioStreamPlayer2D = %PullAudioPlayer
 @onready var recharge_timer: Timer = %RechargeTimer
 @onready var release_audio_player: AudioStreamPlayer2D = %ReleaseAudioPlayer
@@ -86,6 +87,7 @@ func _set_charge(new_value: float) -> void:
 	if charge == new_value: return
 	charge = new_value
 	charge_changed.emit(charge, max_charge)
+	if charge == max_charge: charged_audio_player.play()
 
 
 func _refresh_facing(direction: Vector2):

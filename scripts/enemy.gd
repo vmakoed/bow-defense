@@ -204,4 +204,4 @@ func _on_area_entered(area: Area2D) -> void:
 
 
 func _on_health_component_damaged(damage: Damage) -> void:
-	velocity += damage.knockback
+	velocity += damage.knockback / enemy_stats.weight

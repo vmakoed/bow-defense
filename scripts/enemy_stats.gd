@@ -7,3 +7,4 @@ class_name EnemyStats
 @export var attack_cooldown := 5.0
 @export var color := Color.BLUE
 @export var scale := Vector2(1.0, 1.0)
+@export var weight := 1.0
