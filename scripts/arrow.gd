@@ -2,12 +2,13 @@ class_name Arrow
 extends Area2D
 
 
-@export var damage_amount := 50.0
+@export var max_damage_amount := 50.0
 @export var knockback_factor := 0.5
 
 
 var gravity_modifier: float
 var velocity: Vector2
+var damage_modifier := 1.0
 
 
 @onready var clear_timer: Timer = %ClearTimer
@@ -23,8 +24,8 @@ func _process(delta: float) -> void:
 
 func _get_damage() -> Damage:
 	var damage = Damage.new()
-	damage.amount = damage_amount
-	damage.knockback = velocity * knockback_factor
+	damage.amount = max_damage_amount * damage_modifier
+	damage.knockback = velocity * knockback_factor * damage_modifier
 	return damage
 
 

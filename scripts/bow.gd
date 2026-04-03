@@ -3,6 +3,7 @@ extends Node2D
 
 
 signal facing_changed
+signal charge_changed
 
 
 const ARROW_START_POSITION = Vector2.ZERO
@@ -17,15 +18,17 @@ enum Facing { LEFT, RIGHT }
 
 @export var arrow_speed_baseline := 800.0
 @export var arrow_gravity_modifier := 800.0
-@export var recharge_duration = 0.8
-@export var trajectory_points := 40
+@export var charge_duration = 0.5
+@export var max_charge = 1.0
+@export var trajectory_points := 400
 @export var trajectory_precision := 20.0
 
 
 var arrow_scene: Resource
 var arrow_velocity: Vector2
 var facing: Facing = Facing.LEFT: set = _set_facing
-var charged: bool: set = _set_charged
+var charging: bool
+var charge: float: set = _set_charge
 
 
 @onready var trajectory: Line2D = %Trajectory
@@ -36,11 +39,18 @@ var charged: bool: set = _set_charged
 
 func _ready() -> void:
 	arrow_scene = preload("res://scenes/arrow.tscn")
-	charged = true
-	recharge_timer.wait_time = recharge_duration
+
+
+func _process(delta: float) -> void:
+	if charging:
+		var charge_increase: float = delta / charge_duration
+		charge = clamp(charge + charge_increase, 0, max_charge)
+	else:
+		charge = 0
 
 
 func pull() -> void:
+	charging = true
 	pull_audio_player.play(0.1)
 
 
@@ -53,14 +63,13 @@ func aim(direction: Vector2, power: float):
 func release() -> void:
 	pull_audio_player.stop()
 	_clear_trajectory()
-	if charged: _release_charged_bow()
+	_release_bow()
 
 
-func _release_charged_bow() -> void:
-	charged = false
+func _release_bow() -> void:
 	release_audio_player.play(0.25)
 	_shoot_arrow()
-	_start_recharge()
+	charging = false
 
 
 func _clear_trajectory() -> void:
@@ -73,10 +82,11 @@ func _set_facing(new_value: Facing) -> void:
 	facing_changed.emit(facing)
 
 
-func _set_charged(new_value: bool) -> void:
-	if charged == new_value: return
-	charged = new_value
-	trajectory.default_color = TRAJECTORY_COLORS[charged]
+func _set_charge(new_value: float) -> void:
+	if charge == new_value: return
+	charge = new_value
+	charge_changed.emit(charge, max_charge)
+
 
 func _refresh_facing(direction: Vector2):
 	if direction.x > 0:
@@ -101,6 +111,7 @@ func _redraw_trajectory():
 
 func _shoot_arrow() -> void:
 	var arrow := arrow_scene.instantiate() as Arrow
+	arrow.damage_modifier = charge
 	arrow.velocity = arrow_velocity
 	arrow.gravity_modifier = arrow_gravity_modifier
 	arrow.global_position = ARROW_START_POSITION
@@ -108,11 +119,3 @@ func _shoot_arrow() -> void:
 	add_child(arrow)
 
 	arrow_velocity = Vector2.ZERO
-
-
-func _start_recharge() -> void:
-	recharge_timer.start()
-
-
-func _on_recharge_timer_timeout() -> void:
-	charged = true

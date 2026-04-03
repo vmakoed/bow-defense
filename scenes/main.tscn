@@ -7,8 +7,33 @@
 [ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://dyn0vhb2q3omi" path="res://addons/virtual_joystick_plus/virtual_joystick_plus.gd" id="5_tipki"]
 [ext_resource type="Texture2D" uid="uid://bko0hy7tmib17" path="res://addons/virtual_joystick_plus/resources/textures/joystick_texture_5.png" id="6_85g3d"]
+[ext_resource type="Script" uid="uid://bfvbhk6bmqt7s" path="res://scripts/bow_charge_bar.gd" id="6_choun"]
 [ext_resource type="PackedScene" uid="uid://dlhbjvanv1tga" path="res://scenes/spawner.tscn" id="6_tefeu"]
 [ext_resource type="Texture2D" uid="uid://cvbq3sgsmm46v" path="res://addons/virtual_joystick_plus/resources/textures/stick_texture_5.png" id="7_choun"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
 
 [node name="Main" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_o5qli")
@@ -35,7 +60,7 @@ offset_right = 696.0
 offset_bottom = 528.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0.57994527, 0.34800556, 0.088328175, 1)
 
 [node name="Player" parent="." unique_id=1910543735 instance=ExtResource("2_0wfyh")]
 unique_name_in_owner = true
@@ -44,7 +69,6 @@ position = Vector2(576, 372)
 [node name="Bow" parent="." unique_id=304452323 instance=ExtResource("5_tbgi4")]
 unique_name_in_owner = true
 position = Vector2(520, 352)
-recharge_duration = 0.6
 
 [node name="AimIndicator" type="Line2D" parent="." unique_id=923205895]
 unique_name_in_owner = true
@@ -67,6 +91,7 @@ grow_vertical = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
 [node name="HealthBar" type="ProgressBar" parent="CanvasLayer/MarginContainer" unique_id=2090477709]
 custom_minimum_size = Vector2(0, 40)
@@ -88,6 +113,39 @@ visibility_mode = 1
 joystick_texture = ExtResource("6_85g3d")
 stick_texture = ExtResource("7_choun")
 metadata/_custom_type_script = "uid://dyn0vhb2q3omi"
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1075173119]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BowChargeBar" type="ProgressBar" parent="CanvasLayer/Control" unique_id=396362211]
+custom_minimum_size = Vector2(200, 27)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -92.0
+offset_right = 100.0
+offset_bottom = -65.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+show_percentage = false
+script = ExtResource("6_choun")
+charging_stylebox = SubResource("StyleBoxFlat_ya4ey")
+charged_stylebox = SubResource("StyleBoxFlat_choun")
 
 [node name="SpawnMarkers" type="Node2D" parent="." unique_id=385187766]
 
@@ -147,6 +205,7 @@ unique_name_in_owner = true
 [connection signal="damaged" from="Tower" to="." method="_on_tower_damaged"]
 [connection signal="destroyed" from="Tower" to="." method="_on_tower_destroyed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
+[connection signal="charge_changed" from="Bow" to="CanvasLayer/Control/BowChargeBar" method="_on_bow_charge_changed"]
 [connection signal="facing_changed" from="Bow" to="." method="_on_bow_facing_changed"]
 [connection signal="analogic_changed" from="CanvasLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_analogic_changed"]
 [connection signal="pressed" from="CanvasLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_pressed"]
