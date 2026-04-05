@@ -2,8 +2,9 @@ class_name Bow
 extends Node2D
 
 
-signal facing_changed
+signal arrow_damaged
 signal charge_changed
+signal facing_changed
 
 
 const ARROW_START_POSITION = Vector2.ZERO
@@ -20,21 +21,20 @@ enum Facing { LEFT, RIGHT }
 @export var arrow_gravity_modifier := 800.0
 @export var charge_duration = 0.5
 @export var max_charge = 1.0
-@export var trajectory_points := 400
+@export var trajectory_points := 200
 @export var trajectory_precision := 20.0
 
 
 var arrow_scene: Resource
 var arrow_velocity: Vector2
-var facing: Facing = Facing.LEFT: set = _set_facing
 var charging: bool
 var charge: float: set = _set_charge
+var facing: Facing = Facing.LEFT: set = _set_facing
 
 
 @onready var trajectory: Line2D = %Trajectory
 @onready var charged_audio_player: AudioStreamPlayer2D = %ChargedAudioPlayer
 @onready var pull_audio_player: AudioStreamPlayer2D = %PullAudioPlayer
-@onready var recharge_timer: Timer = %RechargeTimer
 @onready var release_audio_player: AudioStreamPlayer2D = %ReleaseAudioPlayer
 
 
@@ -117,7 +117,12 @@ func _shoot_arrow() -> void:
 	arrow.velocity = arrow_velocity
 	arrow.gravity_modifier = arrow_gravity_modifier
 	arrow.global_position = ARROW_START_POSITION
+	arrow.arrow_damaged.connect(_on_arrow_damaged)
 
 	add_child(arrow)
 
 	arrow_velocity = Vector2.ZERO
+
+
+func _on_arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, impact_velocity: Vector2) -> void:
+	arrow_damaged.emit(arrow_position, area, impact_velocity)

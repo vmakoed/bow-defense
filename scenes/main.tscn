@@ -41,6 +41,7 @@ script = ExtResource("1_o5qli")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
 unique_name_in_owner = true
 position = Vector2(576, 324)
+zoom = Vector2(1.6, 1.6)
 script = ExtResource("2_85g3d")
 
 [node name="Tower" parent="." unique_id=58816153 node_paths=PackedStringArray("health_bar") instance=ExtResource("2_tefeu")]
@@ -60,7 +61,7 @@ offset_right = 696.0
 offset_bottom = 528.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.57994527, 0.34800556, 0.088328175, 1)
+color = Color(0.5384509, 0.2017465, 0.07447272, 1)
 
 [node name="Player" parent="." unique_id=1910543735 instance=ExtResource("2_0wfyh")]
 unique_name_in_owner = true
@@ -106,7 +107,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(576, 324)
+pivot_offset = Vector2(960, 540)
 script = ExtResource("5_tipki")
 joystick_mode = 1
 visibility_mode = 1
@@ -205,6 +206,7 @@ unique_name_in_owner = true
 [connection signal="damaged" from="Tower" to="." method="_on_tower_damaged"]
 [connection signal="destroyed" from="Tower" to="." method="_on_tower_destroyed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
+[connection signal="arrow_damaged" from="Bow" to="." method="_on_bow_arrow_damaged"]
 [connection signal="charge_changed" from="Bow" to="CanvasLayer/Control/BowChargeBar" method="_on_bow_charge_changed"]
 [connection signal="facing_changed" from="Bow" to="." method="_on_bow_facing_changed"]
 [connection signal="analogic_changed" from="CanvasLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_analogic_changed"]

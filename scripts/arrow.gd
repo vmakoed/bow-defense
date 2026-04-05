@@ -2,6 +2,9 @@ class_name Arrow
 extends Area2D
 
 
+signal arrow_damaged
+
+
 @export var max_damage_amount := 50.0
 @export var knockback_factor := 0.5
 
@@ -34,12 +37,14 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	
 
 func _on_area_entered(area: Area2D) -> void:
-	if area is HurtboxComponent:
-		clear_timer.stop()
-		hit_sound_player.play()
-		visible = false
-		collision_shape.set_deferred("disabled", true)
-		area.damage(_get_damage())
+	if area is not HurtboxComponent: return
+
+	clear_timer.stop()
+	hit_sound_player.play()
+	visible = false
+	collision_shape.set_deferred("disabled", true)
+	area.damage(_get_damage())
+	arrow_damaged.emit(global_position, area, velocity)
 
 
 func _on_clear_timer_timeout() -> void:
@@ -47,4 +52,4 @@ func _on_clear_timer_timeout() -> void:
 
 
 func _on_hit_sound_player_finished() -> void:
-	queue_free()
+	clear_timer.start()

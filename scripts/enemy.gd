@@ -63,6 +63,10 @@ func _process(delta: float) -> void:
 		_: _move_towards_target(delta)
 
 
+func is_alive() -> float:
+	return health_component.is_alive()
+
+
 func _set_state(new_value: State) -> void:
 	if state == new_value: return
 
@@ -191,7 +195,7 @@ func _on_target_reached() -> void:
 
 
 func _on_health_component_health_below_minimum() -> void:
-	died.emit()
+	died.emit(global_position, enemy_stats)
 	queue_free()
 
 
@@ -204,4 +208,5 @@ func _on_area_entered(area: Area2D) -> void:
 
 
 func _on_health_component_damaged(damage: Damage) -> void:
+	# emit particles, create them here
 	velocity += damage.knockback / enemy_stats.weight
