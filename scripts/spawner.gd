@@ -67,7 +67,11 @@ func spawn_next_wave() -> int:
 
 
 func all_waves_spawned() -> bool:
-	return current_wave == enemy_waves.size() - 1
+	return current_wave == total_waves() - 1
+
+
+func total_waves() -> int:
+	return enemy_waves.size()
 
 
 func _create_enemy_waves() -> void:

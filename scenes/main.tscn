@@ -99,6 +99,55 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 show_percentage = false
 
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer" unique_id=1305689877]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/PanelContainer" unique_id=743892177]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer" unique_id=713355182]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=387570378]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=614571222]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Wave:"
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1236339111]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="WaveLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=2000179806]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "0/0"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=383242124]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1827811172]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Score:"
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1459783840]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1798028124]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "0"
+
 [node name="VirtualJoystickPlus" type="Control" parent="CanvasLayer" unique_id=1671319775]
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 3

@@ -1,35 +1,52 @@
 extends Node2D
 
 
-signal game_won
 signal game_lost
+signal game_won
 
 
 const BOW_POSITIONS: Dictionary[Bow.Facing, float] = {
 	Bow.Facing.LEFT: 520.0,
 	Bow.Facing.RIGHT: 632.0
 }
+const SCORE_PER_ENEMY = 100
 
 
 var enemies_count: int
 var enemy_hurt_particles_scene: Resource
 var enemy_died_particles_scene: Resource
+var score: int: set = _set_score
+var total_waves: int
 
 
-@onready var tower: StaticBody2D = %Tower
 @onready var bow: Bow = %Bow
-@onready var spawner: Spawner = %Spawner
 @onready var camera: Camera2D = %Camera2D
+@onready var score_label: Label = %ScoreLabel
+@onready var spawner: Spawner = %Spawner
+@onready var tower: StaticBody2D = %Tower
+@onready var wave_label: Label = %WaveLabel
+
 
 
 func _ready() -> void:
+	score = 0
 	enemy_hurt_particles_scene = preload("res://scenes/enemy_hurt_particles.tscn")
 	enemy_died_particles_scene = preload("res://scenes/enemy_died_particles.tscn")
 	if not spawner.all_waves_spawned(): _spawn_next_wave()
-	
+
+
+func _set_score(new_value: int) -> void:
+	if score == new_value: return
+	score = new_value
+	score_label.text = str(score)
+
 
 func _spawn_next_wave() -> void:
 	enemies_count = spawner.spawn_next_wave()
+	wave_label.text = "{current}/{total}".format({
+		"current": spawner.current_wave + 1, 
+		"total": spawner.total_waves()
+	})
 
 
 func _emit_enemy_hit_particles(instance_position: Vector2, direction: Vector2, color: Color) -> void:
@@ -67,6 +84,7 @@ func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
 func _on_enemy_died(enemy_position: Vector2, enemy_stats: EnemyStats) -> void:
 	_emit_enemy_died_particles(enemy_position, enemy_stats.color)
 	enemies_count -= 1
+	score += SCORE_PER_ENEMY
 	if enemies_count == 0: _on_wave_finished()
 
 
