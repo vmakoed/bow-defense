@@ -1,7 +1,5 @@
 [gd_scene format=3 uid="uid://cjyeffdkfbl71"]
 
-[ext_resource type="Script" uid="uid://cjak0y6nri87s" path="res://scripts/enemy_died_particles.gd" id="1_wl0ji"]
-
 [node name="EnemyDiedParticles" type="CPUParticles2D" unique_id=1824010182]
 amount = 16
 lifetime = 0.4
@@ -13,4 +11,3 @@ initial_velocity_min = 150.0
 initial_velocity_max = 300.0
 scale_amount_min = 8.0
 scale_amount_max = 8.0
-script = ExtResource("1_wl0ji")

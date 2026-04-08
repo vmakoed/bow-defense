@@ -33,13 +33,13 @@ func _spawn_next_wave() -> void:
 
 
 func _emit_enemy_hit_particles(instance_position: Vector2, direction: Vector2, color: Color) -> void:
-	var particles := enemy_hurt_particles_scene.instantiate() as EnemyHurtParticles
+	var particles := enemy_hurt_particles_scene.instantiate() as CPUParticles2D
 	particles.direction = direction
 	_emit_particles(particles, instance_position, color)
 
 
 func _emit_enemy_died_particles(instance_position: Vector2, color: Color) -> void:
-	var particles := enemy_died_particles_scene.instantiate() as EnemyDiedParticles
+	var particles := enemy_died_particles_scene.instantiate() as CPUParticles2D
 	_emit_particles(particles, instance_position, color)
 
 

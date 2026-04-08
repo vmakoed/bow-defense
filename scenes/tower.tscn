@@ -16,6 +16,7 @@ collision_layer = 8
 script = ExtResource("1_ktxwe")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1660070826]
+unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

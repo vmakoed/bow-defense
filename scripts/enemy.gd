@@ -39,9 +39,8 @@ var hover_direction = Vector2.UP
 
 @onready var attacking_timer: Timer = %AttackingTimer
 @onready var color_rect: ColorRect = %ColorRect
+@onready var died_audio_player: AudioStreamPlayer2D = %DiedSoundPlayer
 @onready var health_component: HealthComponent = %HealthComponent
-@onready var hitbox_shape: CollisionShape2D = %HitboxShape
-@onready var hurtbox_shape: CollisionShape2D = %HurtboxShape
 
 
 func _ready() -> void:
@@ -146,6 +145,7 @@ func _move_towards_target(delta) -> void:
 func _get_damage() -> Damage:
 	var damage = Damage.new()
 	damage.amount = damage_amount
+	damage.source_global_position = global_position
 	return damage
 
 
@@ -196,7 +196,8 @@ func _on_target_reached() -> void:
 
 func _on_health_component_health_below_minimum() -> void:
 	died.emit(global_position, enemy_stats)
-	queue_free()
+	visible = false
+	died_audio_player.play()
 
 
 func _on_area_entered(area: Area2D) -> void:
@@ -206,7 +207,9 @@ func _on_area_entered(area: Area2D) -> void:
 	area.damage(_get_damage())
 	_on_target_reached()
 
-
 func _on_health_component_damaged(damage: Damage) -> void:
-	# emit particles, create them here
 	velocity += damage.knockback / enemy_stats.weight
+
+
+func _on_died_sound_player_finished() -> void:
+	queue_free()
