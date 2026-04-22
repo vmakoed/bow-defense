@@ -1,5 +1,5 @@
-extends Node
 class_name Types
+extends Node
 
 
 enum RelativePosition { 

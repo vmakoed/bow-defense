@@ -1,5 +1,5 @@
-extends RefCounted
 class_name EnemyWaveEntryFactory
+extends RefCounted
 
 
 const ENEMY_SCENE = preload("res://scenes/enemy.tscn")

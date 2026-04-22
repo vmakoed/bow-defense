@@ -1,5 +1,5 @@
-extends Node
 class_name HealthComponent
+extends Node
 
 
 signal health_below_minimum

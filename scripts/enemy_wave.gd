@@ -1,5 +1,5 @@
-extends RefCounted
 class_name EnemyWave
+extends RefCounted
 ## Represents a single wave's enemy configuration.
 ## Uses a Dictionary keyed by RelativePosition to enforce
 ## one enemy type per spawn position at authoring time.

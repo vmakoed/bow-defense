@@ -1,5 +1,5 @@
-extends Node
 class_name Damage
+extends Node
 
 
 var amount: float

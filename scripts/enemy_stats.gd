@@ -1,5 +1,5 @@
-extends Resource
 class_name EnemyStats
+extends Resource
 
 @export var max_health := 100.0
 @export var attacking_speed := 250.0
