@@ -178,7 +178,8 @@ func _on_hover_point_reached() -> void:
 
 
 func _on_attacking_timer_timeout() -> void:
-	state = State.ATTACKING
+	# state = State.ATTACKING
+	pass
 
 
 func _on_target_reached() -> void:

@@ -21,6 +21,7 @@ var total_waves: int
 
 @onready var bow: Bow = %Bow
 @onready var camera: Camera2D = %Camera2D
+@onready var player: Player = %Player
 @onready var score_label: Label = %ScoreLabel
 @onready var spawner: Spawner = %Spawner
 @onready var tower: StaticBody2D = %Tower
@@ -32,7 +33,7 @@ func _ready() -> void:
 	score = 0
 	enemy_hurt_particles_scene = preload("res://scenes/enemy_hurt_particles.tscn")
 	enemy_died_particles_scene = preload("res://scenes/enemy_died_particles.tscn")
-	if not spawner.all_waves_spawned(): _spawn_next_wave()
+	# if not spawner.all_waves_spawned(): _spawn_next_wave()
 
 
 func _set_score(new_value: int) -> void:

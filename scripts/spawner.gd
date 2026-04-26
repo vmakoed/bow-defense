@@ -5,7 +5,8 @@ extends Node
 signal enemy_spawned
 
 
-@onready var timer: Timer = %Timer
+@export var spawn_circle_center: Node2D
+@export var spawn_circle_radius := 300.0
 
 
 var current_wave: int
@@ -18,6 +19,8 @@ var bulky_square: EnemyStats
 var speedy_square: EnemyStats
 var standard_square: EnemyStats
 
+
+@onready var timer: Timer = %Timer
 
 @onready var top_left_spawn_marker: Marker2D = %TopLeftSpawnMarker
 @onready var center_left_spawn_marker: Marker2D = %CenterLeftSpawnMarker
@@ -184,3 +187,15 @@ func _on_timer_timeout() -> void:
 	_spawn_enemy(spawn_queue.pop_back())
 	if spawn_queue.is_empty(): return
 	timer.start()
+
+
+func _on_endless_spawn_timer_timeout() -> void:
+	var rotation = randf() * 2 * PI
+	var spawn_position = spawn_circle_center.global_position + Vector2(spawn_circle_radius, 0).rotated(rotation)
+	var enemy = enemy_scene.instantiate() as Enemy
+	enemy.enemy_stats = standard_square
+	enemy.initial_state = Enemy.State.HOVERING
+	enemy.global_position = spawn_position
+	enemy.home_position = spawn_position
+	add_child(enemy)
+	# enemy_spawned.emit(enemy)

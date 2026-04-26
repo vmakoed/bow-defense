@@ -10,4 +10,9 @@ unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
 
+[node name="EndlessSpawnTimer" type="Timer" parent="." unique_id=1155509858]
+wait_time = 0.5
+autostart = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="EndlessSpawnTimer" to="." method="_on_endless_spawn_timer_timeout"]

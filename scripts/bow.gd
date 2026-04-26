@@ -58,7 +58,7 @@ func pull() -> void:
 func aim(direction: Vector2, power: float):	
 	_refresh_facing(direction)
 	arrow_velocity = arrow_speed_baseline * power * direction
-	_redraw_trajectory()
+	_draw_trajectory()
 
 
 func release() -> void:
@@ -97,7 +97,7 @@ func _refresh_facing(direction: Vector2):
 		facing = Facing.LEFT
 
 
-func _redraw_trajectory():
+func _draw_trajectory():
 	var gravity_vector := Vector2(0.0, arrow_gravity_modifier)
 	trajectory.clear_points()
 	trajectory.add_point(ARROW_START_POSITION)
