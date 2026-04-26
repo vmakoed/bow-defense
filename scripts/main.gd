@@ -24,7 +24,6 @@ var total_waves: int
 @onready var player: Player = %Player
 @onready var score_label: Label = %ScoreLabel
 @onready var spawner: Spawner = %Spawner
-@onready var tower: StaticBody2D = %Tower
 @onready var wave_label: Label = %WaveLabel
 
 
@@ -78,7 +77,6 @@ func _on_player_tree_exited() -> void:
 
 
 func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
-	# enemy.attack_target_position = Vector2(tower.global_position.x, enemy.global_position.y)
 	enemy.died.connect(_on_enemy_died)
 
 
