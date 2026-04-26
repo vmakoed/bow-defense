@@ -197,5 +197,6 @@ func _on_endless_spawn_timer_timeout() -> void:
 	enemy.initial_state = Enemy.State.HOVERING
 	enemy.global_position = spawn_position
 	enemy.home_position = spawn_position
+	enemy.attack_target_position = spawn_circle_center.global_position
 	add_child(enemy)
-	# enemy_spawned.emit(enemy)
+	enemy_spawned.emit(enemy)

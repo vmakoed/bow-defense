@@ -78,7 +78,7 @@ func _on_player_tree_exited() -> void:
 
 
 func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
-	enemy.attack_target_position = Vector2(tower.global_position.x, enemy.global_position.y)
+	# enemy.attack_target_position = Vector2(tower.global_position.x, enemy.global_position.y)
 	enemy.died.connect(_on_enemy_died)
 
 

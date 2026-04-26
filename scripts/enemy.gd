@@ -58,7 +58,7 @@ func _process(delta: float) -> void:
 	position += velocity * delta
 
 	match state:
-		State.ATTACKING: _move_in_attack_direction(delta)
+		# State.ATTACKING: _move_in_attack_direction(delta)
 		_: _move_towards_target(delta)
 
 
@@ -124,9 +124,13 @@ func _move_in_direction(direction: Vector2, delta: float) -> void:
 
 
 func _move_in_attack_direction(delta) -> void:
-	_move_in_direction(
-		 ATTACK_DIRECTION_VECTORS.get(attack_direction, Vector2.ZERO),
-		 delta
+	# _move_in_direction(
+	# 	 ATTACK_DIRECTION_VECTORS.get(attack_direction, Vector2.ZERO),
+	# 	 delta
+	# )
+	_start_moving_towards(
+		attack_target_position,
+		attacking_speed
 	)
 
 
@@ -162,7 +166,10 @@ func _on_hovering_state_entered() -> void:
 
 
 func _on_attacking_state_entered() -> void:
-	target_speed = attacking_speed
+	_start_moving_towards(
+		attack_target_position,
+		attacking_speed
+	)
 
 
 func _on_retreating_state_entered() -> void:
@@ -178,8 +185,7 @@ func _on_hover_point_reached() -> void:
 
 
 func _on_attacking_timer_timeout() -> void:
-	# state = State.ATTACKING
-	pass
+	state = State.ATTACKING
 
 
 func _on_target_reached() -> void:
