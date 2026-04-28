@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dlhbjvanv1tga"]
 
-[ext_resource type="Script" uid="uid://bmre1y301j572" path="res://scripts/spawner.gd" id="1_2vbf6"]
+[ext_resource type="Script" uid="uid://bfld1qfai0g6k" path="res://scripts/wave_spawner.gd" id="1_2vbf6"]
 
-[node name="Spawner" type="Node" unique_id=1204811195]
+[node name="WaveSpawner" type="Node" unique_id=1204811195]
 script = ExtResource("1_2vbf6")
 
 [node name="Timer" type="Timer" parent="." unique_id=1107406229]
@@ -11,7 +11,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="EndlessSpawnTimer" type="Timer" parent="." unique_id=1155509858]
-wait_time = 0.5
+wait_time = 2.0
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

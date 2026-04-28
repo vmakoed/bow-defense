@@ -4,7 +4,6 @@ extends Node2D
 
 signal arrow_damaged
 signal charge_changed
-signal facing_changed
 
 
 const ARROW_START_POSITION = Vector2.ZERO
@@ -17,7 +16,7 @@ const TRAJECTORY_COLORS: Dictionary[bool, Color] = {
 enum Facing { LEFT, RIGHT }
 
 
-@export var arrow_speed_baseline := 800.0
+@export var arrow_speed_baseline := 900.0
 @export var arrow_gravity_modifier := 800.0
 @export var charge_duration = 0.5
 @export var max_charge = 1.0
@@ -29,7 +28,6 @@ var arrow_scene: Resource
 var arrow_velocity: Vector2
 var charging: bool
 var charge: float: set = _set_charge
-var facing: Facing = Facing.LEFT: set = _set_facing
 
 
 @onready var trajectory: Line2D = %Trajectory
@@ -56,7 +54,6 @@ func pull() -> void:
 
 
 func aim(direction: Vector2, power: float):	
-	_refresh_facing(direction)
 	arrow_velocity = arrow_speed_baseline * power * direction
 	_draw_trajectory()
 
@@ -76,25 +73,11 @@ func _release_bow() -> void:
 func _clear_trajectory() -> void:
 	trajectory.clear_points()
 
-
-func _set_facing(new_value: Facing) -> void:
-	if facing == new_value: return
-	facing = new_value
-	facing_changed.emit(facing)
-
-
 func _set_charge(new_value: float) -> void:
 	if charge == new_value: return
 	charge = new_value
 	charge_changed.emit(charge, max_charge)
 	if charge == max_charge: charged_audio_player.play()
-
-
-func _refresh_facing(direction: Vector2):
-	if direction.x > 0:
-		facing = Facing.RIGHT
-	else:
-		facing = Facing.LEFT
 
 
 func _draw_trajectory():

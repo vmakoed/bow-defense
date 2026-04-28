@@ -12,6 +12,9 @@ const BOW_POSITIONS: Dictionary[Bow.Facing, float] = {
 const SCORE_PER_ENEMY = 100
 
 
+@export var spawner: Node
+
+
 var enemies_count: int
 var enemy_hurt_particles_scene: Resource
 var enemy_died_particles_scene: Resource
@@ -23,7 +26,6 @@ var total_waves: int
 @onready var camera: Camera2D = %Camera2D
 @onready var player: Player = %Player
 @onready var score_label: Label = %ScoreLabel
-@onready var spawner: Spawner = %Spawner
 @onready var wave_label: Label = %WaveLabel
 
 
@@ -42,11 +44,12 @@ func _set_score(new_value: int) -> void:
 
 
 func _spawn_next_wave() -> void:
-	enemies_count = spawner.spawn_next_wave()
-	wave_label.text = "{current}/{total}".format({
-		"current": spawner.current_wave + 1, 
-		"total": spawner.total_waves()
-	})
+	pass
+	# enemies_count = spawner.spawn_next_wave()
+	# wave_label.text = "{current}/{total}".format({
+	# 	"current": spawner.current_wave + 1, 
+	# 	"total": spawner.total_waves()
+	# })
 
 
 func _emit_enemy_hit_particles(instance_position: Vector2, direction: Vector2, color: Color) -> void:
@@ -92,10 +95,11 @@ func _on_tower_destroyed() -> void:
 
 
 func _on_wave_finished() -> void:
-	if spawner.all_waves_spawned():
-		game_won.emit()
-	else:
-		call_deferred("_spawn_next_wave")
+	pass
+	# if spawner.all_waves_spawned():
+	# 	game_won.emit()
+	# else:
+	# 	call_deferred("_spawn_next_wave")
 
 
 func _on_virtual_joystick_plus_analogic_changed(

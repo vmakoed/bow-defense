@@ -7,7 +7,10 @@
 [ext_resource type="AudioStream" uid="uid://dl82r8b6v4utr" path="res://assets/audio/sndHit7trimmed.wav" id="5_c4w8v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
-size = Vector2(75, 77)
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4w8v"]
+size = Vector2(48, 48)
 
 [node name="Enemy" type="Area2D" unique_id=492934886]
 collision_layer = 4
@@ -25,10 +28,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -37.0
-offset_top = -38.0
-offset_right = 37.0
-offset_bottom = 38.0
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -42,7 +45,7 @@ health_component = NodePath("../HealthComponent")
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1009602491]
 unique_name_in_owner = true
-shape = SubResource("RectangleShape2D_sugp2")
+shape = SubResource("RectangleShape2D_c4w8v")
 
 [node name="AttackingTimer" type="Timer" parent="." unique_id=559864249]
 unique_name_in_owner = true

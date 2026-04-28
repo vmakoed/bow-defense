@@ -56,10 +56,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	position += velocity * delta
-
-	match state:
-		# State.ATTACKING: _move_in_attack_direction(delta)
-		_: _move_towards_target(delta)
+	_move_towards_target(delta)
 
 
 func is_alive() -> float:
@@ -123,11 +120,7 @@ func _move_in_direction(direction: Vector2, delta: float) -> void:
 	velocity = velocity.lerp(direction * target_speed, ACCELERATION * delta)
 
 
-func _move_in_attack_direction(delta) -> void:
-	# _move_in_direction(
-	# 	 ATTACK_DIRECTION_VECTORS.get(attack_direction, Vector2.ZERO),
-	# 	 delta
-	# )
+func _move_in_attack_direction() -> void:
 	_start_moving_towards(
 		attack_target_position,
 		attacking_speed
@@ -189,16 +182,7 @@ func _on_attacking_timer_timeout() -> void:
 
 
 func _on_target_reached() -> void:
-	match state:
-		State.FLYING_IN, State.RETREATING:
-			global_position = move_target_position
-			_stop_moving()
-			state = State.HOVERING
-		State.HOVERING:
-			_on_hover_point_reached()
-		State.ATTACKING:
-			_stop_moving()
-			state = State.RETREATING
+	queue_free()
 
 
 func _on_health_component_health_below_minimum() -> void:
