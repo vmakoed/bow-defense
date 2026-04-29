@@ -7,3 +7,7 @@ extends CharacterBody2D
 
 func _ready() -> void:
     %HealthComponent.health_bar = health_bar
+
+
+func heal(amount: float) -> void:
+     %HealthComponent.heal(amount)

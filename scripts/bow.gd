@@ -3,6 +3,7 @@ extends Node2D
 
 
 signal arrow_damaged
+signal arrow_healed(amount: float)
 signal charge_changed
 
 
@@ -28,6 +29,7 @@ var arrow_scene: Resource
 var arrow_velocity: Vector2
 var charging: bool
 var charge: float: set = _set_charge
+var upgrades: Array[BaseArrowStrategy]
 
 
 @onready var trajectory: Line2D = %Trajectory
@@ -100,7 +102,9 @@ func _shoot_arrow() -> void:
 	arrow.velocity = arrow_velocity
 	arrow.gravity_modifier = arrow_gravity_modifier
 	arrow.global_position = ARROW_START_POSITION
+	for upgrade in upgrades: upgrade.apply_strategy(arrow)
 	arrow.arrow_damaged.connect(_on_arrow_damaged)
+	arrow.healed.connect(_on_arrow_healed)
 
 	add_child(arrow)
 
@@ -109,3 +113,7 @@ func _shoot_arrow() -> void:
 
 func _on_arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, impact_velocity: Vector2) -> void:
 	arrow_damaged.emit(arrow_position, area, impact_velocity)
+
+
+func _on_arrow_healed(amount: float) -> void:
+	arrow_healed.emit(amount)

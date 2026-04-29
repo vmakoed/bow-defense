@@ -3,15 +3,17 @@ extends Area2D
 
 
 signal arrow_damaged
+signal healed
 
 
-@export var max_damage_amount := 50.0
 @export var knockback_factor := 0.5
+@export var max_damage_amount := 50.0
 
 
-var gravity_modifier: float
-var velocity: Vector2
 var damage_modifier := 1.0
+var gravity_modifier: float
+var healing_amount := 0.0
+var velocity: Vector2
 
 
 @onready var clear_timer: Timer = %ClearTimer
@@ -32,19 +34,22 @@ func _get_damage() -> Damage:
 	return damage
 
 
-func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	clear_timer.start()
-	
-
-func _on_area_entered(area: Area2D) -> void:
-	if area is not HurtboxComponent: return
-
+func _on_arrow_hit(area: HurtboxComponent) -> void:
 	clear_timer.stop()
 	hit_sound_player.play()
 	visible = false
 	collision_shape.set_deferred("disabled", true)
 	area.damage(_get_damage())
 	arrow_damaged.emit(global_position, area, velocity)
+	if healing_amount > 0.0: healed.emit(healing_amount)
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	clear_timer.start()
+	
+
+func _on_area_entered(area: Area2D) -> void:
+	if area is HurtboxComponent: _on_arrow_hit(area)
 
 
 func _on_clear_timer_timeout() -> void:

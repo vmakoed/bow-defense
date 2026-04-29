@@ -25,6 +25,10 @@ func damage(value: Damage) -> void:
     health -= value.amount
 
 
+func heal(value: float) -> void:
+    health += value
+
+
 func is_alive() -> bool:
     return health > MIN_HEALTH
 
@@ -37,7 +41,7 @@ func _set_max_health(value: float) -> void:
 
 func _set_health(value: float) -> void:
     if value == health: return
-    health = value
+    health = clamp(value, MIN_HEALTH, max_health)
     if health_bar: health_bar.value = health
     if not is_alive(): health_below_minimum.emit()
 

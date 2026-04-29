@@ -10,7 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://cvbq3sgsmm46v" path="res://addons/virtual_joystick_plus/resources/textures/stick_texture_5.png" id="7_choun"]
 [ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="10_choun"]
 [ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="11_eb6dy"]
+[ext_resource type="Script" uid="uid://dhbdje0i3fcro" path="res://scripts/upgrades_manager.gd" id="12_eb6dy"]
 [ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="12_trceg"]
+[ext_resource type="Script" uid="uid://b1i6rw0q5gf8k" path="res://scripts/arrow_strategies/healing_arrow_strategy.gd" id="13_trceg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
 content_margin_left = 2.0
@@ -36,6 +38,10 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 6
 
+[sub_resource type="Resource" id="Resource_a8y0u"]
+script = ExtResource("13_trceg")
+metadata/_custom_type_script = "uid://b1i6rw0q5gf8k"
+
 [node name="Main" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_o5qli")
 
@@ -55,74 +61,9 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="UiLayer" type="CanvasLayer" parent="." unique_id=1788648438]
+[node name="JoystickLayer" type="CanvasLayer" parent="." unique_id=272582328]
 
-[node name="MarginContainer" type="MarginContainer" parent="UiLayer" unique_id=2134818107]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="HealthBar" type="ProgressBar" parent="UiLayer/MarginContainer" unique_id=2090477709]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-show_percentage = false
-
-[node name="PanelContainer" type="PanelContainer" parent="UiLayer/MarginContainer" unique_id=1305689877]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-
-[node name="MarginContainer" type="MarginContainer" parent="UiLayer/MarginContainer/PanelContainer" unique_id=743892177]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_right = 16
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UiLayer/MarginContainer/PanelContainer/MarginContainer" unique_id=713355182]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="UiLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=387570378]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UiLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=614571222]
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Wave:"
-
-[node name="Control" type="Control" parent="UiLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1236339111]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="WaveLabel" type="Label" parent="UiLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=2000179806]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "0/0"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UiLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=383242124]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UiLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1827811172]
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Score:"
-
-[node name="Control" type="Control" parent="UiLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1459783840]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="ScoreLabel" type="Label" parent="UiLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1798028124]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "0"
-
-[node name="VirtualJoystickPlus" type="Control" parent="UiLayer" unique_id=1671319775]
+[node name="VirtualJoystickPlus" type="Control" parent="JoystickLayer" unique_id=1671319775]
 custom_minimum_size = Vector2(300, 300)
 layout_mode = 3
 anchors_preset = 15
@@ -131,6 +72,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(576, 324)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("5_tipki")
 joystick_mode = 1
 visibility_mode = 1
@@ -138,7 +81,95 @@ joystick_texture = ExtResource("6_85g3d")
 stick_texture = ExtResource("7_choun")
 metadata/_custom_type_script = "uid://dyn0vhb2q3omi"
 
-[node name="Control" type="Control" parent="UiLayer" unique_id=1075173119]
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=1788648438]
+layer = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer" unique_id=2134818107]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HealthBar" type="ProgressBar" parent="UILayer/MarginContainer" unique_id=2090477709]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+show_percentage = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/MarginContainer" unique_id=60539199]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="UpgradesContainer" type="PanelContainer" parent="UILayer/MarginContainer/HBoxContainer" unique_id=1303339102]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="HealButton" type="CheckButton" parent="UILayer/MarginContainer/HBoxContainer/UpgradesContainer" unique_id=1368418495]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HEAL"
+
+[node name="Control" type="Control" parent="UILayer/MarginContainer/HBoxContainer" unique_id=1007586313]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="StatsContainer" type="PanelContainer" parent="UILayer/MarginContainer/HBoxContainer" unique_id=1305689877]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer" unique_id=743892177]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer" unique_id=713355182]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer" unique_id=387570378]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=614571222]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Wave:"
+
+[node name="Control" type="Control" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1236339111]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="WaveLabel" type="Label" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=2000179806]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "0/0"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer" unique_id=383242124]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1827811172]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Score:"
+
+[node name="Control" type="Control" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1459783840]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1798028124]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "0"
+
+[node name="Control" type="Control" parent="UILayer" unique_id=1075173119]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -149,7 +180,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="BowChargeBar" type="ProgressBar" parent="UiLayer/Control" unique_id=396362211]
+[node name="BowChargeBar" type="ProgressBar" parent="UILayer/Control" unique_id=396362211]
 custom_minimum_size = Vector2(200, 27)
 layout_mode = 1
 anchors_preset = 8
@@ -174,7 +205,7 @@ charged_stylebox = SubResource("StyleBoxFlat_choun")
 [node name="Player" parent="." unique_id=1910543735 node_paths=PackedStringArray("health_bar") instance=ExtResource("2_0wfyh")]
 unique_name_in_owner = true
 position = Vector2(576, 324)
-health_bar = NodePath("../UiLayer/MarginContainer/HealthBar")
+health_bar = NodePath("../UILayer/MarginContainer/HealthBar")
 
 [node name="Bow" parent="." unique_id=304452323 instance=ExtResource("5_tbgi4")]
 unique_name_in_owner = true
@@ -251,13 +282,17 @@ enemy_scene = ExtResource("11_eb6dy")
 enemy_stats = ExtResource("12_trceg")
 spawn_radius = 300.0
 
-[node name="SpawnLine" type="Line2D" parent="." unique_id=2087266518]
-unique_name_in_owner = true
+[node name="UpgradesManager" type="Node" parent="." unique_id=1385589780 node_paths=PackedStringArray("bow")]
+script = ExtResource("12_eb6dy")
+bow = NodePath("../Bow")
+healing_strategy = SubResource("Resource_a8y0u")
 
-[connection signal="analogic_changed" from="UiLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_analogic_changed"]
-[connection signal="pressed" from="UiLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_pressed"]
-[connection signal="released" from="UiLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_released"]
+[connection signal="analogic_changed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_analogic_changed"]
+[connection signal="pressed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_pressed"]
+[connection signal="released" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_released"]
+[connection signal="toggled" from="UILayer/MarginContainer/HBoxContainer/UpgradesContainer/HealButton" to="UpgradesManager" method="_on_heal_button_toggled"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
 [connection signal="arrow_damaged" from="Bow" to="." method="_on_bow_arrow_damaged"]
-[connection signal="charge_changed" from="Bow" to="UiLayer/Control/BowChargeBar" method="_on_bow_charge_changed"]
+[connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
+[connection signal="charge_changed" from="Bow" to="UILayer/Control/BowChargeBar" method="_on_bow_charge_changed"]
 [connection signal="enemy_spawned" from="ContinuousSpawner" to="." method="_on_spawner_enemy_spawned"]
