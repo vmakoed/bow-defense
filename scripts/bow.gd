@@ -23,13 +23,13 @@ enum Facing { LEFT, RIGHT }
 @export var max_charge = 1.0
 @export var trajectory_points := 200
 @export var trajectory_precision := 20.0
+@export var upgrades_manager: UpgradesManager
 
 
 var arrow_scene: Resource
 var arrow_velocity: Vector2
 var charging: bool
 var charge: float: set = _set_charge
-var upgrades: Array[BaseArrowStrategy]
 
 
 @onready var trajectory: Line2D = %Trajectory
@@ -63,17 +63,19 @@ func aim(direction: Vector2, power: float):
 func release() -> void:
 	pull_audio_player.stop()
 	_clear_trajectory()
-	_release_bow()
-
-
-func _release_bow() -> void:
 	release_audio_player.play(0.25)
 	_shoot_arrow()
+	_reset()
+
+
+func _reset() -> void:
+	arrow_velocity = Vector2.ZERO
 	charging = false
 
 
 func _clear_trajectory() -> void:
 	trajectory.clear_points()
+
 
 func _set_charge(new_value: float) -> void:
 	if charge == new_value: return
@@ -102,13 +104,10 @@ func _shoot_arrow() -> void:
 	arrow.velocity = arrow_velocity
 	arrow.gravity_modifier = arrow_gravity_modifier
 	arrow.global_position = ARROW_START_POSITION
-	for upgrade in upgrades: upgrade.apply_strategy(arrow)
+	for upgrade in upgrades_manager.arrow_strategies(): upgrade.apply_strategy(arrow)
 	arrow.arrow_damaged.connect(_on_arrow_damaged)
 	arrow.healed.connect(_on_arrow_healed)
-
 	add_child(arrow)
-
-	arrow_velocity = Vector2.ZERO
 
 
 func _on_arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, impact_velocity: Vector2) -> void:

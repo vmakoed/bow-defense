@@ -1,11 +1,19 @@
-extends Node
+extends PanelContainer
+class_name UpgradesManager
 
 
-@export var bow: Bow
 @export var healing_strategy: BaseArrowStrategy
 
 
+var healing_enabled: bool
+
+
+func arrow_strategies() -> Array[BaseArrowStrategy]:
+	var value: Array[BaseArrowStrategy] = []
+	if healing_enabled: value.push_back(healing_strategy)
+	return value
+
+
 func _on_heal_button_toggled(toggled_on: bool) -> void:
-	if toggled_on:
-		bow.upgrades.append(healing_strategy)
-		%HealButton.disabled = true
+	healing_enabled = toggled_on
+
