@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cx4xmomywurhq" path="res://scenes/upgrades_manager.tscn" id="6_a8y0u"]
 [ext_resource type="Script" uid="uid://bfvbhk6bmqt7s" path="res://scripts/bow_charge_bar.gd" id="6_choun"]
 [ext_resource type="Texture2D" uid="uid://cvbq3sgsmm46v" path="res://addons/virtual_joystick_plus/resources/textures/stick_texture_5.png" id="7_choun"]
+[ext_resource type="Script" uid="uid://d6o2p57u4mgr" path="res://scripts/arrow_strategies/piercing_arrow_strategy.gd" id="8_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="10_choun"]
 [ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="11_eb6dy"]
 [ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="12_trceg"]
@@ -17,6 +18,10 @@
 [sub_resource type="Resource" id="Resource_trceg"]
 script = ExtResource("13_trceg")
 metadata/_custom_type_script = "uid://b1i6rw0q5gf8k"
+
+[sub_resource type="Resource" id="Resource_jkv2x"]
+script = ExtResource("8_a8y0u")
+metadata/_custom_type_script = "uid://d6o2p57u4mgr"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
 content_margin_left = 2.0
@@ -108,6 +113,7 @@ mouse_filter = 2
 [node name="UpgradesManager" parent="UILayer/MarginContainer/HBoxContainer" unique_id=1849932548 instance=ExtResource("6_a8y0u")]
 layout_mode = 2
 healing_strategy = SubResource("Resource_trceg")
+piercing_strategy = SubResource("Resource_jkv2x")
 
 [node name="Control" type="Control" parent="UILayer/MarginContainer/HBoxContainer" unique_id=1007586313]
 layout_mode = 2

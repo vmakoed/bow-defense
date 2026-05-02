@@ -7,9 +7,16 @@ size_flags_horizontal = 0
 size_flags_vertical = 8
 script = ExtResource("1_sj8sl")
 
-[node name="HealButton" type="CheckButton" parent="." unique_id=1394141168]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=471429147]
+layout_mode = 2
+
+[node name="HealButton" type="CheckButton" parent="VBoxContainer" unique_id=1394141168]
 layout_mode = 2
 text = "HEAL"
 
-[connection signal="toggled" from="HealButton" to="." method="_on_heal_button_toggled"]
+[node name="PierceButton" type="CheckButton" parent="VBoxContainer" unique_id=1944473607]
+layout_mode = 2
+text = "PIERCE"
+
+[connection signal="toggled" from="VBoxContainer/HealButton" to="." method="_on_heal_button_toggled"]
+[connection signal="toggled" from="VBoxContainer/PierceButton" to="." method="_on_pierce_button_toggled"]

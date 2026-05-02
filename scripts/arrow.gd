@@ -13,6 +13,7 @@ signal healed
 var damage_modifier := 1.0
 var gravity_modifier: float
 var healing_amount := 0.0
+var piercing_amount := 0
 var velocity: Vector2
 
 
@@ -34,11 +35,18 @@ func _get_damage() -> Damage:
 	return damage
 
 
+func _pierce() -> void:
+	if piercing_amount <= 0:
+		visible = false
+		collision_shape.set_deferred("disabled", true)
+	else:
+		piercing_amount -= 1
+
+
 func _on_arrow_hit(area: HurtboxComponent) -> void:
 	clear_timer.stop()
 	hit_sound_player.play()
-	visible = false
-	collision_shape.set_deferred("disabled", true)
+	_pierce()
 	area.damage(_get_damage())
 	arrow_damaged.emit(global_position, area, velocity)
 	if healing_amount > 0.0: healed.emit(healing_amount)
