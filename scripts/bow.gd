@@ -2,9 +2,8 @@ class_name Bow
 extends Node2D
 
 
-signal arrow_damaged
+signal arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, impact_velocity: Vector2)
 signal arrow_healed(amount: float)
-signal charge_changed
 
 
 const ARROW_START_POSITION = Vector2.ZERO
@@ -73,15 +72,19 @@ func _reset() -> void:
 	charging = false
 
 
-func _clear_trajectory() -> void:
-	trajectory.clear_points()
-
-
 func _set_charge(new_value: float) -> void:
 	if charge == new_value: return
 	charge = new_value
-	charge_changed.emit(charge, max_charge)
-	if charge == max_charge: charged_audio_player.play()
+	%ChargeBar.value = charge / max_charge * 100.0
+	if charge == max_charge: 
+		charged_audio_player.play()
+		%ChargedRect.show()
+	else:
+		%ChargedRect.hide()
+
+
+func _clear_trajectory() -> void:
+	trajectory.clear_points()
 
 
 func _draw_trajectory():

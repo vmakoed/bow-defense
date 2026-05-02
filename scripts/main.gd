@@ -5,10 +5,6 @@ signal game_lost
 signal game_won
 
 
-const BOW_POSITIONS: Dictionary[Bow.Facing, float] = {
-	Bow.Facing.LEFT: 520.0,
-	Bow.Facing.RIGHT: 632.0
-}
 const SCORE_PER_ENEMY = 100
 
 
@@ -66,10 +62,6 @@ func _emit_particles(particles: CPUParticles2D, instance_position: Vector2, colo
 	particles.emitting = true
 	add_child(particles)
 	particles.global_position = instance_position
-
-
-func _on_bow_facing_changed(facing: Bow.Facing) -> void:
-	bow.position.x = BOW_POSITIONS[facing]
 
 
 func _on_player_tree_exited() -> void:

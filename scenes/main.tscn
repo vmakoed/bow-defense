@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://dyn0vhb2q3omi" path="res://addons/virtual_joystick_plus/virtual_joystick_plus.gd" id="5_tipki"]
 [ext_resource type="Texture2D" uid="uid://bko0hy7tmib17" path="res://addons/virtual_joystick_plus/resources/textures/joystick_texture_5.png" id="6_85g3d"]
 [ext_resource type="PackedScene" uid="uid://cx4xmomywurhq" path="res://scenes/upgrades_manager.tscn" id="6_a8y0u"]
-[ext_resource type="Script" uid="uid://bfvbhk6bmqt7s" path="res://scripts/bow_charge_bar.gd" id="6_choun"]
 [ext_resource type="PackedScene" uid="uid://cq4hclaq31n0m" path="res://scenes/gameplay_settings.tscn" id="6_jkv2x"]
 [ext_resource type="Texture2D" uid="uid://cvbq3sgsmm46v" path="res://addons/virtual_joystick_plus/resources/textures/stick_texture_5.png" id="7_choun"]
 [ext_resource type="Script" uid="uid://d6o2p57u4mgr" path="res://scripts/arrow_strategies/piercing_arrow_strategy.gd" id="8_a8y0u"]
@@ -25,30 +24,6 @@ metadata/_custom_type_script = "uid://b1i6rw0q5gf8k"
 [sub_resource type="Resource" id="Resource_jkv2x"]
 script = ExtResource("8_a8y0u")
 metadata/_custom_type_script = "uid://d6o2p57u4mgr"
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
-content_margin_left = 2.0
-content_margin_top = 2.0
-content_margin_right = 2.0
-content_margin_bottom = 2.0
-bg_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-corner_detail = 6
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
-content_margin_left = 2.0
-content_margin_top = 2.0
-content_margin_right = 2.0
-content_margin_bottom = 2.0
-bg_color = Color(0, 1, 0, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-corner_detail = 6
 
 [node name="Main" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_o5qli")
@@ -125,39 +100,6 @@ spawner = NodePath("../../../ContinuousSpawner")
 
 [node name="ValueDisplay" parent="UILayer/MarginContainer" unique_id=379383826 instance=ExtResource("11_muem4")]
 unique_name_in_owner = true
-
-[node name="Control" type="Control" parent="UILayer" unique_id=1075173119]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 24.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="BowChargeBar" type="ProgressBar" parent="UILayer/Control" unique_id=396362211]
-custom_minimum_size = Vector2(200, 27)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -92.0
-offset_right = 100.0
-offset_bottom = -65.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 2
-show_percentage = false
-script = ExtResource("6_choun")
-charging_stylebox = SubResource("StyleBoxFlat_ya4ey")
-charged_stylebox = SubResource("StyleBoxFlat_choun")
 
 [node name="Player" parent="." unique_id=1910543735 node_paths=PackedStringArray("health_bar") instance=ExtResource("2_0wfyh")]
 unique_name_in_owner = true
@@ -242,5 +184,4 @@ position = Vector2(1024, 512)
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
 [connection signal="arrow_damaged" from="Bow" to="." method="_on_bow_arrow_damaged"]
 [connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
-[connection signal="charge_changed" from="Bow" to="UILayer/Control/BowChargeBar" method="_on_bow_charge_changed"]
 [connection signal="enemy_spawned" from="ContinuousSpawner" to="." method="_on_spawner_enemy_spawned"]
