@@ -2,6 +2,7 @@ class_name Enemy
 extends Area2D
 
 
+signal damaged(amount: float, position: Vector2)
 signal died
 
 
@@ -198,8 +199,10 @@ func _on_area_entered(area: Area2D) -> void:
 	area.damage(_get_damage())
 	_on_target_reached()
 
+
 func _on_health_component_damaged(damage: Damage) -> void:
 	velocity += damage.knockback / enemy_stats.weight
+	damaged.emit(damage.amount, global_position)
 
 
 func _on_died_sound_player_finished() -> void:

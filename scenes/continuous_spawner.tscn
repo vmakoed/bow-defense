@@ -6,6 +6,7 @@
 script = ExtResource("1_batdo")
 
 [node name="EndlessSpawnTimer" type="Timer" parent="." unique_id=809831474]
+unique_name_in_owner = true
 wait_time = 2.0
 autostart = true
 

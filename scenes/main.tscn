@@ -8,10 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://bko0hy7tmib17" path="res://addons/virtual_joystick_plus/resources/textures/joystick_texture_5.png" id="6_85g3d"]
 [ext_resource type="PackedScene" uid="uid://cx4xmomywurhq" path="res://scenes/upgrades_manager.tscn" id="6_a8y0u"]
 [ext_resource type="Script" uid="uid://bfvbhk6bmqt7s" path="res://scripts/bow_charge_bar.gd" id="6_choun"]
+[ext_resource type="PackedScene" uid="uid://cq4hclaq31n0m" path="res://scenes/gameplay_settings.tscn" id="6_jkv2x"]
 [ext_resource type="Texture2D" uid="uid://cvbq3sgsmm46v" path="res://addons/virtual_joystick_plus/resources/textures/stick_texture_5.png" id="7_choun"]
 [ext_resource type="Script" uid="uid://d6o2p57u4mgr" path="res://scripts/arrow_strategies/piercing_arrow_strategy.gd" id="8_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="10_choun"]
+[ext_resource type="PackedScene" uid="uid://b53m7vxvrembo" path="res://scenes/stats_display.tscn" id="10_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="11_eb6dy"]
+[ext_resource type="PackedScene" uid="uid://breg1dotijns5" path="res://scenes/damage_display.tscn" id="11_muem4"]
 [ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="12_trceg"]
 [ext_resource type="Script" uid="uid://b1i6rw0q5gf8k" path="res://scripts/arrow_strategies/healing_arrow_strategy.gd" id="13_trceg"]
 
@@ -106,68 +109,22 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 show_percentage = false
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/MarginContainer" unique_id=60539199]
+[node name="GameplaySettings" parent="UILayer/MarginContainer" unique_id=615622004 node_paths=PackedStringArray("spawner") instance=ExtResource("6_jkv2x")]
 layout_mode = 2
-mouse_filter = 2
+spawner = NodePath("../../../ContinuousSpawner")
 
-[node name="UpgradesManager" parent="UILayer/MarginContainer/HBoxContainer" unique_id=1849932548 instance=ExtResource("6_a8y0u")]
+[node name="UpgradesManager" parent="UILayer/MarginContainer" unique_id=1849932548 instance=ExtResource("6_a8y0u")]
 layout_mode = 2
 healing_strategy = SubResource("Resource_trceg")
 piercing_strategy = SubResource("Resource_jkv2x")
 
-[node name="Control" type="Control" parent="UILayer/MarginContainer/HBoxContainer" unique_id=1007586313]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="StatsContainer" type="PanelContainer" parent="UILayer/MarginContainer/HBoxContainer" unique_id=1305689877]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-
-[node name="MarginContainer" type="MarginContainer" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer" unique_id=743892177]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_right = 16
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer" unique_id=713355182]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer" unique_id=387570378]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=614571222]
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Wave:"
-
-[node name="Control" type="Control" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1236339111]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="WaveLabel" type="Label" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=2000179806]
+[node name="StatsDisplay" parent="UILayer/MarginContainer" unique_id=1067491075 node_paths=PackedStringArray("spawner") instance=ExtResource("10_jbj1t")]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "0/0"
+spawner = NodePath("../../../ContinuousSpawner")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer" unique_id=383242124]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1827811172]
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Score:"
-
-[node name="Control" type="Control" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1459783840]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-
-[node name="ScoreLabel" type="Label" parent="UILayer/MarginContainer/HBoxContainer/StatsContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1798028124]
+[node name="ValueDisplay" parent="UILayer/MarginContainer" unique_id=379383826 instance=ExtResource("11_muem4")]
 unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "0"
 
 [node name="Control" type="Control" parent="UILayer" unique_id=1075173119]
 layout_mode = 3
@@ -211,17 +168,17 @@ health_bar = NodePath("../UILayer/MarginContainer/HealthBar")
 unique_name_in_owner = true
 position = Vector2(576, 324)
 arrow_speed_baseline = 700.0
-upgrades_manager = NodePath("../UILayer/MarginContainer/HBoxContainer/UpgradesManager")
-
-[node name="AimIndicator" type="Line2D" parent="." unique_id=923205895]
-unique_name_in_owner = true
-visible = false
-points = PackedVector2Array(1241, 337)
-width = 6.0
-default_color = Color(2.0335242e-06, 0.31445736, 1.4439226e-07, 1)
+upgrades_manager = NodePath("../UILayer/MarginContainer/UpgradesManager")
 
 [node name="Enemies" type="Node2D" parent="." unique_id=220595151]
 unique_name_in_owner = true
+
+[node name="ContinuousSpawner" parent="." unique_id=274601741 node_paths=PackedStringArray("attack_target") instance=ExtResource("10_choun")]
+unique_name_in_owner = true
+attack_target = NodePath("../Player")
+enemy_scene = ExtResource("11_eb6dy")
+enemy_stats = ExtResource("12_trceg")
+spawn_radius = 300.0
 
 [node name="SpawnMarkers" type="Node2D" parent="." unique_id=385187766]
 visible = false
@@ -277,15 +234,11 @@ position = Vector2(1024, 352)
 unique_name_in_owner = true
 position = Vector2(1024, 512)
 
-[node name="ContinuousSpawner" parent="." unique_id=274601741 node_paths=PackedStringArray("attack_target") instance=ExtResource("10_choun")]
-attack_target = NodePath("../Player")
-enemy_scene = ExtResource("11_eb6dy")
-enemy_stats = ExtResource("12_trceg")
-spawn_radius = 300.0
-
 [connection signal="analogic_changed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_analogic_changed"]
 [connection signal="pressed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_pressed"]
 [connection signal="released" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_released"]
+[connection signal="damaged" from="Player" to="UILayer/MarginContainer/ValueDisplay" method="show_value_label"]
+[connection signal="healed" from="Player" to="." method="_on_player_healed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
 [connection signal="arrow_damaged" from="Bow" to="." method="_on_bow_arrow_damaged"]
 [connection signal="arrow_healed" from="Bow" to="Player" method="heal"]

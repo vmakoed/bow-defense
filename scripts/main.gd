@@ -12,9 +12,6 @@ const BOW_POSITIONS: Dictionary[Bow.Facing, float] = {
 const SCORE_PER_ENEMY = 100
 
 
-@export var spawner: Node
-
-
 var enemies_count: int
 var enemy_hurt_particles_scene: Resource
 var enemy_died_particles_scene: Resource
@@ -24,10 +21,10 @@ var total_waves: int
 
 @onready var bow: Bow = %Bow
 @onready var camera: Camera2D = %Camera2D
+@onready var value_display: Node2D = %ValueDisplay
 @onready var player: Player = %Player
-@onready var score_label: Label = %ScoreLabel
-@onready var wave_label: Label = %WaveLabel
-
+@onready var spawner: Node = %ContinuousSpawner
+@onready var stats_display: Control = %StatsDisplay
 
 
 func _ready() -> void:
@@ -40,7 +37,7 @@ func _ready() -> void:
 func _set_score(new_value: int) -> void:
 	if score == new_value: return
 	score = new_value
-	score_label.text = str(score)
+	stats_display.update_score(score)
 
 
 func _spawn_next_wave() -> void:
@@ -80,6 +77,7 @@ func _on_player_tree_exited() -> void:
 
 
 func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
+	enemy.damaged.connect(value_display.show_value_label)
 	enemy.died.connect(_on_enemy_died)
 
 
@@ -135,3 +133,7 @@ func _on_bow_arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, arro
 		arrow_velocity.normalized() * -1,
 		arrow_target.enemy_stats.color
 	)		
+
+
+func _on_player_healed(amount: float, position_value: Vector2) -> void:
+	value_display.show_value_label(amount, position_value, "+")

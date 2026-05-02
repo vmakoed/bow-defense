@@ -61,3 +61,9 @@ unique_name_in_owner = true
 script = ExtResource("3_dqkch")
 max_health = 1000.0
 metadata/_custom_type_script = "uid://cqb8s71xuwre0"
+
+[node name="HealthChangeMarker" type="Marker2D" parent="." unique_id=517154468]
+unique_name_in_owner = true
+position = Vector2(-20, -40)
+
+[connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]
