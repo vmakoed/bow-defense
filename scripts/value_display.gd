@@ -10,15 +10,15 @@ func _setup(label: Label, amount: float, value_position: Vector2, value_sign: St
 		"sign": value_sign,
 		"amount": str(int(amount))
 	})
-	label.global_position = value_position
+	label.global_position = value_position - Vector2(label.size.x / 2, 0)
 
 
 func _animate(label: Label) -> void:
 	var tween = create_tween()
 	tween.tween_property(
 		label,
-		"position",
-		label.position + Vector2(0, -10),
+		"global_position",
+		label.global_position + Vector2(0, -10),
 		1.0
 	).from_current()
 	tween.tween_property(

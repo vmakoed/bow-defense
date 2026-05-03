@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dhyaagledo26r" path="res://scripts/main.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://cqvn1mqtdtgta" path="res://scenes/player.tscn" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://lmlne1n4jqd7" path="res://scripts/camera_2d.gd" id="2_85g3d"]
+[ext_resource type="AudioStream" uid="uid://dl82r8b6v4utr" path="res://assets/audio/sndHit7trimmed.wav" id="2_muem4"]
 [ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://dyn0vhb2q3omi" path="res://addons/virtual_joystick_plus/virtual_joystick_plus.gd" id="5_tipki"]
 [ext_resource type="Texture2D" uid="uid://bko0hy7tmib17" path="res://addons/virtual_joystick_plus/resources/textures/joystick_texture_5.png" id="6_85g3d"]
@@ -13,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="10_choun"]
 [ext_resource type="PackedScene" uid="uid://b53m7vxvrembo" path="res://scenes/stats_display.tscn" id="10_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="11_eb6dy"]
-[ext_resource type="PackedScene" uid="uid://breg1dotijns5" path="res://scenes/damage_display.tscn" id="11_muem4"]
+[ext_resource type="PackedScene" uid="uid://breg1dotijns5" path="res://scenes/value_display.tscn" id="11_muem4"]
 [ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="12_trceg"]
 [ext_resource type="Script" uid="uid://b1i6rw0q5gf8k" path="res://scripts/arrow_strategies/healing_arrow_strategy.gd" id="13_trceg"]
 
@@ -27,6 +28,7 @@ metadata/_custom_type_script = "uid://d6o2p57u4mgr"
 
 [node name="Main" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_o5qli")
+enemy_died_audio_stream = ExtResource("2_muem4")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
 unique_name_in_owner = true
@@ -84,9 +86,8 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 show_percentage = false
 
-[node name="GameplaySettings" parent="UILayer/MarginContainer" unique_id=615622004 node_paths=PackedStringArray("spawner") instance=ExtResource("6_jkv2x")]
+[node name="GameplaySettings" parent="UILayer/MarginContainer" unique_id=615622004 instance=ExtResource("6_jkv2x")]
 layout_mode = 2
-spawner = NodePath("../../../ContinuousSpawner")
 
 [node name="UpgradesManager" parent="UILayer/MarginContainer" unique_id=1849932548 instance=ExtResource("6_a8y0u")]
 layout_mode = 2
@@ -179,6 +180,7 @@ position = Vector2(1024, 512)
 [connection signal="analogic_changed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_analogic_changed"]
 [connection signal="pressed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_pressed"]
 [connection signal="released" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_released"]
+[connection signal="spawn_timeout_changed" from="UILayer/MarginContainer/GameplaySettings" to="ContinuousSpawner" method="set_spawn_timeout"]
 [connection signal="damaged" from="Player" to="UILayer/MarginContainer/ValueDisplay" method="show_value_label"]
 [connection signal="healed" from="Player" to="." method="_on_player_healed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]

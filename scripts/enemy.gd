@@ -118,7 +118,7 @@ func _target_direction_vector() -> Vector2:
 
 
 func _move_in_direction(direction: Vector2, delta: float) -> void:
-	velocity = velocity.lerp(direction * target_speed, ACCELERATION * delta)
+	velocity = velocity.lerp(direction * attacking_speed, ACCELERATION * delta)	# TODO: target speed replaced with attacking speed
 
 
 func _move_in_attack_direction() -> void:
@@ -183,13 +183,12 @@ func _on_attacking_timer_timeout() -> void:
 
 
 func _on_target_reached() -> void:
-	queue_free()
+	health_component.health = 0
 
 
 func _on_health_component_health_below_minimum() -> void:
-	died.emit(global_position, enemy_stats)
+	died.emit()
 	visible = false
-	died_audio_player.play()
 
 
 func _on_area_entered(area: Area2D) -> void:
@@ -204,6 +203,3 @@ func _on_health_component_damaged(damage: Damage) -> void:
 	velocity += damage.knockback / enemy_stats.weight
 	damaged.emit(damage.amount, global_position)
 
-
-func _on_died_sound_player_finished() -> void:
-	queue_free()

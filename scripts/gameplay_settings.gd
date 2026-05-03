@@ -1,8 +1,9 @@
 extends PanelContainer
+# TODO: implement a single source of truth for settings in autoload
 
 
-@export var spawner: Node
+signal spawn_timeout_changed(value: float)
 
 
 func _on_spawn_timeout_spin_value_changed(value: float) -> void:
-	spawner.spawn_timeout = value
+	spawn_timeout_changed.emit(value)

@@ -1,11 +1,15 @@
 extends Node2D
 
 
+signal enemy_died(enemy: Enemy)
 signal game_lost
 signal game_won
 
 
 const SCORE_PER_ENEMY = 100
+
+
+@export var enemy_died_audio_stream: AudioStream
 
 
 var enemies_count: int
@@ -70,11 +74,14 @@ func _on_player_tree_exited() -> void:
 
 func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
 	enemy.damaged.connect(value_display.show_value_label)
-	enemy.died.connect(_on_enemy_died)
+	enemy.died.connect(func(): _on_enemy_died(enemy))
 
 
-func _on_enemy_died(enemy_position: Vector2, enemy_stats: EnemyStats) -> void:
-	_emit_enemy_died_particles(enemy_position, enemy_stats.color)
+func _on_enemy_died(enemy: Enemy) -> void:
+	enemy_died.emit(enemy)
+	SfxSoundController.play_audio(enemy_died_audio_stream)
+	_emit_enemy_died_particles(enemy.global_position, enemy.enemy_stats.color)
+	enemy.queue_free()
 	enemies_count -= 1
 	score += SCORE_PER_ENEMY
 	if enemies_count == 0: _on_wave_finished()
