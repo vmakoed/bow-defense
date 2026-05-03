@@ -40,7 +40,6 @@ var hover_direction = Vector2.UP
 
 @onready var attacking_timer: Timer = %AttackingTimer
 @onready var color_rect: ColorRect = %ColorRect
-@onready var died_audio_player: AudioStreamPlayer2D = %DiedSoundPlayer
 @onready var health_component: HealthComponent = %HealthComponent
 
 
@@ -53,6 +52,11 @@ func _ready() -> void:
 	health_component.health = enemy_stats.max_health
 	scale = enemy_stats.scale
 	state = initial_state
+	
+	var direction = _target_direction_vector()
+	var shield_center: Vector2 = global_position + (direction * 50.0)
+	%Shield.global_position = shield_center
+	%Shield.rotation = direction.angle() + PI / 2
 
 
 func _process(delta: float) -> void:
@@ -202,4 +206,3 @@ func _on_area_entered(area: Area2D) -> void:
 func _on_health_component_damaged(damage: Damage) -> void:
 	velocity += damage.knockback / enemy_stats.weight
 	damaged.emit(damage.amount, global_position)
-

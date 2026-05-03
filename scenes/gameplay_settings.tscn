@@ -18,6 +18,7 @@ text = "Spawn Timeout"
 [node name="SpawnTimeoutSpin" type="SpinBox" parent="GridContainer" unique_id=831438262]
 unique_name_in_owner = true
 layout_mode = 2
+min_value = 0.5
 step = 0.5
 value = 2.0
 

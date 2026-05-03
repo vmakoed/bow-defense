@@ -4,12 +4,17 @@
 [ext_resource type="Resource" uid="uid://356v3rcijw8c" path="res://resources/speedy_square.tres" id="2_5uy6h"]
 [ext_resource type="PackedScene" uid="uid://chys2hmjno4mv" path="res://scenes/hurtbox_component.tscn" id="2_md0e3"]
 [ext_resource type="PackedScene" uid="uid://blywxglkpxl7t" path="res://scenes/health_component.tscn" id="3_4ra3w"]
+[ext_resource type="Script" uid="uid://dvego2xg2ditv" path="res://scripts/hurtbox_component.gd" id="5_xwavj"]
+[ext_resource type="Script" uid="uid://cwu00060cbk8o" path="res://scripts/infinite_health_component.gd" id="6_nenq2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
 size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c4w8v"]
 size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
+size = Vector2(40, 6)
 
 [node name="Enemy" type="Area2D" unique_id=492934886]
 collision_layer = 4
@@ -72,7 +77,36 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 show_percentage = false
 
+[node name="Shield" type="Area2D" parent="." unique_id=505211879 node_paths=PackedStringArray("health_component")]
+unique_name_in_owner = true
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("5_xwavj")
+health_component = NodePath("InfiniteHealthComponent")
+metadata/_custom_type_script = "uid://dvego2xg2ditv"
+
+[node name="ShieldColorRect" type="ColorRect" parent="Shield" unique_id=2091281665]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -3.0
+offset_right = 20.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shield" unique_id=918108008]
+shape = SubResource("RectangleShape2D_5uy6h")
+
+[node name="InfiniteHealthComponent" type="Node" parent="Shield" unique_id=61346392]
+script = ExtResource("6_nenq2")
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="AttackingTimer" to="." method="_on_attacking_timer_timeout"]
 [connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]
 [connection signal="health_below_minimum" from="HealthComponent" to="." method="_on_health_component_health_below_minimum"]
+[connection signal="damaged" from="Shield/InfiniteHealthComponent" to="." method="_on_health_component_damaged"]

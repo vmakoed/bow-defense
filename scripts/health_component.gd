@@ -3,7 +3,7 @@ extends Node
 
 
 signal health_below_minimum
-signal damaged
+signal damaged(value: Damage)
 
 
 const MIN_HEALTH = 0.0
