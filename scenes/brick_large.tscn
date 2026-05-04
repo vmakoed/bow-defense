@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://32dnfhhoiqid"]
+
+[node name="BrickLarge" type="Node2D" unique_id=136852892]
+
+[node name="OuterRect" type="ColorRect" parent="." unique_id=2017198710]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -30.0
+offset_right = 90.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InnerRect" type="ColorRect" parent="." unique_id=305910092]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -28.0
+offset_right = 88.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 1)

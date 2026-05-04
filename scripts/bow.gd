@@ -4,6 +4,7 @@ extends Node2D
 
 signal arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, impact_velocity: Vector2)
 signal arrow_healed(amount: float)
+signal trajectory_changed(points: Array[Vector2])
 
 
 const ARROW_START_POSITION = Vector2.ZERO
@@ -21,7 +22,7 @@ enum Facing { LEFT, RIGHT }
 @export var charge_duration = 0.5
 @export var max_charge = 1.0
 @export var trajectory_points := 200
-@export var trajectory_precision := 20.0
+@export var trajectory_precision := 25.0
 @export var upgrades_manager: UpgradesManager
 
 
@@ -29,9 +30,9 @@ var arrow_scene: Resource
 var arrow_velocity: Vector2
 var charging: bool
 var charge: float: set = _set_charge
+var gravity_vector
 
 
-@onready var trajectory: Line2D = %Trajectory
 @onready var charged_audio_player: AudioStreamPlayer2D = %ChargedAudioPlayer
 @onready var pull_audio_player: AudioStreamPlayer2D = %PullAudioPlayer
 @onready var release_audio_player: AudioStreamPlayer2D = %ReleaseAudioPlayer
@@ -39,6 +40,7 @@ var charge: float: set = _set_charge
 
 func _ready() -> void:
 	arrow_scene = preload("res://scenes/arrow.tscn")
+	gravity_vector = Vector2(0.0, arrow_gravity_modifier)
 
 
 func _process(delta: float) -> void:
@@ -84,21 +86,20 @@ func _set_charge(new_value: float) -> void:
 
 
 func _clear_trajectory() -> void:
-	trajectory.clear_points()
+	trajectory_changed.emit(Array([], TYPE_VECTOR2, "", null))
 
 
 func _draw_trajectory():
-	var gravity_vector := Vector2(0.0, arrow_gravity_modifier)
-	trajectory.clear_points()
-	trajectory.add_point(ARROW_START_POSITION)
+	trajectory_changed.emit(_get_trajectory_points())
 
-	for step in range(trajectory_points):
-		var time_offset := step / trajectory_precision
-		trajectory.add_point(
-			ARROW_START_POSITION + \
+
+func _get_trajectory_points() -> Array[Vector2]:
+	return Array(range(trajectory_points).map(func(step: int):
+		var time_offset: float = step / trajectory_precision
+		return ARROW_START_POSITION + \
 			(arrow_velocity * time_offset) + \
 			(0.5 * gravity_vector * (time_offset)**2)
-		)
+	), TYPE_VECTOR2, "", null)
 
 
 func _shoot_arrow() -> void:

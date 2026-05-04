@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://c5gxrtcm8bbed"]
 
 [ext_resource type="Script" uid="uid://bll5iy4y4a0nv" path="res://scripts/bow.gd" id="1_vt0lb"]
+[ext_resource type="Script" uid="uid://b3g6fgnjpxtom" path="res://scripts/dotted_line.gd" id="2_atxj4"]
 [ext_resource type="AudioStream" uid="uid://dnw81geisxfpm" path="res://assets/audio/freesound_community-bow-release-bow-and-arrow-4-101936.mp3" id="2_prjx1"]
 [ext_resource type="AudioStream" uid="uid://c8in6uhchu3ep" path="res://assets/audio/clock_tock_only.wav" id="3_rivji"]
 
@@ -16,9 +17,8 @@ bg_color = Color(1, 1, 1, 1)
 [node name="Bow" type="Node2D" unique_id=304452323]
 script = ExtResource("1_vt0lb")
 
-[node name="Trajectory" type="Line2D" parent="." unique_id=239984618]
-unique_name_in_owner = true
-width = 6.0
+[node name="DottedLine" type="Node2D" parent="." unique_id=886168598]
+script = ExtResource("2_atxj4")
 
 [node name="PullAudioPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1956569330]
 unique_name_in_owner = true
@@ -80,3 +80,5 @@ rotation = -1.5707964
 theme_override_styles/background = SubResource("StyleBoxFlat_atxj4")
 theme_override_styles/fill = SubResource("StyleBoxFlat_oxltw")
 show_percentage = false
+
+[connection signal="trajectory_changed" from="." to="DottedLine" method="set_points"]

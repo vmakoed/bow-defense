@@ -3,32 +3,95 @@
 [ext_resource type="Script" uid="uid://dvego2xg2ditv" path="res://scripts/hurtbox_component.gd" id="1_2x682"]
 [ext_resource type="Script" uid="uid://crqyw3m3qiabq" path="res://scripts/tower.gd" id="1_ktxwe"]
 [ext_resource type="PackedScene" uid="uid://blywxglkpxl7t" path="res://scenes/health_component.tscn" id="2_ay4al"]
+[ext_resource type="PackedScene" uid="uid://b8kyqc5wgqman" path="res://scenes/brick_medium.tscn" id="2_xl0gn"]
+[ext_resource type="PackedScene" uid="uid://cmjevsl3rmtfv" path="res://scenes/brick_small.tscn" id="3_vqps3"]
+[ext_resource type="PackedScene" uid="uid://32dnfhhoiqid" path="res://scenes/brick_large.tscn" id="4_qfw7u"]
 [ext_resource type="AudioStream" uid="uid://ca8bopdgfvjdj" path="res://assets/audio/shot_muffled.wav" id="4_qrbg1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2x682"]
-size = Vector2(236, 605)
+size = Vector2(236, 716)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ay4al"]
-size = Vector2(240, 612)
+size = Vector2(240, 716)
 
 [node name="Tower" type="StaticBody2D" unique_id=58816153]
 collision_layer = 8
 script = ExtResource("1_ktxwe")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1660070826]
+[node name="Bricks" type="Node2D" parent="." unique_id=1401611193]
 unique_name_in_owner = true
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -120.0
-offset_top = -320.0
-offset_right = 120.0
-offset_bottom = 292.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.6194887, 0.61948866, 0.6194887, 1)
+
+[node name="BrickMedium" parent="Bricks" unique_id=136852892 instance=ExtResource("2_xl0gn")]
+position = Vector2(-60, -330)
+
+[node name="BrickMedium2" parent="Bricks" unique_id=641261374 instance=ExtResource("2_xl0gn")]
+position = Vector2(60, -330)
+
+[node name="BrickSmall" parent="Bricks" unique_id=1091017294 instance=ExtResource("3_vqps3")]
+position = Vector2(-90, -270)
+
+[node name="BrickLarge" parent="Bricks" unique_id=1833201511 instance=ExtResource("4_qfw7u")]
+position = Vector2(30, -270)
+
+[node name="BrickLarge2" parent="Bricks" unique_id=1460795730 instance=ExtResource("4_qfw7u")]
+position = Vector2(-30, -210)
+
+[node name="BrickSmall2" parent="Bricks" unique_id=826497299 instance=ExtResource("3_vqps3")]
+position = Vector2(90, -210)
+
+[node name="BrickMedium3" parent="Bricks" unique_id=204608201 instance=ExtResource("2_xl0gn")]
+position = Vector2(-60, -150)
+
+[node name="BrickMedium4" parent="Bricks" unique_id=1771786452 instance=ExtResource("2_xl0gn")]
+position = Vector2(60, -150)
+
+[node name="BrickSmall3" parent="Bricks" unique_id=1428292211 instance=ExtResource("3_vqps3")]
+position = Vector2(-90, -90)
+
+[node name="BrickLarge3" parent="Bricks" unique_id=891929544 instance=ExtResource("4_qfw7u")]
+position = Vector2(30, -90)
+
+[node name="BrickLarge4" parent="Bricks" unique_id=726266913 instance=ExtResource("4_qfw7u")]
+position = Vector2(-30, -30)
+
+[node name="BrickSmall4" parent="Bricks" unique_id=248416148 instance=ExtResource("3_vqps3")]
+position = Vector2(90, -30)
+
+[node name="BrickMedium5" parent="Bricks" unique_id=1889102366 instance=ExtResource("2_xl0gn")]
+position = Vector2(-60, 30)
+
+[node name="BrickMedium6" parent="Bricks" unique_id=734727904 instance=ExtResource("2_xl0gn")]
+position = Vector2(60, 30)
+
+[node name="BrickSmall5" parent="Bricks" unique_id=1669257791 instance=ExtResource("3_vqps3")]
+position = Vector2(-90, 90)
+
+[node name="BrickLarge5" parent="Bricks" unique_id=1567445782 instance=ExtResource("4_qfw7u")]
+position = Vector2(30, 90)
+
+[node name="BrickLarge6" parent="Bricks" unique_id=1244783054 instance=ExtResource("4_qfw7u")]
+position = Vector2(-30, 150)
+
+[node name="BrickSmall6" parent="Bricks" unique_id=1878113689 instance=ExtResource("3_vqps3")]
+position = Vector2(90, 150)
+
+[node name="BrickMedium7" parent="Bricks" unique_id=1590872307 instance=ExtResource("2_xl0gn")]
+position = Vector2(-60, 210)
+
+[node name="BrickMedium8" parent="Bricks" unique_id=720186140 instance=ExtResource("2_xl0gn")]
+position = Vector2(60, 210)
+
+[node name="BrickSmall7" parent="Bricks" unique_id=970705474 instance=ExtResource("3_vqps3")]
+position = Vector2(-90, 270)
+
+[node name="BrickLarge7" parent="Bricks" unique_id=761571712 instance=ExtResource("4_qfw7u")]
+position = Vector2(30, 270)
+
+[node name="BrickLarge8" parent="Bricks" unique_id=1936122714 instance=ExtResource("4_qfw7u")]
+position = Vector2(-30, 330)
+
+[node name="BrickSmall8" parent="Bricks" unique_id=512653857 instance=ExtResource("3_vqps3")]
+position = Vector2(90, 330)
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=737427270 node_paths=PackedStringArray("health_component")]
 collision_layer = 8
@@ -37,11 +100,9 @@ script = ExtResource("1_2x682")
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=912733530]
-position = Vector2(0, -13.5)
 shape = SubResource("RectangleShape2D_2x682")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1766948387]
-position = Vector2(0, -14)
 shape = SubResource("RectangleShape2D_ay4al")
 
 [node name="HealthComponent" parent="." unique_id=105572739 instance=ExtResource("2_ay4al")]
@@ -51,6 +112,10 @@ max_health = 1000.0
 [node name="DamagedSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=7380262]
 unique_name_in_owner = true
 stream = ExtResource("4_qrbg1")
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=752073126]
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]
 [connection signal="health_below_minimum" from="HealthComponent" to="." method="_on_health_component_health_below_minimum"]

@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://breg1dotijns5" path="res://scenes/value_display.tscn" id="11_muem4"]
 [ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="12_trceg"]
 [ext_resource type="Script" uid="uid://b1i6rw0q5gf8k" path="res://scripts/arrow_strategies/healing_arrow_strategy.gd" id="13_trceg"]
+[ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="14_dp3eg"]
 
 [sub_resource type="Resource" id="Resource_trceg"]
 script = ExtResource("13_trceg")
@@ -106,6 +107,9 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 position = Vector2(576, 324)
 health_bar = NodePath("../UILayer/MarginContainer/HealthBar")
+
+[node name="Tower" parent="." unique_id=58816153 instance=ExtResource("14_dp3eg")]
+position = Vector2(576, 712)
 
 [node name="Bow" parent="." unique_id=304452323 node_paths=PackedStringArray("upgrades_manager") instance=ExtResource("5_tbgi4")]
 unique_name_in_owner = true
