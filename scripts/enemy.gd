@@ -51,6 +51,7 @@ func _ready() -> void:
 	health_component.max_health = enemy_stats.max_health
 	health_component.health = enemy_stats.max_health
 	scale = enemy_stats.scale
+	if not enemy_stats.shield: %Shield.queue_free()
 	state = initial_state
 	
 	var direction = _target_direction_vector()
