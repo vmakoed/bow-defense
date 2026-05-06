@@ -4,38 +4,40 @@ extends Area2D
 
 signal damaged(amount: float, position: Vector2)
 signal died
+signal killed
 
 
 enum State { NULL, FLYING_IN, HOVERING, ATTACKING, RETREATING }
 enum AttackDirection { LEFT, RIGHT }
 
 
-const MAX_OVERSHOOT_DISTANCE = 3.0
-const MAX_HOVER_DISTANCE = 50.0
 const ACCELERATION = 4.0
-const HOVERING_SPEED = 50.0
 const ATTACK_DIRECTION_VECTORS: Dictionary[AttackDirection, Vector2] = {
 	AttackDirection.LEFT: Vector2.LEFT,
 	AttackDirection.RIGHT: Vector2.RIGHT
 }
+const MAX_HOVER_DISTANCE = 50.0
+const MAX_OVERSHOOT_DISTANCE = 3.0
+const HOVERING_SPEED = 50.0
+
 
 
 @export var enemy_stats: EnemyStats
 @export var initial_state: State
 
 
-var attacking_speed: float
-var damage_amount: float
-
-var state: State = State.NULL: set = _set_state
-var home_position: Vector2
 var attack_target_position: Vector2: set = _set_attack_target_position
 var attack_direction: AttackDirection
-var moving_towards_target := false
+var attacking_speed: float
+var damage_amount: float
+var home_position: Vector2
+var hover_direction = Vector2.UP
 var move_target_position := Vector2.DOWN
+var moving_towards_target := false
+var self_destruct := false
+var state: State = State.NULL: set = _set_state
 var target_speed: float
 var velocity: Vector2
-var hover_direction = Vector2.UP
 
 
 @onready var attacking_timer: Timer = %AttackingTimer
@@ -188,10 +190,12 @@ func _on_attacking_timer_timeout() -> void:
 
 
 func _on_target_reached() -> void:
+	self_destruct = true
 	health_component.health = 0
 
 
 func _on_health_component_health_below_minimum() -> void:
+	if not self_destruct: killed.emit()
 	died.emit()
 	visible = false
 

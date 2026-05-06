@@ -76,6 +76,7 @@ func _on_player_tree_exited() -> void:
 func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
 	enemy.damaged.connect(value_display.show_value_label)
 	enemy.died.connect(func(): _on_enemy_died(enemy))
+	enemy.killed.connect(_on_enemy_killed)
 
 
 func _on_enemy_died(enemy: Enemy) -> void:
@@ -84,9 +85,12 @@ func _on_enemy_died(enemy: Enemy) -> void:
 	_emit_enemy_died_particles(enemy.global_position, enemy.enemy_stats.color)
 	enemy.queue_free()
 	enemies_count -= 1
-	score += SCORE_PER_ENEMY
-	if score >= 200: upgrade_reached.emit()
 	if enemies_count == 0: _on_wave_finished()
+
+
+func _on_enemy_killed() -> void:
+	score += SCORE_PER_ENEMY
+	if score >= 100: upgrade_reached.emit()
 
 
 func _on_tower_destroyed() -> void:
