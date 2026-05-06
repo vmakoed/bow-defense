@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dp7xj32kkkw4n"]
+
+[ext_resource type="Script" uid="uid://cuesd10oghs8m" path="res://scenes/windows/pause_menu_layer.gd" id="1_mqmyp"]
+[ext_resource type="PackedScene" uid="uid://6gdbfi0172ji" path="res://addons/maaacks_game_template/base/nodes/windows/overlaid_window.tscn" id="1_s8p6d"]
+[ext_resource type="PackedScene" uid="uid://cbhr7i2ck5ykb" path="res://scenes/upgrade_button.tscn" id="2_cgpox"]
+[ext_resource type="Script" uid="uid://btiixr4mqu0x4" path="res://scripts/upgrades_menu.gd" id="3_dxkgv"]
+[ext_resource type="Resource" uid="uid://b1bq2mtwgylhg" path="res://resources/upgrades/pierce_upgrade.tres" id="3_jdyr4"]
+[ext_resource type="Resource" uid="uid://baov4088d3nkj" path="res://resources/upgrades/healing_upgrade.tres" id="4_uxgo2"]
+
+[node name="UpgradesMenuLayer" type="CanvasLayer" unique_id=1584143782]
+script = ExtResource("1_mqmyp")
+
+[node name="PauseMenu" parent="." unique_id=343706911 instance=ExtResource("1_s8p6d")]
+unique_name_in_owner = true
+process_mode = 3
+script = ExtResource("3_dxkgv")
+pauses_game = true
+ui_cancel_closes = false
+
+[node name="TitleLabel" parent="PauseMenu/ContentContainer/BoxContainer/TitleMargin/BoxContainer" parent_id_path=PackedInt32Array(343706911, 1788474031) index="0" unique_id=1049966061]
+text = "Upgrades"
+
+[node name="DescriptionLabel" parent="PauseMenu/ContentContainer/BoxContainer/BodyMargin" parent_id_path=PackedInt32Array(343706911, 590613964) index="0" unique_id=617407155]
+text = "Choose one of the following:"
+
+[node name="MenuButtons" parent="PauseMenu/ContentContainer/BoxContainer/MenuButtonsMargin" parent_id_path=PackedInt32Array(343706911, 1413292752) index="0" unique_id=1371114575]
+vertical = false
+
+[node name="PierceUpgradeButton" parent="PauseMenu/ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="0" unique_id=1423811395 instance=ExtResource("2_cgpox")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+upgrade = ExtResource("3_jdyr4")
+
+[node name="HealUpgradeButton" parent="PauseMenu/ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="1" unique_id=627484927 instance=ExtResource("2_cgpox")]
+unique_name_in_owner = true
+layout_mode = 2
+upgrade = ExtResource("4_uxgo2")
+
+[node name="CloseButton" parent="PauseMenu/ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="2" unique_id=314526102]
+visible = false
+
+[connection signal="pressed" from="PauseMenu/ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/PierceUpgradeButton" to="PauseMenu" method="_on_pierce_upgrade_button_pressed"]
+[connection signal="pressed" from="PauseMenu/ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/HealUpgradeButton" to="PauseMenu" method="_on_heal_upgrade_button_pressed"]
+
+[editable path="PauseMenu"]

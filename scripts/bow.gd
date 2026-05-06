@@ -23,7 +23,6 @@ enum Facing { LEFT, RIGHT }
 @export var max_charge = 1.0
 @export var trajectory_points := 200
 @export var trajectory_precision := 25.0
-@export var upgrades_manager: UpgradesManager
 
 
 var arrow_scene: Resource
@@ -108,9 +107,12 @@ func _shoot_arrow() -> void:
 	arrow.velocity = arrow_velocity
 	arrow.gravity_modifier = arrow_gravity_modifier
 	arrow.global_position = ARROW_START_POSITION
-	for upgrade in upgrades_manager.arrow_strategies(): upgrade.apply_strategy(arrow)
+
+	for upgrade in PlayerStats.get_arrow_strategies(): upgrade.apply_strategy(arrow)
+
 	arrow.arrow_damaged.connect(_on_arrow_damaged)
 	arrow.healed.connect(_on_arrow_healed)
+	
 	add_child(arrow)
 
 

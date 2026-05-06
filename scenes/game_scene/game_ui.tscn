@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://cyh0d64pfygbl" path="res://addons/maaacks_game_template/base/nodes/utilities/pause_menu_controller.gd" id="1_bmy5n"]
 [ext_resource type="PackedScene" uid="uid://bln530wtrxs8q" path="res://scenes/windows/pause_menu_layer.tscn" id="2_7aihr"]
 [ext_resource type="PackedScene" uid="uid://bkcsjsk2ciff" path="res://addons/maaacks_game_template/base/nodes/music_players/background_music_player.tscn" id="3_3re04"]
+[ext_resource type="Script" uid="uid://doluwp13lpjbp" path="res://scripts/upgrades_menu_controller.gd" id="3_onvsj"]
+[ext_resource type="PackedScene" uid="uid://dp7xj32kkkw4n" path="res://scenes/upgrades_menu_layer.tscn" id="4_8qp3c"]
 [ext_resource type="PackedScene" uid="uid://wxqvxfhsjc62" path="res://scenes/main.tscn" id="5_y85d6"]
 [ext_resource type="PackedScene" uid="uid://bf4elgb8epd2i" path="res://scenes/windows/game_won_window.tscn" id="6_ukb12"]
 [ext_resource type="PackedScene" uid="uid://bdwo2miqbp75e" path="res://scenes/windows/level_lost_window.tscn" id="7_i7m4m"]
@@ -23,6 +25,10 @@ script = ExtResource("1_bmy5n")
 pause_menu_packed = ExtResource("2_7aihr")
 focused_viewport = NodePath("../ViewportContainer/ConfigurableSubViewport")
 
+[node name="UpgradesMenuController" type="Node" parent="." unique_id=1167908208]
+script = ExtResource("3_onvsj")
+upgrades_menu_packed = ExtResource("4_8qp3c")
+
 [node name="BackgroundMusicPlayer" parent="." unique_id=986713811 instance=ExtResource("3_3re04")]
 
 [node name="ViewportContainer" type="SubViewportContainer" parent="." unique_id=1831513653]
@@ -38,7 +44,7 @@ stretch = true
 handle_input_locally = false
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
-size = Vector2i(1920, 1080)
+size = Vector2i(1152, 648)
 render_target_update_mode = 4
 script = ExtResource("11_ulq3g")
 
@@ -54,3 +60,4 @@ game_lost_scene = ExtResource("7_i7m4m")
 
 [connection signal="game_lost" from="ViewportContainer/ConfigurableSubViewport/Main" to="WinLoseManager" method="_on_game_lost"]
 [connection signal="game_won" from="ViewportContainer/ConfigurableSubViewport/Main" to="WinLoseManager" method="_on_game_won"]
+[connection signal="upgrade_reached" from="ViewportContainer/ConfigurableSubViewport/Main" to="UpgradesMenuController" method="show"]

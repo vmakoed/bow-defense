@@ -10,22 +10,14 @@
 [ext_resource type="PackedScene" uid="uid://cx4xmomywurhq" path="res://scenes/upgrades_manager.tscn" id="6_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://cq4hclaq31n0m" path="res://scenes/gameplay_settings.tscn" id="6_jkv2x"]
 [ext_resource type="Texture2D" uid="uid://cvbq3sgsmm46v" path="res://addons/virtual_joystick_plus/resources/textures/stick_texture_5.png" id="7_choun"]
-[ext_resource type="Script" uid="uid://d6o2p57u4mgr" path="res://scripts/arrow_strategies/piercing_arrow_strategy.gd" id="8_a8y0u"]
+[ext_resource type="Resource" uid="uid://baov4088d3nkj" path="res://resources/upgrades/healing_upgrade.tres" id="9_dp3eg"]
+[ext_resource type="Resource" uid="uid://b1bq2mtwgylhg" path="res://resources/upgrades/pierce_upgrade.tres" id="10_0ld40"]
 [ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="10_choun"]
 [ext_resource type="PackedScene" uid="uid://b53m7vxvrembo" path="res://scenes/stats_display.tscn" id="10_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="11_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://breg1dotijns5" path="res://scenes/value_display.tscn" id="11_muem4"]
 [ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="12_trceg"]
-[ext_resource type="Script" uid="uid://b1i6rw0q5gf8k" path="res://scripts/arrow_strategies/healing_arrow_strategy.gd" id="13_trceg"]
 [ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="14_dp3eg"]
-
-[sub_resource type="Resource" id="Resource_trceg"]
-script = ExtResource("13_trceg")
-metadata/_custom_type_script = "uid://b1i6rw0q5gf8k"
-
-[sub_resource type="Resource" id="Resource_jkv2x"]
-script = ExtResource("8_a8y0u")
-metadata/_custom_type_script = "uid://d6o2p57u4mgr"
 
 [node name="Main" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_o5qli")
@@ -92,8 +84,8 @@ layout_mode = 2
 
 [node name="UpgradesManager" parent="UILayer/MarginContainer" unique_id=1849932548 instance=ExtResource("6_a8y0u")]
 layout_mode = 2
-healing_strategy = SubResource("Resource_trceg")
-piercing_strategy = SubResource("Resource_jkv2x")
+healing_upgrade = ExtResource("9_dp3eg")
+piercing_upgrade = ExtResource("10_0ld40")
 
 [node name="StatsDisplay" parent="UILayer/MarginContainer" unique_id=1067491075 node_paths=PackedStringArray("spawner") instance=ExtResource("10_jbj1t")]
 unique_name_in_owner = true
@@ -111,11 +103,10 @@ health_bar = NodePath("../UILayer/MarginContainer/HealthBar")
 [node name="Tower" parent="." unique_id=58816153 instance=ExtResource("14_dp3eg")]
 position = Vector2(576, 712)
 
-[node name="Bow" parent="." unique_id=304452323 node_paths=PackedStringArray("upgrades_manager") instance=ExtResource("5_tbgi4")]
+[node name="Bow" parent="." unique_id=304452323 instance=ExtResource("5_tbgi4")]
 unique_name_in_owner = true
 position = Vector2(576, 324)
 arrow_speed_baseline = 700.0
-upgrades_manager = NodePath("../UILayer/MarginContainer/UpgradesManager")
 
 [node name="Enemies" type="Node2D" parent="." unique_id=220595151]
 unique_name_in_owner = true

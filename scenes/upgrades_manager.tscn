@@ -11,10 +11,12 @@ script = ExtResource("1_sj8sl")
 layout_mode = 2
 
 [node name="HealButton" type="CheckButton" parent="VBoxContainer" unique_id=1394141168]
+unique_name_in_owner = true
 layout_mode = 2
 text = "HEAL"
 
 [node name="PierceButton" type="CheckButton" parent="VBoxContainer" unique_id=1944473607]
+unique_name_in_owner = true
 layout_mode = 2
 text = "PIERCE"
 

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PlayerUpgrade" format=3 uid="uid://b1bq2mtwgylhg"]
+
+[ext_resource type="Script" uid="uid://dkdsenixytw0d" path="res://scripts/player_upgrade.gd" id="1_57xj8"]
+[ext_resource type="Script" uid="uid://d6o2p57u4mgr" path="res://scripts/arrow_strategies/piercing_arrow_strategy.gd" id="2_hkr6i"]
+
+[sub_resource type="Resource" id="Resource_g64qb"]
+script = ExtResource("2_hkr6i")
+metadata/_custom_type_script = "uid://d6o2p57u4mgr"
+
+[resource]
+script = ExtResource("1_57xj8")
+name = "Pierce"
+description = "Arrow is not destroyed on impact"
+strategy = SubResource("Resource_g64qb")
+metadata/_custom_type_script = "uid://dkdsenixytw0d"

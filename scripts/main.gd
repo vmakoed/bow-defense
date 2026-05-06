@@ -2,6 +2,7 @@ extends Node2D
 
 
 signal enemy_died(enemy: Enemy)
+signal upgrade_reached
 signal game_lost
 signal game_won
 
@@ -84,6 +85,7 @@ func _on_enemy_died(enemy: Enemy) -> void:
 	enemy.queue_free()
 	enemies_count -= 1
 	score += SCORE_PER_ENEMY
+	if score >= 200: upgrade_reached.emit()
 	if enemies_count == 0: _on_wave_finished()
 
 

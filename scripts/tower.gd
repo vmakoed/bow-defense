@@ -1,7 +1,6 @@
 extends StaticBody2D
 
 
-signal damaged
 signal destroyed
 
 

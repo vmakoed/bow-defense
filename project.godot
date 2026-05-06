@@ -26,6 +26,7 @@ SceneLoader="*uid://cbwmrnp0af35y"
 ProjectMusicController="*uid://r5t485lr3p7t"
 ProjectUISoundController="*uid://cc37235kj4384"
 SfxSoundController="*uid://cgw18bdbkflhd"
+PlayerStats="*uid://b7pqja8xk6srl"
 
 [display]
 
