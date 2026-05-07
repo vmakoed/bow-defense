@@ -40,6 +40,7 @@ upgrade = ExtResource("4_uxgo2")
 [node name="CloseButton" parent="PauseMenu/ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="2" unique_id=314526102]
 visible = false
 
+[connection signal="hidden" from="PauseMenu" to="." method="_on_pause_menu_hidden"]
 [connection signal="pressed" from="PauseMenu/ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/PierceUpgradeButton" to="PauseMenu" method="_on_pierce_upgrade_button_pressed"]
 [connection signal="pressed" from="PauseMenu/ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/HealUpgradeButton" to="PauseMenu" method="_on_heal_upgrade_button_pressed"]
 

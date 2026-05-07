@@ -175,7 +175,6 @@ position = Vector2(1024, 512)
 [connection signal="analogic_changed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_analogic_changed"]
 [connection signal="pressed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_pressed"]
 [connection signal="released" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_released"]
-[connection signal="spawn_timeout_changed" from="UILayer/MarginContainer/GameplaySettings" to="ContinuousSpawner" method="set_spawn_timeout"]
 [connection signal="damaged" from="Player" to="UILayer/MarginContainer/ValueDisplay" method="show_value_label"]
 [connection signal="healed" from="Player" to="." method="_on_player_healed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]

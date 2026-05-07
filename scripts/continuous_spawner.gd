@@ -14,6 +14,11 @@ signal enemy_spawned(enemy: Enemy)
 @onready var endless_spawn_timer: Timer = %EndlessSpawnTimer
 
 
+func _ready() -> void:
+	set_spawn_timeout(GameConfig.spawn_rate)
+	GameConfig.spawn_rate_changed.connect(set_spawn_timeout)
+
+
 func get_time_left() -> float:
 	return endless_spawn_timer.time_left
 
