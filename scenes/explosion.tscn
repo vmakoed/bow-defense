@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://drvsgckpurw4h"]
+
+[ext_resource type="Script" uid="uid://2k2yu67ivnao" path="res://scripts/explosion.gd" id="1_nfeox"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3el85"]
+size = Vector2(10, 10)
+
+[node name="Explosion" type="Area2D" unique_id=415500348]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_nfeox")
+
+[node name="RectArea" type="Node2D" parent="." unique_id=507849283]
+unique_name_in_owner = true
+
+[node name="ColorRect" type="ColorRect" parent="RectArea" unique_id=2055858352]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=450049491]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_3el85")

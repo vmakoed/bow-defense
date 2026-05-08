@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cqvn1mqtdtgta" path="res://scenes/player.tscn" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://lmlne1n4jqd7" path="res://scripts/camera_2d.gd" id="2_85g3d"]
 [ext_resource type="AudioStream" uid="uid://dl82r8b6v4utr" path="res://assets/audio/sndHit7trimmed.wav" id="2_muem4"]
+[ext_resource type="PackedScene" uid="uid://drvsgckpurw4h" path="res://scenes/explosion.tscn" id="3_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://dyn0vhb2q3omi" path="res://addons/virtual_joystick_plus/virtual_joystick_plus.gd" id="5_tipki"]
 [ext_resource type="Texture2D" uid="uid://bko0hy7tmib17" path="res://addons/virtual_joystick_plus/resources/textures/joystick_texture_5.png" id="6_85g3d"]
@@ -19,6 +20,7 @@
 [node name="Main" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_o5qli")
 enemy_died_audio_stream = ExtResource("2_muem4")
+explosion_packed = ExtResource("3_jbj1t")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
 unique_name_in_owner = true
@@ -171,5 +173,6 @@ position = Vector2(1024, 512)
 [connection signal="healed" from="Player" to="." method="_on_player_healed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
 [connection signal="arrow_damaged" from="Bow" to="." method="_on_bow_arrow_damaged"]
+[connection signal="arrow_exploded" from="Bow" to="." method="_on_bow_arrow_exploded"]
 [connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
 [connection signal="enemy_spawned" from="ContinuousSpawner" to="." method="_on_spawner_enemy_spawned"]

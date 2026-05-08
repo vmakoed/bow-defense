@@ -3,6 +3,7 @@ extends Node2D
 
 
 signal arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, impact_velocity: Vector2)
+signal arrow_exploded(arrow_position: Vector2, explosive_damage: float)
 signal arrow_healed(amount: float)
 signal trajectory_changed(points: Array[Vector2])
 
@@ -111,9 +112,14 @@ func _shoot_arrow() -> void:
 	for upgrade in PlayerStats.get_arrow_strategies(): upgrade.apply_strategy(arrow)
 
 	arrow.arrow_damaged.connect(_on_arrow_damaged)
+	arrow.exploded.connect(_on_arrow_exploded)
 	arrow.healed.connect(_on_arrow_healed)
 	
 	add_child(arrow)
+
+
+func _on_arrow_exploded(arrow_position: Vector2, explosive_damage: float) -> void:
+	arrow_exploded.emit(arrow_position, explosive_damage)
 
 
 func _on_arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, impact_velocity: Vector2) -> void:

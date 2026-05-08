@@ -3,6 +3,7 @@ extends Area2D
 
 
 signal arrow_damaged
+signal exploded(global_position: Vector2, explosive_damage: float)
 signal healed
 
 
@@ -11,6 +12,7 @@ signal healed
 
 
 var damage_modifier := 1.0
+var explosive_damage := 0.0
 var gravity_modifier: float
 var healing_amount := 0.0
 var piercing_amount := 0
@@ -35,6 +37,20 @@ func _get_damage() -> Damage:
 	return damage
 
 
+func _damage(area: HurtboxComponent) -> void:
+	area.damage(_get_damage())
+	arrow_damaged.emit(global_position, area, velocity)
+
+
+func _explode() -> void:
+	var total_explosive_damage = explosive_damage * damage_modifier
+	if explosive_damage > 0.0: exploded.emit(global_position, total_explosive_damage)
+
+
+func _heal() -> void:
+	if healing_amount > 0.0: healed.emit(healing_amount)
+
+
 func _pierce() -> void:
 	if piercing_amount <= 0:
 		visible = false
@@ -47,9 +63,9 @@ func _on_arrow_hit(area: HurtboxComponent) -> void:
 	clear_timer.stop()
 	hit_sound_player.play()
 	_pierce()
-	area.damage(_get_damage())
-	arrow_damaged.emit(global_position, area, velocity)
-	if healing_amount > 0.0: healed.emit(healing_amount)
+	_damage(area)
+	_heal()
+	_explode()
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:

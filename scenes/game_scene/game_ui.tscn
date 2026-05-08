@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://dkdsenixytw0d" path="res://scripts/player_upgrade.gd" id="13_wr4n6"]
 [ext_resource type="Resource" uid="uid://b1bq2mtwgylhg" path="res://resources/upgrades/pierce_upgrade.tres" id="14_ukb12"]
 [ext_resource type="Resource" uid="uid://baov4088d3nkj" path="res://resources/upgrades/healing_upgrade.tres" id="15_i7m4m"]
+[ext_resource type="Resource" uid="uid://bp8wq2tqtllna" path="res://resources/upgrades/explosive_upgrade.tres" id="16_ukb12"]
 
 [node name="GameUI" type="Control" unique_id=1609552811]
 layout_mode = 3
@@ -66,7 +67,7 @@ game_lost_scene = ExtResource("7_i7m4m")
 
 [node name="UpgradesManager" type="Node" parent="." unique_id=776271839]
 script = ExtResource("13_7aihr")
-upgrades = Array[ExtResource("13_wr4n6")]([ExtResource("14_ukb12"), ExtResource("15_i7m4m")])
+upgrades = Array[ExtResource("13_wr4n6")]([ExtResource("14_ukb12"), ExtResource("15_i7m4m"), ExtResource("16_ukb12")])
 
 [node name="UpgradesPanel" parent="." unique_id=1849932548 node_paths=PackedStringArray("upgrades_manager") instance=ExtResource("12_3re04")]
 layout_mode = 1

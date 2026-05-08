@@ -8,6 +8,7 @@ signal game_won
 
 
 @export var enemy_died_audio_stream: AudioStream
+@export var explosion_packed: PackedScene
 
 
 var enemies_count: int
@@ -37,6 +38,13 @@ func _set_score(new_value: int) -> void:
 	if score == new_value: return
 	score = new_value
 	stats_display.update_score(score)
+
+
+func _create_explosion(explosion_position: Vector2, damage: float) -> void:
+	var explosion = explosion_packed.instantiate()
+	explosion.damage_amount = damage
+	explosion.position = explosion_position
+	add_child.call_deferred(explosion)
 
 
 func _spawn_next_wave() -> void:
@@ -135,8 +143,12 @@ func _on_bow_arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, arro
 		arrow_position,
 		arrow_velocity.normalized() * -1,
 		arrow_target.enemy_stats.color
-	)		
+	)
 
 
 func _on_player_healed(amount: float, position_value: Vector2) -> void:
 	value_display.show_value_label(amount, position_value, "+")
+
+
+func _on_bow_arrow_exploded(arrow_position: Vector2, explosive_damage: float) -> void:
+	_create_explosion(arrow_position, explosive_damage)
