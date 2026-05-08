@@ -7,9 +7,6 @@ signal game_lost
 signal game_won
 
 
-const SCORE_PER_ENEMY = 100
-
-
 @export var enemy_died_audio_stream: AudioStream
 
 
@@ -29,6 +26,7 @@ var total_waves: int
 
 
 func _ready() -> void:
+	PlayerStats.clear_upgrades()
 	score = 0
 	enemy_hurt_particles_scene = preload("res://scenes/enemy_hurt_particles.tscn")
 	enemy_died_particles_scene = preload("res://scenes/enemy_died_particles.tscn")
@@ -89,7 +87,7 @@ func _on_enemy_died(enemy: Enemy) -> void:
 
 
 func _on_enemy_killed() -> void:
-	score += SCORE_PER_ENEMY
+	score += GameConfig.score_per_enemy
 	if score >= GameConfig.next_upgrade_goal: upgrade_reached.emit()
 
 

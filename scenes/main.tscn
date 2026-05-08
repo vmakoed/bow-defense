@@ -7,11 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://dyn0vhb2q3omi" path="res://addons/virtual_joystick_plus/virtual_joystick_plus.gd" id="5_tipki"]
 [ext_resource type="Texture2D" uid="uid://bko0hy7tmib17" path="res://addons/virtual_joystick_plus/resources/textures/joystick_texture_5.png" id="6_85g3d"]
-[ext_resource type="PackedScene" uid="uid://cx4xmomywurhq" path="res://scenes/upgrades_manager.tscn" id="6_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://cq4hclaq31n0m" path="res://scenes/gameplay_settings.tscn" id="6_jkv2x"]
 [ext_resource type="Texture2D" uid="uid://cvbq3sgsmm46v" path="res://addons/virtual_joystick_plus/resources/textures/stick_texture_5.png" id="7_choun"]
-[ext_resource type="Resource" uid="uid://baov4088d3nkj" path="res://resources/upgrades/healing_upgrade.tres" id="9_dp3eg"]
-[ext_resource type="Resource" uid="uid://b1bq2mtwgylhg" path="res://resources/upgrades/pierce_upgrade.tres" id="10_0ld40"]
 [ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="10_choun"]
 [ext_resource type="PackedScene" uid="uid://b53m7vxvrembo" path="res://scenes/stats_display.tscn" id="10_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="11_eb6dy"]
@@ -81,11 +78,6 @@ show_percentage = false
 
 [node name="GameplaySettings" parent="UILayer/MarginContainer" unique_id=615622004 instance=ExtResource("6_jkv2x")]
 layout_mode = 2
-
-[node name="UpgradesManager" parent="UILayer/MarginContainer" unique_id=1849932548 instance=ExtResource("6_a8y0u")]
-layout_mode = 2
-healing_upgrade = ExtResource("9_dp3eg")
-piercing_upgrade = ExtResource("10_0ld40")
 
 [node name="StatsDisplay" parent="UILayer/MarginContainer" unique_id=1067491075 node_paths=PackedStringArray("spawner") instance=ExtResource("10_jbj1t")]
 unique_name_in_owner = true

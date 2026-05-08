@@ -5,8 +5,19 @@ signal next_upgrade_goal_changed(new_value: int)
 signal spawn_rate_changed(new_value: float)
 
 
-@export var spawn_rate := 2.0: set = set_spawn_rate
-@export var next_upgrade_goal := 100: set = set_next_upgrade_goal
+const SPAWN_RATE_PRECISION = 0.1
+
+
+@export var next_upgrade_goal := 5: set = set_next_upgrade_goal
+@export var score_per_enemy := 1
+@export var spawn_rate_multiplier := 0.5
+@export var spawn_rate := 4.0: set = set_spawn_rate
+@export var upgrade_increase := 10
+@export var upgrade_selection_limit := 3
+
+
+func _ready() -> void:
+    PlayerStats.upgrade_added.connect(_on_player_upgrade_added)
 
 
 func set_next_upgrade_goal(value: int) -> void:
@@ -20,3 +31,7 @@ func set_spawn_rate(value: float) -> void:
     spawn_rate = value
     spawn_rate_changed.emit(spawn_rate)
 
+
+func _on_player_upgrade_added(_upgrade: PlayerUpgrade) -> void:
+    next_upgrade_goal += upgrade_increase
+    spawn_rate = snappedf(spawn_rate * spawn_rate_multiplier, SPAWN_RATE_PRECISION)

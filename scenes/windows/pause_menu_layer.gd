@@ -1,3 +1,4 @@
+class_name PauseMenuLayer
 extends CanvasLayer
 
 @onready var pause_menu = %PauseMenu

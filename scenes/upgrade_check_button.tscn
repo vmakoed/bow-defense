@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c72hok6my7qtn"]
+
+[ext_resource type="Script" uid="uid://b2kv0a5t4y4p2" path="res://scripts/upgrade_check_button.gd" id="1_nqp3x"]
+[ext_resource type="Resource" uid="uid://b1bq2mtwgylhg" path="res://resources/upgrades/pierce_upgrade.tres" id="2_nlx3f"]
+
+[node name="UpgradeCheckButton" type="CheckButton" unique_id=265755775]
+text = "HEAL"
+script = ExtResource("1_nqp3x")
+upgrade = ExtResource("2_nlx3f")

@@ -23,14 +23,17 @@ script = ExtResource("2_atxj4")
 [node name="PullAudioPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1956569330]
 unique_name_in_owner = true
 stream = SubResource("AudioStreamMP3_prjx1")
+bus = &"SFX"
 
 [node name="ReleaseAudioPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1137464307]
 unique_name_in_owner = true
 stream = ExtResource("2_prjx1")
+bus = &"SFX"
 
 [node name="ChargedAudioPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1901855461]
 unique_name_in_owner = true
 stream = ExtResource("3_rivji")
+bus = &"SFX"
 
 [node name="ChargedRect" type="Node2D" parent="." unique_id=1824701195]
 unique_name_in_owner = true

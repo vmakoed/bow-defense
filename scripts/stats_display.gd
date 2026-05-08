@@ -13,7 +13,7 @@ func update_score(new_value: int) -> void:
 
 
 func update_spawn_time_label(new_value: float) -> void:
-	%SpawnTimeLabel.text = str(snappedf(new_value, 0.1))
+	%SpawnTimeLabel.text = str(snappedf(new_value, GameConfig.SPAWN_RATE_PRECISION))
 
 
 func _on_stats_update_timer_timeout() -> void:

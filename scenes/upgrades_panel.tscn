@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cx4xmomywurhq"]
+
+[ext_resource type="Script" uid="uid://0kai61qppobs" path="res://scripts/upgrades_panel.gd" id="1_lg1w1"]
+[ext_resource type="PackedScene" uid="uid://c72hok6my7qtn" path="res://scenes/upgrade_check_button.tscn" id="2_0s7kc"]
+[ext_resource type="Resource" uid="uid://baov4088d3nkj" path="res://resources/upgrades/healing_upgrade.tres" id="3_648e1"]
+
+[node name="UpgradesPanel" type="PanelContainer" unique_id=1849932548]
+size_flags_horizontal = 0
+size_flags_vertical = 8
+script = ExtResource("1_lg1w1")
+
+[node name="UpgradesContainer" type="VBoxContainer" parent="." unique_id=471429147]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="UpgradeCheckButton" parent="UpgradesContainer" unique_id=265755775 instance=ExtResource("2_0s7kc")]
+layout_mode = 2
+text = "Pierce"
+
+[node name="UpgradeCheckButton2" parent="UpgradesContainer" unique_id=2123066309 instance=ExtResource("2_0s7kc")]
+layout_mode = 2
+text = "Heal"
+upgrade = ExtResource("3_648e1")

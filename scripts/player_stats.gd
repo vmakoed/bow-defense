@@ -14,6 +14,10 @@ func add_upgrade(upgrade: PlayerUpgrade) -> void:
 	upgrade_added.emit(upgrade)
 
 
+func clear_upgrades() -> void:
+	upgrades = []
+
+
 func get_arrow_strategies() -> Array[BaseArrowStrategy]:
 	var result: Array[BaseArrowStrategy] = []
 	for upgrade in upgrades: result.append(upgrade.strategy)
