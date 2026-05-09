@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://btiixr4mqu0x4" path="res://scripts/upgrades_menu.gd" id="3_dxkgv"]
 
 [node name="UpgradesMenuLayer" type="CanvasLayer" unique_id=1584143782]
-follow_viewport_enabled = true
 script = ExtResource("1_dxkgv")
 
 [node name="PauseMenu" parent="." unique_id=343706911 instance=ExtResource("1_s8p6d")]

@@ -3,6 +3,7 @@ extends Node2D
 
 signal enemy_died(enemy: Enemy)
 signal upgrade_reached
+signal game_paused
 signal game_lost
 signal game_won
 
@@ -28,6 +29,7 @@ var total_waves: int
 
 func _ready() -> void:
 	PlayerStats.clear_upgrades()
+	GameConfig.reset()
 	score = 0
 	enemy_hurt_particles_scene = preload("res://scenes/enemy_hurt_particles.tscn")
 	enemy_died_particles_scene = preload("res://scenes/enemy_died_particles.tscn")
@@ -146,9 +148,14 @@ func _on_bow_arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, arro
 	)
 
 
+func _on_bow_arrow_exploded(arrow_position: Vector2, explosive_damage: float) -> void:
+	_create_explosion(arrow_position, explosive_damage)
+
+
+func _on_pause_button_pressed() -> void:
+	game_paused.emit()
+
+
 func _on_player_healed(amount: float, position_value: Vector2) -> void:
 	value_display.show_value_label(amount, position_value, "+")
 
-
-func _on_bow_arrow_exploded(arrow_position: Vector2, explosive_damage: float) -> void:
-	_create_explosion(arrow_position, explosive_damage)

@@ -73,6 +73,13 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
+[node name="PauseButton" type="Button" parent="UILayer/MarginContainer" unique_id=1616501532]
+custom_minimum_size = Vector2(128, 60)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "Pause"
+
 [node name="HealthBar" type="ProgressBar" parent="UILayer/MarginContainer" unique_id=2090477709]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -169,6 +176,7 @@ position = Vector2(1024, 512)
 [connection signal="analogic_changed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_analogic_changed"]
 [connection signal="pressed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_pressed"]
 [connection signal="released" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_released"]
+[connection signal="pressed" from="UILayer/MarginContainer/PauseButton" to="." method="_on_pause_button_pressed"]
 [connection signal="damaged" from="Player" to="UILayer/MarginContainer/ValueDisplay" method="show_value_label"]
 [connection signal="healed" from="Player" to="." method="_on_player_healed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
