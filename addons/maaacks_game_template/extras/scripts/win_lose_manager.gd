@@ -68,9 +68,3 @@ func game_won() -> void:
 	if has_won_game or has_lost_game: return
 	has_won_game = true
 	_load_win_screen_or_ending()
-
-func _on_game_won() -> void:
-	game_won()
-
-func _on_game_lost() -> void:
-	game_lost()
