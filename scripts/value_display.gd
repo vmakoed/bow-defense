@@ -5,10 +5,11 @@ func _ready() -> void:
 	%ValueLabel.hide()
 
 
-func _setup(label: Label, amount: float, value_position: Vector2, value_sign: String) -> void:
-	label.text = "{sign}{amount}".format({
+func _setup(label: Label, value: float, value_position: Vector2, value_sign: String) -> void:
+	label.text = "{sign}{value}".format({
 		"sign": value_sign,
-		"amount": str(int(amount))
+		"value": _cast(value)
+
 	})
 	label.global_position = value_position - Vector2(label.size.x / 2, 0)
 
@@ -30,9 +31,18 @@ func _animate(label: Label) -> void:
 	tween.finished.connect(func(): label.queue_free())
 
 
-func show_value_label(amount: float, value_position: Vector2, value_sign := "") -> void:
+func _cast(value: float) -> String:
+	var int_value = int(value)
+	if value == float(int_value):
+		return str(int_value)
+	else:
+		return str(snappedf(value, 0.1))
+
+
+
+func show_value_label(value: float, value_position: Vector2, value_sign := "") -> void:
 	var label : Label = %ValueLabel.duplicate()
-	_setup(label, amount, value_position, value_sign)
+	_setup(label, value, value_position, value_sign)
 	add_child(label)
 	label.show()
 	_animate(label)
