@@ -1,6 +1,7 @@
 extends Node2D
 
 
+signal boss_spawned_enemy(spawn_position: Vector2)
 signal enemy_died(enemy: Enemy)
 signal upgrade_reached
 signal game_paused
@@ -10,6 +11,7 @@ signal game_won
 
 @export var enemy_died_audio_stream: AudioStream
 @export var explosion_packed: PackedScene
+@export var enemy_spawning_particles_scene: PackedScene
 
 
 var enemies_count: int
@@ -159,3 +161,16 @@ func _on_pause_button_pressed() -> void:
 func _on_player_healed(amount: float, position_value: Vector2) -> void:
 	value_display.show_value_label(amount, position_value, "+")
 
+
+func _on_boss_enemy_spawning(spawn_position: Vector2) -> void:
+	var particles := enemy_spawning_particles_scene.instantiate() as CPUParticles2D
+	_emit_particles(particles, spawn_position, Color.WHITE)
+	var enemy_position = Vector2(spawn_position.x - 800, spawn_position.y)
+	var tween = create_tween()
+	tween.tween_property(
+		particles, 
+		"global_position", 
+		enemy_position,
+		0.8
+	).from_current()
+	tween.tween_callback(func(): boss_spawned_enemy.emit(enemy_position))

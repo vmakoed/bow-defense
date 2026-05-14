@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://lmlne1n4jqd7" path="res://scripts/camera_2d.gd" id="2_85g3d"]
 [ext_resource type="AudioStream" uid="uid://dl82r8b6v4utr" path="res://assets/audio/sndHit7trimmed.wav" id="2_muem4"]
 [ext_resource type="PackedScene" uid="uid://drvsgckpurw4h" path="res://scenes/explosion.tscn" id="3_jbj1t"]
+[ext_resource type="PackedScene" uid="uid://djj85l6vvm6qa" path="res://scenes/enemy_spawn_particles.tscn" id="4_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://dyn0vhb2q3omi" path="res://addons/virtual_joystick_plus/virtual_joystick_plus.gd" id="5_tipki"]
 [ext_resource type="Texture2D" uid="uid://bko0hy7tmib17" path="res://addons/virtual_joystick_plus/resources/textures/joystick_texture_5.png" id="6_85g3d"]
@@ -16,11 +17,13 @@
 [ext_resource type="PackedScene" uid="uid://breg1dotijns5" path="res://scenes/value_display.tscn" id="11_muem4"]
 [ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="12_trceg"]
 [ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="14_dp3eg"]
+[ext_resource type="Script" uid="uid://vcxau5cb8p5" path="res://scripts/boss.gd" id="17_muem4"]
 
 [node name="Main" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_o5qli")
 enemy_died_audio_stream = ExtResource("2_muem4")
 explosion_packed = ExtResource("3_jbj1t")
+enemy_spawning_particles_scene = ExtResource("4_dp3eg")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
 unique_name_in_owner = true
@@ -176,6 +179,37 @@ position = Vector2(1024, 352)
 unique_name_in_owner = true
 position = Vector2(1024, 512)
 
+[node name="Boss" type="Area2D" parent="." unique_id=93705625]
+script = ExtResource("17_muem4")
+
+[node name="ColorRect" type="ColorRect" parent="Boss" unique_id=1031887851]
+offset_left = 920.0
+offset_top = 120.0
+offset_right = 1094.0
+offset_bottom = 518.0
+
+[node name="FirstAttackTimer" type="Timer" parent="Boss" unique_id=307875305]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="ProjectileSpawnTimer" type="Timer" parent="Boss" unique_id=75619401]
+unique_name_in_owner = true
+wait_time = 10.0
+
+[node name="ProjectileSpawnMarkers" type="Node2D" parent="Boss" unique_id=1739355768]
+unique_name_in_owner = true
+position = Vector2(952, 312)
+
+[node name="Marker2D" type="Marker2D" parent="Boss/ProjectileSpawnMarkers" unique_id=1719156540]
+position = Vector2(0, -144)
+
+[node name="Marker2D2" type="Marker2D" parent="Boss/ProjectileSpawnMarkers" unique_id=1828519931]
+
+[node name="Marker2D3" type="Marker2D" parent="Boss/ProjectileSpawnMarkers" unique_id=1974606366]
+position = Vector2(0, 158)
+
+[connection signal="boss_spawned_enemy" from="." to="ContinuousSpawner" method="spawn_enemy"]
 [connection signal="analogic_changed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_analogic_changed"]
 [connection signal="pressed" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_pressed"]
 [connection signal="released" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_released"]
@@ -187,3 +221,6 @@ position = Vector2(1024, 512)
 [connection signal="arrow_exploded" from="Bow" to="." method="_on_bow_arrow_exploded"]
 [connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
 [connection signal="enemy_spawned" from="ContinuousSpawner" to="." method="_on_spawner_enemy_spawned"]
+[connection signal="enemy_spawning" from="Boss" to="." method="_on_boss_enemy_spawning"]
+[connection signal="timeout" from="Boss/FirstAttackTimer" to="Boss" method="_on_first_attack_timer_timeout"]
+[connection signal="timeout" from="Boss/ProjectileSpawnTimer" to="Boss" method="_on_projectile_spawn_timer_timeout"]

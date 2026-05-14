@@ -57,10 +57,3 @@ Use for slippage from hours 1–7. If on track, use for a second external playte
 
 ---
 
-## Hours log
-
-| Session | Hours spent | Cumulative | Notes |
-|---|---|---|---|
-| 2026-05-14 | 0 | 0 | Plan written, branch decision made |
-
-*Update after each session.*
