@@ -24,3 +24,8 @@ func _on_main_menu_confirmation_confirmed():
 
 func _on_exit_confirmation_confirmed():
 	get_tree().quit()
+
+
+func _on_restart_button_pressed() -> void:
+	SceneLoader.reload_current_scene()
+	close()

@@ -37,6 +37,10 @@ func _get_damage() -> Damage:
 	return damage
 
 
+func invert() -> void:
+	modulate = Color.BLACK
+
+
 func _damage(area: HurtboxComponent) -> void:
 	area.damage(_get_damage())
 	arrow_damaged.emit(global_position, area, velocity)

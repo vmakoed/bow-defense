@@ -174,3 +174,8 @@ func _on_boss_enemy_spawning(spawn_position: Vector2) -> void:
 		0.8
 	).from_current()
 	tween.tween_callback(func(): boss_spawned_enemy.emit(enemy_position))
+
+
+func _on_boss_destroyed() -> void:
+	print("main: won")
+	game_won.emit()

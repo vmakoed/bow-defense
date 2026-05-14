@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PlayerUpgrade" format=3 uid="uid://baov4088d3nkj"]
 
-[ext_resource type="Script" uid="uid://dkdsenixytw0d" path="res://scripts/player_upgrade.gd" id="1_f4yo1"]
+[ext_resource type="Script" path="res://scripts/player_upgrade.gd" id="1_f4yo1"]
 [ext_resource type="Script" uid="uid://b1i6rw0q5gf8k" path="res://scripts/arrow_strategies/healing_arrow_strategy.gd" id="2_kkukd"]
 
 [sub_resource type="Resource" id="Resource_6x4ut"]
