@@ -98,7 +98,7 @@ func _on_enemy_died(enemy: Enemy) -> void:
 
 func _on_enemy_killed() -> void:
 	score += GameConfig.score_per_enemy
-	if score >= GameConfig.next_upgrade_goal: upgrade_reached.emit()
+	# if score >= GameConfig.next_upgrade_goal: upgrade_reached.emit()
 
 
 func _on_tower_destroyed() -> void:

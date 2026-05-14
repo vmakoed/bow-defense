@@ -16,7 +16,7 @@ signal enemy_spawned(enemy: Enemy)
 
 func _ready() -> void:
 	set_spawn_timeout(GameConfig.spawn_rate)
-	GameConfig.spawn_rate_changed.connect(set_spawn_timeout)
+	# GameConfig.spawn_rate_changed.connect(set_spawn_timeout)
 
 
 func get_time_left() -> float:
@@ -30,13 +30,14 @@ func set_spawn_timeout(value: float) -> void:
 
 
 func _on_endless_spawn_timer_timeout() -> void:
-	var rotation = randf() * 2 * PI
-	var spawn_position = attack_target.global_position + Vector2(spawn_radius, 0).rotated(rotation)
-	var enemy = enemy_scene.instantiate() as Enemy
-	enemy.enemy_stats = enemy_stats
-	enemy.initial_state = Enemy.State.ATTACKING
-	enemy.global_position = spawn_position
-	enemy.home_position = spawn_position
-	enemy.attack_target_position = attack_target.global_position
-	add_child(enemy)
-	enemy_spawned.emit(enemy)
+	pass
+	# var rotation = randf() * 2 * PI
+	# var spawn_position = attack_target.global_position + Vector2(spawn_radius, 0).rotated(rotation)
+	# var enemy = enemy_scene.instantiate() as Enemy
+	# enemy.enemy_stats = enemy_stats
+	# enemy.initial_state = Enemy.State.ATTACKING
+	# enemy.global_position = spawn_position
+	# enemy.home_position = spawn_position
+	# enemy.attack_target_position = attack_target.global_position
+	# add_child(enemy)
+	# enemy_spawned.emit(enemy)
