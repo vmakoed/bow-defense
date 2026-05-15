@@ -56,14 +56,32 @@ health_component = NodePath("../HealthComponent")
 scale = Vector2(2.3899355, -2.3607502)
 shape = SubResource("RectangleShape2D_qlg0r")
 
-[node name="HealthComponent" type="Node" parent="." unique_id=2053672530]
+[node name="HealthComponent" type="Node" parent="." unique_id=2053672530 node_paths=PackedStringArray("health_bar")]
 unique_name_in_owner = true
 script = ExtResource("3_dqkch")
-max_health = 20.0
+max_health = 50.0
+health_bar = NodePath("../HealthBar")
 metadata/_custom_type_script = "uid://cqb8s71xuwre0"
 
 [node name="HealthChangeMarker" type="Marker2D" parent="." unique_id=517154468]
 unique_name_in_owner = true
 position = Vector2(0, -39)
 
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=698950232]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -80.0
+offset_right = 100.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+show_percentage = false
+
 [connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]
+[connection signal="health_below_minimum" from="HealthComponent" to="." method="_on_health_component_health_below_minimum"]

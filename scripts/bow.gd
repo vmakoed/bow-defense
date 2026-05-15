@@ -2,6 +2,7 @@ class_name Bow
 extends Node2D
 
 
+signal arrow_fired
 signal arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, impact_velocity: Vector2)
 signal arrow_exploded(arrow_position: Vector2, explosive_damage: float)
 signal arrow_healed(amount: float)
@@ -116,6 +117,7 @@ func _shoot_arrow() -> void:
 	arrow.healed.connect(_on_arrow_healed)
 	
 	add_child(arrow)
+	arrow_fired.emit()
 
 
 func _on_arrow_exploded(arrow_position: Vector2, explosive_damage: float) -> void:

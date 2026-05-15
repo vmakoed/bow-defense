@@ -84,11 +84,6 @@ size_flags_horizontal = 8
 size_flags_vertical = 4
 text = "Pause"
 
-[node name="HealthBar" type="ProgressBar" parent="UILayer/MarginContainer" unique_id=2090477709]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-show_percentage = false
-
 [node name="GameplaySettings" parent="UILayer/MarginContainer" unique_id=615622004 instance=ExtResource("6_jkv2x")]
 visible = false
 layout_mode = 2
@@ -102,10 +97,18 @@ spawner = NodePath("../../../ContinuousSpawner")
 [node name="ValueDisplay" parent="UILayer/MarginContainer" unique_id=379383826 instance=ExtResource("11_muem4")]
 unique_name_in_owner = true
 
-[node name="Player" parent="." unique_id=1910543735 node_paths=PackedStringArray("health_bar") instance=ExtResource("2_0wfyh")]
+[node name="ControlsLabel" type="Label" parent="UILayer/MarginContainer" unique_id=1860115224]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 36
+text = "Swipe/drag 
+anywhere
+to shoot"
+
+[node name="Player" parent="." unique_id=1910543735 instance=ExtResource("2_0wfyh")]
 unique_name_in_owner = true
 position = Vector2(576, 324)
-health_bar = NodePath("../UILayer/MarginContainer/HealthBar")
 
 [node name="Tower" parent="." unique_id=58816153 instance=ExtResource("14_dp3eg")]
 position = Vector2(576, 712)
@@ -188,11 +191,14 @@ position = Vector2(928, 328)
 [connection signal="released" from="JoystickLayer/VirtualJoystickPlus" to="." method="_on_virtual_joystick_plus_released"]
 [connection signal="pressed" from="UILayer/MarginContainer/PauseButton" to="." method="_on_pause_button_pressed"]
 [connection signal="damaged" from="Player" to="UILayer/MarginContainer/ValueDisplay" method="show_value_label"]
+[connection signal="destroyed" from="Player" to="." method="_on_player_destroyed"]
 [connection signal="healed" from="Player" to="." method="_on_player_healed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
 [connection signal="arrow_damaged" from="Bow" to="." method="_on_bow_arrow_damaged"]
 [connection signal="arrow_exploded" from="Bow" to="." method="_on_bow_arrow_exploded"]
+[connection signal="arrow_fired" from="Bow" to="." method="_on_bow_arrow_fired"]
 [connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
 [connection signal="enemy_spawned" from="ContinuousSpawner" to="." method="_on_spawner_enemy_spawned"]
+[connection signal="damaged" from="Boss" to="." method="_on_enemy_damaged"]
 [connection signal="destroyed" from="Boss" to="." method="_on_boss_destroyed"]
 [connection signal="enemy_spawning" from="Boss" to="." method="_on_boss_enemy_spawning"]

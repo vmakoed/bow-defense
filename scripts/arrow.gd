@@ -34,6 +34,7 @@ func _get_damage() -> Damage:
 	var damage = Damage.new()
 	damage.amount = max_damage_amount * damage_modifier
 	damage.knockback = velocity * knockback_factor * damage_modifier
+	damage.source_global_position = global_position
 	return damage
 
 

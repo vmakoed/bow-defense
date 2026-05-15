@@ -3,31 +3,17 @@
 [ext_resource type="Script" uid="uid://vcxau5cb8p5" path="res://scripts/boss.gd" id="1_dlmty"]
 [ext_resource type="PackedScene" uid="uid://bxmqkfw32637e" path="res://scenes/boss_hurt_area.tscn" id="2_neq0i"]
 [ext_resource type="Script" uid="uid://cqb8s71xuwre0" path="res://scripts/health_component.gd" id="3_jncid"]
+[ext_resource type="Script" uid="uid://dvego2xg2ditv" path="res://scripts/hurtbox_component.gd" id="4_qnbj4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r3bxh"]
+size = Vector2(176, 400)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jncid"]
 size = Vector2(176, 400)
 
-[node name="Boss" type="Area2D" unique_id=1418579193]
-collision_layer = 0
-collision_mask = 2
+[node name="Boss" type="Node2D" unique_id=810152370]
 script = ExtResource("1_dlmty")
 hurt_area_packed = ExtResource("2_neq0i")
-
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1997763955]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -87.0
-offset_top = -199.0
-offset_right = 87.0
-offset_bottom = 199.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1823695352]
-shape = SubResource("RectangleShape2D_jncid")
 
 [node name="FirstAttackTimer" type="Timer" parent="." unique_id=1269808658]
 wait_time = 2.0
@@ -52,11 +38,11 @@ position = Vector2(0, 158)
 [node name="HealthComponent" type="Node" parent="." unique_id=1987695807 node_paths=PackedStringArray("health_bar")]
 script = ExtResource("3_jncid")
 max_health = 30.0
-health_bar = NodePath("../ProgressBar")
+health_bar = NodePath("../HealthBar")
 metadata/_custom_type_script = "uid://cqb8s71xuwre0"
 
-[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1650607703]
-custom_minimum_size = Vector2(400, 28)
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1650607703]
+custom_minimum_size = Vector2(400, 40)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -70,8 +56,92 @@ grow_horizontal = 2
 grow_vertical = 2
 show_percentage = false
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="took_damage" from="." to="HealthComponent" method="damage"]
+[node name="ShieldArea" type="Area2D" parent="." unique_id=801500793]
+unique_name_in_owner = true
+
+[node name="ColorRect2" type="ColorRect" parent="ShieldArea" unique_id=1093927146]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = -199.0
+offset_right = 87.0
+offset_bottom = 199.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ColorRect" type="ColorRect" parent="ShieldArea" unique_id=595337673]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -192.0
+offset_right = 80.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShieldArea" unique_id=144090682]
+shape = SubResource("RectangleShape2D_r3bxh")
+
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=776060323 node_paths=PackedStringArray("health_component")]
+unique_name_in_owner = true
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("4_qnbj4")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://dvego2xg2ditv"
+
+[node name="ColorRect" type="ColorRect" parent="HurtboxComponent" unique_id=1997763955]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = -199.0
+offset_right = 87.0
+offset_bottom = 199.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HurtboxCollisionShape" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1823695352]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_jncid")
+
+[node name="HurtAreas" type="Node2D" parent="." unique_id=1320049745]
+unique_name_in_owner = true
+
+[node name="DebugTimer" type="Timer" parent="." unique_id=2081500568]
+wait_time = 3.0
+autostart = true
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=427452204]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="HurtAreasTimer" type="Timer" parent="." unique_id=1844608511]
+unique_name_in_owner = true
+wait_time = 10.0
+one_shot = true
+
+[node name="VulnerableTimer" type="Timer" parent="." unique_id=1122726346]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true
+
 [connection signal="timeout" from="FirstAttackTimer" to="." method="_on_first_attack_timer_timeout"]
 [connection signal="timeout" from="ProjectileSpawnTimer" to="." method="_on_projectile_spawn_timer_timeout"]
+[connection signal="damaged" from="HealthComponent" to="." method="_on_health_component_damaged"]
 [connection signal="health_below_minimum" from="HealthComponent" to="." method="_on_health_component_health_below_minimum"]
+[connection signal="timeout" from="DebugTimer" to="." method="_on_debug_timer_timeout"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="HurtAreasTimer" to="." method="_on_hurt_areas_timer_timeout"]
+[connection signal="timeout" from="VulnerableTimer" to="." method="_on_vulnerable_timer_timeout"]

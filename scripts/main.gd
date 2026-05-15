@@ -84,9 +84,14 @@ func _on_player_tree_exited() -> void:
 
 
 func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
-	enemy.damaged.connect(value_display.show_value_label)
+	# enemy.damaged.connect(value_display.show_value_label)
+	enemy.damaged.connect(_on_enemy_damaged)
 	enemy.died.connect(func(): _on_enemy_died(enemy))
 	enemy.killed.connect(_on_enemy_killed)
+
+
+func _on_enemy_damaged(damage: Damage) -> void:
+	value_display.show_value_label(damage.amount, damage.source_global_position)
 
 
 func _on_enemy_died(enemy: Enemy) -> void:
@@ -163,9 +168,9 @@ func _on_player_healed(amount: float, position_value: Vector2) -> void:
 
 
 func _on_boss_enemy_spawning(spawn_position: Vector2) -> void:
+	var enemy_position = player.global_position + Vector2(300.0, 0).rotated(randf() * 2 * PI)
 	var particles := enemy_spawning_particles_scene.instantiate() as CPUParticles2D
 	_emit_particles(particles, spawn_position, Color.WHITE)
-	var enemy_position = Vector2(spawn_position.x - 800, spawn_position.y)
 	var tween = create_tween()
 	tween.tween_property(
 		particles, 
@@ -179,3 +184,11 @@ func _on_boss_enemy_spawning(spawn_position: Vector2) -> void:
 func _on_boss_destroyed() -> void:
 	print("main: won")
 	game_won.emit()
+
+
+func _on_player_destroyed() -> void:
+	game_lost.emit()
+
+
+func _on_bow_arrow_fired() -> void:
+	%ControlsLabel.hide()

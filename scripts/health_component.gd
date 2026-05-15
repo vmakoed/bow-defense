@@ -17,37 +17,37 @@ var health: float: set = _set_health
 
 
 func _ready() -> void:
-    health = max_health
+	health = max_health
 
 
 func damage(value: Damage) -> void:
-    damaged.emit(value)
-    health -= value.amount
+	damaged.emit(value)
+	health -= value.amount
 
 
 func heal(value: float) -> void:
-    health += value
+	health += value
 
 
 func is_alive() -> bool:
-    return health > MIN_HEALTH
+	return health > MIN_HEALTH
 
 
 func _set_max_health(value: float) -> void:
-    if value == max_health: return
-    max_health = value
-    if health_bar: health_bar.max_value = max_health
+	if value == max_health: return
+	max_health = value
+	if health_bar: health_bar.max_value = max_health
 
 
 func _set_health(value: float) -> void:
-    if value == health: return
-    health = clamp(value, MIN_HEALTH, max_health)
-    if health_bar: health_bar.value = health
-    if not is_alive(): health_below_minimum.emit()
+	if value == health: return
+	health = clamp(value, MIN_HEALTH, max_health)
+	if health_bar: health_bar.value = health
+	if not is_alive(): health_below_minimum.emit()
 
 
 func _set_health_bar(value: ProgressBar) -> void:
-    if value == health_bar: return
-    health_bar = value
-    health_bar.max_value = max_health
-    health_bar.value = health
+	if value == health_bar: return
+	health_bar = value
+	health_bar.max_value = max_health
+	health_bar.value = health

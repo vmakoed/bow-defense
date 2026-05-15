@@ -82,7 +82,7 @@ offset_right = 101.0
 grow_vertical = 0
 upgrades_manager = NodePath("../UpgradesManager")
 
-[connection signal="game_lost" from="ViewportContainer/ConfigurableSubViewport/Main" to="WinLoseManager" method="_on_game_lost"]
+[connection signal="game_lost" from="ViewportContainer/ConfigurableSubViewport/Main" to="WinLoseManager" method="game_lost"]
 [connection signal="game_paused" from="ViewportContainer/ConfigurableSubViewport/Main" to="PauseMenuController" method="pause"]
 [connection signal="game_won" from="ViewportContainer/ConfigurableSubViewport/Main" to="WinLoseManager" method="game_won"]
 [connection signal="upgrade_reached" from="ViewportContainer/ConfigurableSubViewport/Main" to="UpgradesMenuController" method="_on_upgrade_reached"]

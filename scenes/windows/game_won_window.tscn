@@ -42,6 +42,7 @@ text = "Restart
 "
 
 [node name="CloseButton" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="3" unique_id=314526102]
+visible = false
 size_flags_horizontal = 3
 text = "Continue"
 
