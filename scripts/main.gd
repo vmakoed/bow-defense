@@ -144,6 +144,7 @@ func _on_tower_damaged() -> void:
 
 
 func _on_bow_arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, arrow_velocity: Vector2) -> void:
+	%ControlsLabel.hide()
 	var arrow_target = area.get_parent()
 	if not (arrow_target is Enemy): return
 	if not arrow_target.is_alive(): return
@@ -191,4 +192,5 @@ func _on_player_destroyed() -> void:
 
 
 func _on_bow_arrow_fired() -> void:
-	%ControlsLabel.hide()
+	# %ControlsLabel.hide()
+	pass
