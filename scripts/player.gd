@@ -7,15 +7,14 @@ signal destroyed
 signal healed(amount: float, position: Vector2)
 
 
-# @export var health_bar: ProgressBar
+@export var health_bar: ProgressBar
 
 
 @onready var health_component: HealthComponent = %HealthComponent
 
 
 func _ready() -> void:
-	pass
-	# health_component.health_bar = health_bar
+	health_component.health_bar = health_bar
 
 
 func heal(amount: float) -> void:

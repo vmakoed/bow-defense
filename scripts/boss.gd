@@ -4,8 +4,16 @@ extends Node2D
 signal enemy_spawning(spawn_position: Vector2)
 signal destroyed
 signal damaged(damage: Damage)
+signal hurt_area_destroyed(hurt_area_position: Vector2)
 
 
+const HURT_AREA_BOUNDS := Vector2(184, 120)
+const HURT_AREA_SIZE := Vector2(48, 48)
+
+
+@export var arrow_scene: Resource
+@export var attack_target: Node
+@export var health_bar: ProgressBar
 @export var hurt_area_packed: PackedScene
 
 
@@ -15,6 +23,10 @@ var vulnerable := true: set = _set_vulnerable
 
 
 @onready var spawn_markers = %ProjectileSpawnMarkers
+
+
+func _ready() -> void:
+	%HealthComponent.health_bar = health_bar
 
 
 func _set_idle(value: bool) -> void:
@@ -39,16 +51,28 @@ func _spawn_enemies() -> void:
 	hurt_areas = spawn_markers.get_child_count()
 
 	for marker: Marker2D in spawn_markers.get_children():
-		var hurt_area_position := marker.global_position
+		var marker_position = marker.global_position
+		var hurt_area_x = marker_position.x + randf_range(
+			-HURT_AREA_BOUNDS.x / 2 + HURT_AREA_SIZE.x / 2,
+			 HURT_AREA_BOUNDS.x / 2 - HURT_AREA_SIZE.x / 2
+		)
+		var hurt_area_y = marker_position.y + randf_range(
+			-HURT_AREA_BOUNDS.y / 2 + HURT_AREA_SIZE.y / 2,
+			 HURT_AREA_BOUNDS.y / 2 - HURT_AREA_SIZE.y / 2
+		)
+
+		var hurt_area_position := Vector2(hurt_area_x, hurt_area_y)
+		
 		_spawn_hurt_area(hurt_area_position)
 		enemy_spawning.emit(hurt_area_position)
 
 
 func _spawn_hurt_area(area_position: Vector2) -> void:
 	var hurt_area_scene = hurt_area_packed.instantiate() as BossHurtArea
+	hurt_area_scene.attack_target = attack_target
 	%HurtAreas.add_child.call_deferred(hurt_area_scene)
 	hurt_area_scene.set_deferred("global_position", area_position)
-	hurt_area_scene.destroyed.connect(_on_hurt_area_destroyed)
+	hurt_area_scene.destroyed.connect(func(): _on_hurt_area_destroyed(area_position))
 	# hurt_area_scene.vanished.connect(_on_hurt_area_vanished)
 
 
@@ -70,8 +94,9 @@ func _on_first_attack_timer_timeout() -> void:
 	# %ProjectileSpawnTimer.start()
 
 
-func _on_hurt_area_destroyed() -> void:
+func _on_hurt_area_destroyed(area_position: Vector2) -> void:
 	hurt_areas -= 1
+	hurt_area_destroyed.emit(area_position)
 	if hurt_areas <= 0:
 		vulnerable = true
 		%HurtAreasTimer.stop()

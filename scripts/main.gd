@@ -66,7 +66,7 @@ func _emit_enemy_hit_particles(instance_position: Vector2, direction: Vector2, c
 	_emit_particles(particles, instance_position, color)
 
 
-func _emit_enemy_died_particles(instance_position: Vector2, color: Color) -> void:
+func _emit_enemy_died_particles(instance_position: Vector2, color = Color.WHITE) -> void:
 	var particles := enemy_died_particles_scene.instantiate() as CPUParticles2D
 	_emit_particles(particles, instance_position, color)
 

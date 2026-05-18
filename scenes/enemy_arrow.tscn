@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://crw3fxg8q0bx5"]
+
+[ext_resource type="Script" uid="uid://dpf4fbi15nw0q" path="res://scripts/enemy_arrow.gd" id="1_gaww0"]
+[ext_resource type="AudioStream" uid="uid://cksj4unolq721" path="res://assets/audio/harsh_thud.wav" id="2_b4gx2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wyax8"]
+size = Vector2(32, 6)
+
+[sub_resource type="Curve" id="Curve_23jat"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="EnemyArrow" type="Area2D" unique_id=272067978]
+z_index = 1
+collision_layer = 0
+script = ExtResource("1_gaww0")
+max_damage_amount = 0.5
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=557322220]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -3.0
+offset_right = 16.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1636116430]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_wyax8")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=279184070]
+rect = Rect2(-16, -3, 32, 6)
+
+[node name="ClearTimer" type="Timer" parent="." unique_id=73996554]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true
+
+[node name="HitSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=305342995]
+unique_name_in_owner = true
+stream = ExtResource("2_b4gx2")
+volume_db = -10.0
+bus = &"SFX"
+
+[node name="TrailParticles" type="CPUParticles2D" parent="." unique_id=1348300407]
+position = Vector2(-16, 0)
+amount = 30
+lifetime = 0.5
+direction = Vector2(0, 0)
+spread = 0.0
+gravity = Vector2(0, 0)
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_23jat")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="ClearTimer" to="." method="_on_clear_timer_timeout"]
+[connection signal="finished" from="HitSoundPlayer" to="." method="_on_hit_sound_player_finished"]

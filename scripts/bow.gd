@@ -21,6 +21,7 @@ enum Facing { LEFT, RIGHT }
 
 @export var arrow_speed_baseline := 900.0
 @export var arrow_gravity_modifier := 800.0
+@export var charge_bar: ProgressBar
 @export var charge_duration = 0.5
 @export var max_charge = 1.0
 @export var trajectory_points := 200
@@ -78,12 +79,12 @@ func _reset() -> void:
 func _set_charge(new_value: float) -> void:
 	if charge == new_value: return
 	charge = new_value
-	%ChargeBar.value = charge / max_charge * 100.0
+	charge_bar.value = charge / max_charge * 100.0
 	if charge == max_charge: 
 		charged_audio_player.play()
-		%ChargedRect.show()
-	else:
-		%ChargedRect.hide()
+		# %ChargedRect.show()
+	# else:
+		# %ChargedRect.hide()
 
 
 func _clear_trajectory() -> void:

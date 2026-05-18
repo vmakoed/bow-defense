@@ -59,6 +59,13 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hvwn"]
+bg_color = Color(0, 0, 0, 0.33333334)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u30hj"]
 content_margin_left = 8.0
 content_margin_right = 8.0
@@ -109,6 +116,7 @@ Button/styles/pressed = SubResource("StyleBoxFlat_ftays")
 Label/font_sizes/font_size = 32
 Panel/styles/panel = SubResource("StyleBoxFlat_sucf2")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_sucf2")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_1hvwn")
 RichTextLabel/font_sizes/normal_font_size = 32
 TabContainer/colors/font_hovered_color = Color(0.945281, 0.945281, 0.945281, 1)
 TabContainer/colors/font_selected_color = Color(0.0195315, 0.0195315, 0.0195315, 1)

@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://c5gxrtcm8bbed"]
 
 [ext_resource type="Script" uid="uid://bll5iy4y4a0nv" path="res://scripts/bow.gd" id="1_vt0lb"]
-[ext_resource type="Script" path="res://scripts/dotted_line.gd" id="2_atxj4"]
+[ext_resource type="Script" uid="uid://b3g6fgnjpxtom" path="res://scripts/dotted_line.gd" id="2_atxj4"]
 [ext_resource type="AudioStream" uid="uid://dnw81geisxfpm" path="res://assets/audio/freesound_community-bow-release-bow-and-arrow-4-101936.mp3" id="2_prjx1"]
 [ext_resource type="AudioStream" uid="uid://c8in6uhchu3ep" path="res://assets/audio/clock_tock_only.wav" id="3_rivji"]
 
