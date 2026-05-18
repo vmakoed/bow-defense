@@ -9,11 +9,15 @@ signal game_lost
 signal game_won
 
 
+enum BossPosition { LEFT, RIGHT }
+
+
 @export var enemy_died_audio_stream: AudioStream
 @export var explosion_packed: PackedScene
 @export var enemy_spawning_particles_scene: PackedScene
 
 
+var current_boss_position := BossPosition.RIGHT
 var enemies_count: int
 var enemy_hurt_particles_scene: Resource
 var enemy_died_particles_scene: Resource
@@ -21,6 +25,10 @@ var score: int: set = _set_score
 var total_waves: int
 
 
+@onready var boss_position_markers: Dictionary[BossPosition, Marker2D] = {
+	BossPosition.LEFT: %LeftBossMarker,
+	BossPosition.RIGHT: %RightBossMarker
+}
 @onready var bow: Bow = %Bow
 @onready var camera: Camera2D = %Camera2D
 @onready var value_display: Node2D = %ValueDisplay
@@ -35,6 +43,7 @@ func _ready() -> void:
 	score = 0
 	enemy_hurt_particles_scene = preload("res://scenes/enemy_hurt_particles.tscn")
 	enemy_died_particles_scene = preload("res://scenes/enemy_died_particles.tscn")
+	%Boss.global_position = boss_position_markers[current_boss_position].global_position
 	# if not spawner.all_waves_spawned(): _spawn_next_wave()
 
 
@@ -88,6 +97,15 @@ func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
 	enemy.damaged.connect(_on_enemy_damaged)
 	enemy.died.connect(func(): _on_enemy_died(enemy))
 	enemy.killed.connect(_on_enemy_killed)
+
+
+func _on_boss_damaged(_damage: Damage) -> void:
+	if current_boss_position == BossPosition.RIGHT:
+		current_boss_position = BossPosition.LEFT
+	else:
+		current_boss_position = BossPosition.RIGHT
+
+	%Boss.global_position = boss_position_markers[current_boss_position].global_position
 
 
 func _on_enemy_damaged(damage: Damage) -> void:
