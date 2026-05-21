@@ -4,13 +4,79 @@
 
 ---
 
+## 2026-05-20 — Playtest 5 (randomized weak points, boss jumping, Ove)
+
+**Type:** External
+
+**Direction tested:** Boss-as-puzzle
+
+**Player(s):** Ove Danner (fresh — had not seen the game before)
+
+**Session length:** 20+ minutes (including post-play discussion)
+
+---
+
+**Pillars under test:**
+- Impactful shots
+
+---
+
+**What you observed:**
+- Initial confusion with controls — did not understand pulling direction at first (thought it might be 3D perspective)
+- Once mechanic clicked, engaged immediately
+- Developed strategy organically: started chaotic, then recognized static shooting enemies are bigger threat, prioritized them
+- Pull distance vs. charge disconnect noticed — pulling far from center had no visible effect
+- Played multiple rounds
+
+**What the player said:**
+
+Thinking during play:
+- "Mostly, what to focus on first. Which enemies to get first."
+- Strategy evolved: "I realized that the static bad guys always hit me at a predictable cadence. Probably better to shoot them first whilst making sure none of the others touch me."
+
+Felt good:
+- "The moment you hit a bad guy and they go down. It's pretty nice. The splatter animation is very satisfying."
+- "Especially when you reach an enemy further away, that's very nice." — unprompted, about harder shots being more rewarding
+- "The harder shots are nicer." — direct confirmation of pillar
+- Sound effects satisfying
+
+Felt frustrating:
+- Charge mechanic disconnect: "The difference between what I see when I try to make that charge and what happens. I pull it back pretty far away in screen coordinates, but that doesn't help me."
+- Higher charge shots could feel more satisfying
+- Controls initially confusing — thought shooting direction was into or out of screen (3D interpretation)
+
+Other feedback:
+- "Add color" — monochrome abstraction adds to initial confusion
+- Suggested making pull area larger for more reach
+- Suggested deflecting enemy projectiles as a mechanic
+- Noted charge should ideally be distance-based, not purely time-based
+- Suggested boss projectiles be slower and larger so player could shoot them down
+- Controls felt laggy on web build — likely a framerate/browser limitation
+
+---
+
+**Verdicts:**
+- **Impactful shots:** survives — "the harder shots are nicer" is direct unprompted confirmation of the pillar. Tester developed a deliberate strategy without guidance. Named specific shot moments. Did not ask for a different mechanic.
+
+---
+
+**Decision triggered:**
+Pillar confirmed. All four original production point criteria met. Fifth criterion (full mechanical system validated) not yet met — this direction has validated the shooting mechanic but not a complete mechanical system. Further prototyping directions needed before production point.
+
+---
+
+**Notes for future self:**
+"The harder shots are nicer" is the clearest pillar confirmation yet. Tester reached the "felt powerful" moment — strategy clicked, harder shots rewarded deliberate aiming. Charge mechanic disconnect is a recurring issue across multiple testers and needs to be addressed. Distance-based charge is worth exploring as a direction. Deflectable boss projectiles noted by two testers now — worth exploring as a direction.
+
+---
+
 ## 2026-05-17 — Playtest 4 (post-QoL improvements)
 
 **Type:** External
 
 **Direction tested:** Boss-as-puzzle
 
-**Player(s):** Fiona
+**Player(s):** 1 external playtester (fresh)
 
 **Session length:** Unknown
 
@@ -61,7 +127,7 @@ Flow state is the signal you're looking for. It appeared once strategy clicked. 
 
 **Direction tested:** Boss-as-puzzle
 
-**Player(s):** Stephan
+**Player(s):** 1 external playtester (fresh, mobile)
 
 **Session length:** Unknown
 
@@ -113,7 +179,7 @@ Continue with adjustment — add health bar with label, charge bar with label, b
 
 **Direction tested:** Boss-as-puzzle
 
-**Player(s):** Dylan (Tester 1), Josh (Tester 2)
+**Player(s):** 2 external playtesters (fresh)
 
 **Session length:** Unknown
 
@@ -160,11 +226,11 @@ Arc shot over the boss is the clearest pillar evidence so far. Tester discovered
 
 ## 2026-05-17 — Playtest 1 (first external playtest, base boss build)
 
-**Type:** Anton
+**Type:** External
 
 **Direction tested:** Boss-as-puzzle
 
-**Player(s):** Bram
+**Player(s):** 1 external playtester (fresh)
 
 **Session length:** Unknown
 
