@@ -28,6 +28,7 @@ ProjectUISoundController="*uid://cc37235kj4384"
 SfxSoundController="*uid://cgw18bdbkflhd"
 PlayerStats="*uid://b7pqja8xk6srl"
 GameConfig="*uid://dk8uy37t0ign1"
+GameUIBridge="*uid://cxqtinbm2cv41"
 
 [display]
 

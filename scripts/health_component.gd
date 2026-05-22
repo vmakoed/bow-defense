@@ -2,8 +2,9 @@ class_name HealthComponent
 extends Node
 
 
-signal health_below_minimum
 signal damaged(value: Damage)
+signal health_below_minimum
+signal health_changed(new_value: float)
 
 
 const MIN_HEALTH = 0.0
@@ -43,6 +44,7 @@ func _set_health(value: float) -> void:
 	if value == health: return
 	health = clamp(value, MIN_HEALTH, max_health)
 	if health_bar: health_bar.value = health
+	health_changed.emit(health)
 	if not is_alive(): health_below_minimum.emit()
 
 

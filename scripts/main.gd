@@ -5,8 +5,8 @@ signal boss_spawned_enemy(spawn_position: Vector2)
 signal enemy_died(enemy: Enemy)
 signal upgrade_reached
 signal game_paused
-signal game_lost
-signal game_won
+signal level_lost
+signal level_won
 
 
 enum BossPosition { LEFT, RIGHT }
@@ -31,15 +31,19 @@ var total_waves: int
 }
 @onready var bow: Bow = %Bow
 @onready var camera: Camera2D = %Camera2D
-@onready var value_display: Node2D = %ValueDisplay
+# @onready var value_display: Node2D = %ValueDisplay
 @onready var player: Player = %Player
 @onready var spawner: Node = %ContinuousSpawner
-@onready var stats_display: Control = %StatsDisplay
+# @onready var stats_display: Control = %StatsDisplay
 
 
 func _ready() -> void:
 	PlayerStats.clear_upgrades()
 	GameConfig.reset()
+	GameUIBridge.virtual_joystick_plus_analogic_changed.connect(_on_virtual_joystick_plus_analogic_changed)
+	GameUIBridge.virtual_joystick_plus_pressed.connect(_on_virtual_joystick_plus_pressed)
+	GameUIBridge.virtual_joystick_plus_released.connect(_on_virtual_joystick_plus_released)
+	GameUIBridge.level_started.emit()
 	score = 0
 	enemy_hurt_particles_scene = preload("res://scenes/enemy_hurt_particles.tscn")
 	enemy_died_particles_scene = preload("res://scenes/enemy_died_particles.tscn")
@@ -50,7 +54,7 @@ func _ready() -> void:
 func _set_score(new_value: int) -> void:
 	if score == new_value: return
 	score = new_value
-	stats_display.update_score(score)
+	# stats_display.update_score(score)
 
 
 func _create_explosion(explosion_position: Vector2, damage: float) -> void:
@@ -109,7 +113,7 @@ func _on_boss_damaged(_damage: Damage) -> void:
 
 
 func _on_enemy_damaged(damage: Damage) -> void:
-	value_display.show_value_label(damage.amount, damage.source_global_position)
+	GameUIBridge.value_display_requested.emit(damage.amount, damage.source_global_position)
 
 
 func _on_enemy_died(enemy: Enemy) -> void:
@@ -127,7 +131,7 @@ func _on_enemy_killed() -> void:
 
 
 func _on_tower_destroyed() -> void:
-	game_lost.emit()
+	level_lost.emit()
 
 
 func _on_wave_finished() -> void:
@@ -162,7 +166,7 @@ func _on_tower_damaged() -> void:
 
 
 func _on_bow_arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, arrow_velocity: Vector2) -> void:
-	%ControlsLabel.hide()
+	GameUIBridge.controls_label_hide_requested.emit()
 	var arrow_target = area.get_parent()
 	if not (arrow_target is Enemy): return
 	if not arrow_target.is_alive(): return
@@ -183,7 +187,7 @@ func _on_pause_button_pressed() -> void:
 
 
 func _on_player_healed(amount: float, position_value: Vector2) -> void:
-	value_display.show_value_label(amount, position_value, "+")
+	GameUIBridge.signed_value_display_requested.emit(amount, position_value, "+")
 
 
 func _on_boss_enemy_spawning(spawn_position: Vector2) -> void:
@@ -201,14 +205,19 @@ func _on_boss_enemy_spawning(spawn_position: Vector2) -> void:
 
 
 func _on_boss_destroyed() -> void:
-	print("main: won")
-	game_won.emit()
+	call_deferred("_on_level_won")
 
 
 func _on_player_destroyed() -> void:
-	game_lost.emit()
+	level_lost.emit()
+	GameUIBridge.level_lost.emit()
 
 
 func _on_bow_arrow_fired() -> void:
 	# %ControlsLabel.hide()
 	pass
+
+
+func _on_level_won() -> void:
+	level_won.emit()
+	GameUIBridge.level_won.emit()

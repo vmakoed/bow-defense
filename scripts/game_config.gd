@@ -10,6 +10,7 @@ const SPAWN_RATE_PRECISION = 0.1
 
 @export var healing_amount = 0.5
 @export var explosive_damage = 3.0
+@export var max_player_health = 50.0
 @export var next_upgrade_goal := 5: set = set_next_upgrade_goal
 @export var score_per_enemy := 1
 @export var spawn_rate_multiplier := 0.5

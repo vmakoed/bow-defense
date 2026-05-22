@@ -7,6 +7,7 @@ signal exploded(global_position: Vector2, explosive_damage: float)
 signal healed
 
 
+@export var hit_sound_stream: AudioStream
 @export var knockback_factor := 0.5
 @export var max_damage_amount := 50.0
 
@@ -20,7 +21,6 @@ var velocity: Vector2
 
 
 @onready var clear_timer: Timer = %ClearTimer
-@onready var hit_sound_player: AudioStreamPlayer2D = %HitSoundPlayer
 @onready var collision_shape: CollisionShape2D = %CollisionShape2D
 
 
@@ -66,11 +66,12 @@ func _pierce() -> void:
 
 func _on_arrow_hit(area: HurtboxComponent) -> void:
 	clear_timer.stop()
-	hit_sound_player.play()
+	SfxSoundController.play_audio(hit_sound_stream)
 	_pierce()
 	_damage(area)
 	_heal()
 	_explode()
+	queue_free()
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
@@ -84,6 +85,3 @@ func _on_area_entered(area: Area2D) -> void:
 func _on_clear_timer_timeout() -> void:
 	queue_free()
 
-
-func _on_hit_sound_player_finished() -> void:
-	clear_timer.start()

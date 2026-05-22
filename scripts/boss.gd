@@ -13,7 +13,6 @@ const HURT_AREA_SIZE := Vector2(48, 48)
 
 @export var arrow_scene: Resource
 @export var attack_target: Node
-@export var health_bar: ProgressBar
 @export var hurt_area_packed: PackedScene
 
 
@@ -26,7 +25,7 @@ var vulnerable := true: set = _set_vulnerable
 
 
 func _ready() -> void:
-	%HealthComponent.health_bar = health_bar
+	GameUIBridge.boss_ready.emit(%HealthComponent)
 
 
 func _set_idle(value: bool) -> void:

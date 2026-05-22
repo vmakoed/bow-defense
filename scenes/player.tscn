@@ -56,11 +56,9 @@ health_component = NodePath("../HealthComponent")
 scale = Vector2(2.3899355, -2.3607502)
 shape = SubResource("RectangleShape2D_qlg0r")
 
-[node name="HealthComponent" type="Node" parent="." unique_id=2053672530 node_paths=PackedStringArray("health_bar")]
+[node name="HealthComponent" type="Node" parent="." unique_id=2053672530]
 unique_name_in_owner = true
 script = ExtResource("3_dqkch")
-max_health = 50.0
-health_bar = NodePath("")
 metadata/_custom_type_script = "uid://cqb8s71xuwre0"
 
 [node name="HealthChangeMarker" type="Marker2D" parent="." unique_id=517154468]

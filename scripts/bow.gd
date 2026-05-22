@@ -79,7 +79,7 @@ func _reset() -> void:
 func _set_charge(new_value: float) -> void:
 	if charge == new_value: return
 	charge = new_value
-	charge_bar.value = charge / max_charge * 100.0
+	GameUIBridge.charge_bar_value_changed.emit(charge / max_charge * 100.0)
 	if charge == max_charge: 
 		charged_audio_player.play()
 		# %ChargedRect.show()

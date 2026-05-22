@@ -35,11 +35,10 @@ position = Vector2(0, -124)
 [node name="BottomMarker" type="Marker2D" parent="ProjectileSpawnMarkers" unique_id=1776263424]
 position = Vector2(0, 124)
 
-[node name="HealthComponent" type="Node" parent="." unique_id=1987695807 node_paths=PackedStringArray("health_bar")]
+[node name="HealthComponent" type="Node" parent="." unique_id=1987695807]
 unique_name_in_owner = true
 script = ExtResource("3_jncid")
 max_health = 30.0
-health_bar = NodePath("")
 metadata/_custom_type_script = "uid://cqb8s71xuwre0"
 
 [node name="ShieldArea" type="Area2D" parent="." unique_id=801500793]
