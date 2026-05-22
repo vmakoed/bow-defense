@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://dtivd7lkcgouk"]
+
+[ext_resource type="Script" uid="uid://cqr85x4noxttc" path="res://scenes/game_scene/levels/level.gd" id="1_rqs5e"]
+[ext_resource type="PackedScene" uid="uid://cqvn1mqtdtgta" path="res://scenes/player.tscn" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://lmlne1n4jqd7" path="res://scripts/camera_2d.gd" id="2_85g3d"]
+[ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_tbgi4"]
+[ext_resource type="Script" uid="uid://b8i7io76kaqe" path="res://scripts/spawner.gd" id="7_o6uwv"]
+[ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="10_choun"]
+[ext_resource type="Script" uid="uid://dnoalsksfh65j" path="res://scripts/boss_level_manager.gd" id="10_rqs5e"]
+[ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="11_eb6dy"]
+[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="12_trceg"]
+[ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="14_dp3eg"]
+[ext_resource type="PackedScene" uid="uid://d1gjr8m8hsbaw" path="res://scenes/boss.tscn" id="18_dp3eg"]
+[ext_resource type="PackedScene" uid="uid://crw3fxg8q0bx5" path="res://scenes/enemy_arrow.tscn" id="20_gqmmt"]
+
+[node name="BossLevel" type="Node2D" unique_id=1153814589]
+script = ExtResource("1_rqs5e")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
+unique_name_in_owner = true
+position = Vector2(576, 324)
+script = ExtResource("2_85g3d")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=897506556]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="BackgroundLayer" unique_id=239669578]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Player" parent="." unique_id=1910543735 instance=ExtResource("2_0wfyh")]
+unique_name_in_owner = true
+position = Vector2(576, 324)
+
+[node name="Tower" parent="." unique_id=58816153 instance=ExtResource("14_dp3eg")]
+position = Vector2(576, 712)
+
+[node name="Bow" parent="." unique_id=304452323 instance=ExtResource("5_tbgi4")]
+unique_name_in_owner = true
+position = Vector2(576, 324)
+arrow_speed_baseline = 700.0
+
+[node name="Enemies" type="Node2D" parent="." unique_id=220595151]
+unique_name_in_owner = true
+
+[node name="Spawner" parent="." unique_id=274601741 node_paths=PackedStringArray("attack_target") instance=ExtResource("10_choun")]
+unique_name_in_owner = true
+script = ExtResource("7_o6uwv")
+attack_target = NodePath("../Player")
+enemy_scene = ExtResource("11_eb6dy")
+enemy_stats = ExtResource("12_trceg")
+
+[node name="Boss" parent="." unique_id=1418579193 node_paths=PackedStringArray("attack_target") instance=ExtResource("18_dp3eg")]
+unique_name_in_owner = true
+position = Vector2(928, 328)
+arrow_scene = ExtResource("20_gqmmt")
+attack_target = NodePath("../Player")
+
+[node name="BossLevelManager" type="Node" parent="." unique_id=1046052719 node_paths=PackedStringArray("player")]
+script = ExtResource("10_rqs5e")
+player = NodePath("../Player")
+
+[node name="BossMarkers" type="Node2D" parent="." unique_id=1568527764]
+
+[node name="RightBossMarker" type="Marker2D" parent="BossMarkers" unique_id=571013272]
+unique_name_in_owner = true
+position = Vector2(960, 324)
+
+[node name="LeftBossMarker" type="Marker2D" parent="BossMarkers" unique_id=1867868829]
+unique_name_in_owner = true
+position = Vector2(192, 324)
+
+[connection signal="destroyed" from="Player" to="." method="_on_player_destroyed"]
+[connection signal="healed" from="Player" to="." method="_on_player_healed"]
+[connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
+[connection signal="arrow_damaged" from="Bow" to="." method="_on_bow_arrow_damaged"]
+[connection signal="arrow_exploded" from="Bow" to="." method="_on_bow_arrow_exploded"]
+[connection signal="arrow_fired" from="Bow" to="." method="_on_bow_arrow_fired"]
+[connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
+[connection signal="enemy_spawned" from="Spawner" to="." method="_on_spawner_enemy_spawned"]
+[connection signal="damaged" from="Boss" to="." method="_on_enemy_damaged"]
+[connection signal="damaged" from="Boss" to="BossLevelManager" method="_on_boss_damaged"]
+[connection signal="destroyed" from="Boss" to="." method="_on_level_won"]
+[connection signal="enemy_spawning" from="Boss" to="BossLevelManager" method="_on_boss_enemy_spawning"]
+[connection signal="hurt_area_destroyed" from="Boss" to="." method="_emit_enemy_died_particles"]
+[connection signal="enemy_requested" from="BossLevelManager" to="Spawner" method="spawn_enemy"]
+[connection signal="particles_requested" from="BossLevelManager" to="." method="_emit_particles"]

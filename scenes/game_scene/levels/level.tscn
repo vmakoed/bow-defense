@@ -1,29 +1,21 @@
 [gd_scene format=3 uid="uid://wxqvxfhsjc62"]
 
-[ext_resource type="Script" uid="uid://dhyaagledo26r" path="res://scripts/main.gd" id="1_blx31"]
-[ext_resource type="AudioStream" uid="uid://dl82r8b6v4utr" path="res://assets/audio/sndHit7trimmed.wav" id="2_64p0k"]
-[ext_resource type="PackedScene" uid="uid://drvsgckpurw4h" path="res://scenes/explosion.tscn" id="3_bt76c"]
-[ext_resource type="PackedScene" uid="uid://djj85l6vvm6qa" path="res://scenes/enemy_spawn_particles.tscn" id="4_wk6yk"]
-[ext_resource type="Script" uid="uid://lmlne1n4jqd7" path="res://scripts/camera_2d.gd" id="5_84km1"]
-[ext_resource type="PackedScene" uid="uid://cqvn1mqtdtgta" path="res://scenes/player.tscn" id="6_051sr"]
-[ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="7_57wid"]
-[ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="8_sec0m"]
-[ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="9_fjgd2"]
-[ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="10_1hd2n"]
-[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="11_oovfo"]
-[ext_resource type="PackedScene" uid="uid://d1gjr8m8hsbaw" path="res://scenes/boss.tscn" id="12_s75wf"]
-[ext_resource type="PackedScene" uid="uid://crw3fxg8q0bx5" path="res://scenes/enemy_arrow.tscn" id="13_4avp3"]
+[ext_resource type="Script" uid="uid://cqr85x4noxttc" path="res://scenes/game_scene/levels/level.gd" id="1_l1wr4"]
+[ext_resource type="Script" uid="uid://lmlne1n4jqd7" path="res://scripts/camera_2d.gd" id="2_6i7vj"]
+[ext_resource type="PackedScene" uid="uid://cqvn1mqtdtgta" path="res://scenes/player.tscn" id="3_ipu0p"]
+[ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="4_qywm2"]
+[ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_xknmv"]
+[ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="6_x0ypt"]
+[ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="7_6tvmh"]
+[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="8_eeb5m"]
 
-[node name="Main" type="Node2D" unique_id=1153814589]
-script = ExtResource("1_blx31")
-enemy_died_audio_stream = ExtResource("2_64p0k")
-explosion_packed = ExtResource("3_bt76c")
-enemy_spawning_particles_scene = ExtResource("4_wk6yk")
+[node name="Level" type="Node2D" unique_id=1153814589]
+script = ExtResource("1_l1wr4")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
 unique_name_in_owner = true
 position = Vector2(576, 324)
-script = ExtResource("5_84km1")
+script = ExtResource("2_6i7vj")
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=897506556]
 layer = -1
@@ -36,14 +28,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Player" parent="." unique_id=1910543735 instance=ExtResource("6_051sr")]
+[node name="Player" parent="." unique_id=1910543735 instance=ExtResource("3_ipu0p")]
 unique_name_in_owner = true
 position = Vector2(576, 324)
 
-[node name="Tower" parent="." unique_id=58816153 instance=ExtResource("7_57wid")]
+[node name="Tower" parent="." unique_id=58816153 instance=ExtResource("4_qywm2")]
 position = Vector2(576, 712)
 
-[node name="Bow" parent="." unique_id=304452323 instance=ExtResource("8_sec0m")]
+[node name="Bow" parent="." unique_id=304452323 instance=ExtResource("5_xknmv")]
 unique_name_in_owner = true
 position = Vector2(576, 324)
 arrow_speed_baseline = 700.0
@@ -51,11 +43,11 @@ arrow_speed_baseline = 700.0
 [node name="Enemies" type="Node2D" parent="." unique_id=220595151]
 unique_name_in_owner = true
 
-[node name="ContinuousSpawner" parent="." unique_id=274601741 node_paths=PackedStringArray("attack_target") instance=ExtResource("9_fjgd2")]
+[node name="ContinuousSpawner" parent="." unique_id=274601741 node_paths=PackedStringArray("attack_target") instance=ExtResource("6_x0ypt")]
 unique_name_in_owner = true
 attack_target = NodePath("../Player")
-enemy_scene = ExtResource("10_1hd2n")
-enemy_stats = ExtResource("11_oovfo")
+enemy_scene = ExtResource("7_6tvmh")
+enemy_stats = ExtResource("8_eeb5m")
 spawn_radius = 300.0
 
 [node name="SpawnMarkers" type="Node2D" parent="." unique_id=385187766]
@@ -112,23 +104,6 @@ position = Vector2(1024, 352)
 unique_name_in_owner = true
 position = Vector2(1024, 512)
 
-[node name="Boss" parent="." unique_id=1418579193 node_paths=PackedStringArray("attack_target") instance=ExtResource("12_s75wf")]
-unique_name_in_owner = true
-position = Vector2(928, 328)
-arrow_scene = ExtResource("13_4avp3")
-attack_target = NodePath("../Player")
-
-[node name="BossMarkers" type="Node2D" parent="." unique_id=1568527764]
-
-[node name="RightBossMarker" type="Marker2D" parent="BossMarkers" unique_id=571013272]
-unique_name_in_owner = true
-position = Vector2(960, 324)
-
-[node name="LeftBossMarker" type="Marker2D" parent="BossMarkers" unique_id=1867868829]
-unique_name_in_owner = true
-position = Vector2(192, 324)
-
-[connection signal="boss_spawned_enemy" from="." to="ContinuousSpawner" method="spawn_enemy"]
 [connection signal="destroyed" from="Player" to="." method="_on_player_destroyed"]
 [connection signal="healed" from="Player" to="." method="_on_player_healed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
@@ -137,8 +112,3 @@ position = Vector2(192, 324)
 [connection signal="arrow_fired" from="Bow" to="." method="_on_bow_arrow_fired"]
 [connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
 [connection signal="enemy_spawned" from="ContinuousSpawner" to="." method="_on_spawner_enemy_spawned"]
-[connection signal="damaged" from="Boss" to="." method="_on_boss_damaged"]
-[connection signal="damaged" from="Boss" to="." method="_on_enemy_damaged"]
-[connection signal="destroyed" from="Boss" to="." method="_on_boss_destroyed"]
-[connection signal="enemy_spawning" from="Boss" to="." method="_on_boss_enemy_spawning"]
-[connection signal="hurt_area_destroyed" from="Boss" to="." method="_emit_enemy_died_particles"]
