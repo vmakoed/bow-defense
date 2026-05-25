@@ -89,7 +89,7 @@ metadata/_custom_type_script = "uid://bllg4gg7v1tsr"
 
 [node name="SceneLister" type="Node" parent="LevelManager" unique_id=226600961]
 script = ExtResource("19_g2ndc")
-files = Array[String](["res://scenes/game_scene/levels/boss_level.tscn"])
+files = Array[String](["res://scenes/game_scene/levels/shield_level.tscn", "res://scenes/game_scene/levels/boss_level.tscn"])
 
 [node name="UpgradesPanel" parent="." unique_id=1849932548 node_paths=PackedStringArray("upgrades_manager") instance=ExtResource("12_3re04")]
 visible = false

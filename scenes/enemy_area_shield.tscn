@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://4iwwiqu3jrpe"]
+
+[ext_resource type="Script" uid="uid://cwu00060cbk8o" path="res://scripts/infinite_health_component.gd" id="1_0k630"]
+[ext_resource type="Script" uid="uid://dvego2xg2ditv" path="res://scripts/hurtbox_component.gd" id="1_f7t5w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
+size = Vector2(60, 60)
+
+[node name="EnemyAreaShield" type="Area2D" unique_id=1669533822 node_paths=PackedStringArray("health_component")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_f7t5w")
+health_component = NodePath("InfiniteHealthComponent")
+metadata/_custom_type_script = "uid://dvego2xg2ditv"
+
+[node name="ShieldColorRect" type="ColorRect" parent="." unique_id=1970956549]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+color = Color(1, 1, 1, 0.80784315)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1022372086]
+shape = SubResource("RectangleShape2D_5uy6h")
+
+[node name="InfiniteHealthComponent" type="Node" parent="." unique_id=148257143]
+script = ExtResource("1_0k630")

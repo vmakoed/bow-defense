@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://dn1ncqsekomrb"]
 
 [ext_resource type="Script" uid="uid://jqpu0afh5v2f" path="res://scripts/enemy.gd" id="1_7p1mj"]
-[ext_resource type="Resource" uid="uid://356v3rcijw8c" path="res://resources/speedy_square.tres" id="2_5uy6h"]
 [ext_resource type="PackedScene" uid="uid://chys2hmjno4mv" path="res://scenes/hurtbox_component.tscn" id="2_md0e3"]
+[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="2_xwavj"]
 [ext_resource type="PackedScene" uid="uid://blywxglkpxl7t" path="res://scenes/health_component.tscn" id="3_4ra3w"]
+[ext_resource type="PackedScene" uid="uid://4iwwiqu3jrpe" path="res://scenes/enemy_area_shield.tscn" id="3_nenq2"]
 [ext_resource type="Script" uid="uid://dvego2xg2ditv" path="res://scripts/hurtbox_component.gd" id="5_xwavj"]
 [ext_resource type="Script" uid="uid://cwu00060cbk8o" path="res://scripts/infinite_health_component.gd" id="6_nenq2"]
 
@@ -14,12 +15,13 @@ size = Vector2(48, 48)
 size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
-size = Vector2(40, 6)
+size = Vector2(60, 60)
 
 [node name="Enemy" type="Area2D" unique_id=492934886]
 collision_layer = 0
 script = ExtResource("1_7p1mj")
-enemy_stats = ExtResource("2_5uy6h")
+enemy_stats = ExtResource("2_xwavj")
+area_shield_scene = ExtResource("3_nenq2")
 
 [node name="HitboxShape" type="CollisionShape2D" parent="." unique_id=860006014]
 unique_name_in_owner = true
@@ -79,6 +81,7 @@ show_percentage = false
 
 [node name="Shield" type="Area2D" parent="." unique_id=505211879 node_paths=PackedStringArray("health_component")]
 unique_name_in_owner = true
+visible = false
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("5_xwavj")

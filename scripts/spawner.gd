@@ -8,9 +8,18 @@ signal enemy_spawned(enemy: Enemy)
 @export var attack_target: Node2D
 @export var enemy_scene: Resource
 @export var enemy_stats: EnemyStats
+@export var spawn_radius: float
 
 
-func spawn_enemy(spawn_position: Vector2) -> void:
+func start() -> void:
+	pass
+
+
+func get_random_spawn_position() -> Vector2:
+	return attack_target.global_position + Vector2(spawn_radius, 0).rotated(randf() * 2 * PI)
+
+
+func spawn_enemy(spawn_position: Vector2) -> Enemy:
 	var enemy = enemy_scene.instantiate() as Enemy
 	enemy.enemy_stats = enemy_stats
 	enemy.initial_state = Enemy.State.ATTACKING
@@ -22,3 +31,4 @@ func spawn_enemy(spawn_position: Vector2) -> void:
 	enemy_spawned.emit(enemy)
 	var tween = create_tween()
 	tween.tween_property(enemy, "modulate", Color.WHITE, 0.2).from_current()
+	return enemy

@@ -5,6 +5,7 @@ extends Area2D
 signal damaged(damage: Damage)
 signal died
 signal killed
+signal moved
 
 
 enum State { NULL, FLYING_IN, HOVERING, ATTACKING, RETREATING }
@@ -24,8 +25,10 @@ const HOVERING_SPEED = 50.0
 
 @export var enemy_stats: EnemyStats
 @export var initial_state: State
+@export var area_shield_scene: PackedScene
 
 
+var area_shield: Area2D
 var attack_target_position: Vector2: set = _set_attack_target_position
 var attack_direction: AttackDirection
 var attacking_speed: float
@@ -63,12 +66,25 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	position += velocity * delta
+	var position_change: Vector2 = velocity * delta
+	position += position_change
+	if not position_change == Vector2.ZERO: moved.emit()
 	_move_towards_target(delta)
 
 
 func is_alive() -> float:
 	return health_component.is_alive()
+
+
+func add_area_shield(shielder: Enemy) -> void:
+	area_shield = area_shield_scene.instantiate() as HurtboxComponent
+	area_shield.scale = enemy_stats.scale * 1.2
+	shielder.killed.connect(remove_area_shield)
+	add_child(area_shield)
+
+
+func remove_area_shield() -> void:
+	area_shield.queue_free()
 
 
 func _set_state(new_value: State) -> void:
@@ -197,7 +213,6 @@ func _on_target_reached() -> void:
 func _on_health_component_health_below_minimum() -> void:
 	if not self_destruct: killed.emit()
 	died.emit()
-	visible = false
 
 
 func _on_area_entered(area: Area2D) -> void:

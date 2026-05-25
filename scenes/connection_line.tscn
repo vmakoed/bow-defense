@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dfgym5fopsnxp"]
+
+[ext_resource type="Script" uid="uid://bhy732jp7e1nb" path="res://scripts/connection_line.gd" id="1_asxao"]
+
+[node name="ConnectionLine" type="Line2D" unique_id=1103768771]
+default_color = Color(1, 1, 1, 0.80784315)
+script = ExtResource("1_asxao")

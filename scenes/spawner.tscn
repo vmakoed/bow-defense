@@ -1,18 +1,11 @@
-[gd_scene format=3 uid="uid://dlhbjvanv1tga"]
+[gd_scene format=3 uid="uid://0vfsex5lyt4i"]
 
-[ext_resource type="Script" uid="uid://bfld1qfai0g6k" path="res://scripts/wave_spawner.gd" id="1_2vbf6"]
+[ext_resource type="Script" uid="uid://b8i7io76kaqe" path="res://scripts/spawner.gd" id="1_tx2ig"]
+[ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="2_6bbd6"]
+[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="3_cmhla"]
 
-[node name="WaveSpawner" type="Node" unique_id=1204811195]
-script = ExtResource("1_2vbf6")
-
-[node name="Timer" type="Timer" parent="." unique_id=1107406229]
-unique_name_in_owner = true
-wait_time = 0.5
-one_shot = true
-
-[node name="EndlessSpawnTimer" type="Timer" parent="." unique_id=1155509858]
-wait_time = 2.0
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="EndlessSpawnTimer" to="." method="_on_endless_spawn_timer_timeout"]
+[node name="Spawner" type="Node" unique_id=650787862]
+script = ExtResource("1_tx2ig")
+enemy_scene = ExtResource("2_6bbd6")
+enemy_stats = ExtResource("3_cmhla")
+spawn_radius = 300.0

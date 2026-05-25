@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://eqxfmv3rn6ry"]
+
+[ext_resource type="Script" uid="uid://doo6sey8e6e04" path="res://scripts/shielder_pair.gd" id="1_hq13b"]
+[ext_resource type="PackedScene" uid="uid://dfgym5fopsnxp" path="res://scenes/connection_line.tscn" id="2_i5ip6"]
+
+[node name="ShielderPair" type="Node" unique_id=1790040300]
+script = ExtResource("1_hq13b")
+
+[node name="ConnectionLine" parent="." unique_id=1103768771 instance=ExtResource("2_i5ip6")]
+unique_name_in_owner = true

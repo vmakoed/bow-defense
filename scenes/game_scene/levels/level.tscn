@@ -6,11 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="4_qywm2"]
 [ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_xknmv"]
 [ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="6_x0ypt"]
-[ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="7_6tvmh"]
-[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="8_eeb5m"]
 
 [node name="Level" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_l1wr4")
+enemy_died_audio_stream = null
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
 unique_name_in_owner = true
@@ -43,15 +42,11 @@ arrow_speed_baseline = 700.0
 [node name="Enemies" type="Node2D" parent="." unique_id=220595151]
 unique_name_in_owner = true
 
-[node name="ContinuousSpawner" parent="." unique_id=274601741 node_paths=PackedStringArray("attack_target") instance=ExtResource("6_x0ypt")]
+[node name="Spawner" parent="." unique_id=274601741 node_paths=PackedStringArray("attack_target") instance=ExtResource("6_x0ypt")]
 unique_name_in_owner = true
 attack_target = NodePath("../Player")
-enemy_scene = ExtResource("7_6tvmh")
-enemy_stats = ExtResource("8_eeb5m")
-spawn_radius = 300.0
 
 [node name="SpawnMarkers" type="Node2D" parent="." unique_id=385187766]
-visible = false
 
 [node name="TopLeftSpawnMarker" type="Marker2D" parent="SpawnMarkers" unique_id=2096204799]
 unique_name_in_owner = true
@@ -111,4 +106,3 @@ position = Vector2(1024, 512)
 [connection signal="arrow_exploded" from="Bow" to="." method="_on_bow_arrow_exploded"]
 [connection signal="arrow_fired" from="Bow" to="." method="_on_bow_arrow_fired"]
 [connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
-[connection signal="enemy_spawned" from="ContinuousSpawner" to="." method="_on_spawner_enemy_spawned"]

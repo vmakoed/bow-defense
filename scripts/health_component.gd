@@ -22,6 +22,7 @@ func _ready() -> void:
 
 
 func damage(value: Damage) -> void:
+	if not is_alive(): return
 	damaged.emit(value)
 	health -= value.amount
 

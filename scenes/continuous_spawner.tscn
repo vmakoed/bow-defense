@@ -1,13 +1,18 @@
 [gd_scene format=3 uid="uid://cv6hqtvnw45qs"]
 
 [ext_resource type="Script" uid="uid://odn52cvw80mh" path="res://scripts/continuous_spawner.gd" id="1_batdo"]
+[ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="2_b1b2h"]
+[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="3_uxq5i"]
 
-[node name="ContinuousSpawner" type="Node" unique_id=274601741]
+[node name="ContinuousSpawner" type="Node" unique_id=685057716]
 script = ExtResource("1_batdo")
+enemy_scene = ExtResource("2_b1b2h")
+enemy_stats = ExtResource("3_uxq5i")
+spawn_radius = 300.0
+metadata/_custom_type_script = "uid://b8i7io76kaqe"
 
 [node name="EndlessSpawnTimer" type="Timer" parent="." unique_id=809831474]
 unique_name_in_owner = true
 wait_time = 2.0
-autostart = true
 
 [connection signal="timeout" from="EndlessSpawnTimer" to="." method="_on_endless_spawn_timer_timeout"]

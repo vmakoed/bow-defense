@@ -27,6 +27,5 @@ func _get_damage(target_position: Vector2) -> Damage:
 	damage.amount = damage_amount
 	var direction = global_position.direction_to(target_position)
 	damage.knockback = direction * KNOCKBACK_STRENGTH
-	print(damage.knockback)
 	return damage
 

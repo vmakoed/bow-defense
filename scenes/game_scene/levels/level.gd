@@ -8,8 +8,8 @@ signal level_lost
 signal level_won
 
 
-@export var enemy_died_audio_stream: AudioStream
-@export var explosion_packed: PackedScene
+@export var enemy_died_audio_stream: AudioStream = preload("res://assets/audio/sndHit7trimmed.wav")
+@export var explosion_packed: PackedScene = preload("res://scenes/explosion.tscn")
 
 
 var enemies_count: int
@@ -22,6 +22,7 @@ var total_waves: int
 @onready var bow: Bow = %Bow
 @onready var camera: Camera2D = %Camera2D
 @onready var player: Player = %Player
+@onready var spawner = %Spawner
 
 
 func _ready() -> void:
@@ -32,6 +33,8 @@ func _ready() -> void:
 	GameUIBridge.virtual_joystick_plus_released.connect(_on_virtual_joystick_plus_released)
 	GameUIBridge.level_started.emit()
 	score = 0
+	spawner.enemy_spawned.connect(_on_spawner_enemy_spawned)
+	spawner.start()
 
 
 func _set_score(new_value: int) -> void:
