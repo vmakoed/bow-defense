@@ -16,7 +16,7 @@ func start() -> void:
 
 
 func get_random_spawn_position() -> Vector2:
-	return attack_target.global_position + Vector2(spawn_radius, 0).rotated(randf() * 2 * PI)
+		return attack_target.global_position + Vector2(spawn_radius, 0).rotated(randf() * 2 * PI)
 
 
 func spawn_enemy(spawn_position: Vector2) -> Enemy:

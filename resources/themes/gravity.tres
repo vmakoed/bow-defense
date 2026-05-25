@@ -105,6 +105,7 @@ Button/styles/focus = null
 Button/styles/hover = SubResource("StyleBoxFlat_w50h3")
 Button/styles/normal = SubResource("StyleBoxFlat_6tkof")
 Button/styles/pressed = SubResource("StyleBoxFlat_ftays")
+ItemList/font_sizes/font_size = 32
 Panel/styles/panel = SubResource("StyleBoxFlat_sucf2")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_sucf2")
 TabContainer/colors/font_hovered_color = Color(0.945281, 0.945281, 0.945281, 1)

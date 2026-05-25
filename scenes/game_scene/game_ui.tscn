@@ -6,8 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bkcsjsk2ciff" path="res://addons/maaacks_game_template/base/nodes/music_players/background_music_player.tscn" id="3_3re04"]
 [ext_resource type="Script" uid="uid://doluwp13lpjbp" path="res://scripts/upgrades_menu_controller.gd" id="3_onvsj"]
 [ext_resource type="PackedScene" uid="uid://dp7xj32kkkw4n" path="res://scenes/upgrades_menu_layer.tscn" id="4_8qp3c"]
-[ext_resource type="PackedScene" uid="uid://bf4elgb8epd2i" path="res://scenes/windows/game_won_window.tscn" id="6_ukb12"]
-[ext_resource type="PackedScene" uid="uid://bdwo2miqbp75e" path="res://scenes/windows/level_lost_window.tscn" id="7_i7m4m"]
 [ext_resource type="Script" uid="uid://c1dacedvgx2uk" path="res://scenes/game_scene/configurable_sub_viewport.gd" id="11_ulq3g"]
 [ext_resource type="PackedScene" uid="uid://cx4xmomywurhq" path="res://scenes/upgrades_panel.tscn" id="12_3re04"]
 [ext_resource type="Script" uid="uid://d21hwls01n45u" path="res://scenes/game_scene/game_timer.gd" id="12_gpor5"]
@@ -17,8 +15,6 @@
 [ext_resource type="Resource" uid="uid://baov4088d3nkj" path="res://resources/upgrades/healing_upgrade.tres" id="15_i7m4m"]
 [ext_resource type="Resource" uid="uid://bp8wq2tqtllna" path="res://resources/upgrades/explosive_upgrade.tres" id="16_ukb12"]
 [ext_resource type="Script" uid="uid://bbymrin0cm704" path="res://addons/maaacks_game_template/extras/scripts/level_loader.gd" id="17_i7m4m"]
-[ext_resource type="Script" uid="uid://bllg4gg7v1tsr" path="res://addons/maaacks_game_template/extras/scripts/level_manager.gd" id="18_rkfhe"]
-[ext_resource type="PackedScene" uid="uid://c6hn1lp2prfiy" path="res://scenes/windows/level_won_window.tscn" id="19_ck3wh"]
 [ext_resource type="Script" uid="uid://wjq7li836lwj" path="res://addons/maaacks_game_template/extras/scripts/scene_lister.gd" id="19_g2ndc"]
 [ext_resource type="PackedScene" uid="uid://ctv88k48at7cn" path="res://scenes/loading_screen/level_loading_screen.tscn" id="19_rkfhe"]
 [ext_resource type="PackedScene" uid="uid://breg1dotijns5" path="res://scenes/value_display.tscn" id="22_oo80c"]
@@ -26,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bko0hy7tmib17" path="res://addons/virtual_joystick_plus/resources/textures/joystick_texture_5.png" id="24_is1bs"]
 [ext_resource type="Texture2D" uid="uid://cvbq3sgsmm46v" path="res://addons/virtual_joystick_plus/resources/textures/stick_texture_5.png" id="25_tdibn"]
 [ext_resource type="Theme" uid="uid://dqa31jn4lxnv6" path="res://resources/themes/gravity.tres" id="26_pbvv0"]
+[ext_resource type="Script" uid="uid://dgdwual6qslwr" path="res://scripts/level_and_state_manager.gd" id="27_ck3wh"]
 
 [node name="GameUI" type="Control" unique_id=1609552811]
 layout_mode = 3
@@ -72,24 +69,21 @@ script = ExtResource("12_gpor5")
 script = ExtResource("13_7aihr")
 upgrades = Array[ExtResource("13_wr4n6")]([ExtResource("14_ukb12"), ExtResource("15_i7m4m"), ExtResource("16_ukb12")])
 
+[node name="LevelManager" type="Node" parent="." unique_id=679390254 node_paths=PackedStringArray("level_loader", "scene_lister")]
+script = ExtResource("27_ck3wh")
+level_loader = NodePath("../LevelLoader")
+scene_lister = NodePath("SceneLister")
+
+[node name="SceneLister" type="Node" parent="LevelManager" unique_id=226600961]
+script = ExtResource("19_g2ndc")
+files = Array[String](["res://scenes/game_scene/levels/level.tscn", "res://scenes/game_scene/levels/shield_level.tscn", "res://scenes/game_scene/levels/boss_level.tscn"])
+directory = "res://scenes/game_scene/levels"
+
 [node name="LevelLoader" type="Node" parent="." unique_id=262784248 node_paths=PackedStringArray("level_container", "level_loading_screen")]
 script = ExtResource("17_i7m4m")
 level_container = NodePath("../ViewportContainer/ConfigurableSubViewport")
 level_loading_screen = NodePath("../LevelLoadingScreen")
 metadata/_custom_type_script = "uid://bbymrin0cm704"
-
-[node name="LevelManager" type="Node" parent="." unique_id=1836207690 node_paths=PackedStringArray("level_loader", "scene_lister")]
-script = ExtResource("18_rkfhe")
-level_loader = NodePath("../LevelLoader")
-scene_lister = NodePath("SceneLister")
-game_won_scene = ExtResource("6_ukb12")
-level_lost_scene = ExtResource("7_i7m4m")
-level_won_scene = ExtResource("19_ck3wh")
-metadata/_custom_type_script = "uid://bllg4gg7v1tsr"
-
-[node name="SceneLister" type="Node" parent="LevelManager" unique_id=226600961]
-script = ExtResource("19_g2ndc")
-files = Array[String](["res://scenes/game_scene/levels/shield_level.tscn", "res://scenes/game_scene/levels/boss_level.tscn"])
 
 [node name="UpgradesPanel" parent="." unique_id=1849932548 node_paths=PackedStringArray("upgrades_manager") instance=ExtResource("12_3re04")]
 visible = false

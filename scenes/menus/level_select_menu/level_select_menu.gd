@@ -19,7 +19,7 @@ func add_levels_to_container() -> void:
 	level_buttons_container.clear()
 	level_paths.clear()
 	var game_state := GameState.get_or_create_state()
-	for file_path in game_state.level_states.keys():
+	for file_path in scene_lister.files:	# makes all levels available from the start
 		var file_name : String = file_path.get_file()  # e.g., "level_1.tscn"
 		file_name = file_name.trim_suffix(".tscn")  # Remove the ".tscn" extension
 		file_name = file_name.replace("_", " ")  # Replace underscores with spaces

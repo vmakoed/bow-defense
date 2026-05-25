@@ -9,7 +9,6 @@
 
 [node name="Level" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_l1wr4")
-enemy_died_audio_stream = null
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
 unique_name_in_owner = true
