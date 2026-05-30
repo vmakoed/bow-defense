@@ -2,6 +2,8 @@ class_name ContinuousSpawner
 extends Spawner
 
 
+var enemies_wave: Array[EnemyStats]
+var spawn_allowed := true: set = set_spawn_allowed
 var spawn_timeout: float: set = set_spawn_timeout
 
 
@@ -11,6 +13,15 @@ var spawn_timeout: float: set = set_spawn_timeout
 func _ready() -> void:
 	set_spawn_timeout(GameConfig.spawn_rate)
 	GameConfig.spawn_rate_changed.connect(set_spawn_timeout)
+
+
+func set_spawn_allowed(value: bool) -> void:
+	if value == spawn_allowed: return
+	spawn_allowed = value
+	if spawn_allowed:
+		endless_spawn_timer.start()
+	else:
+		endless_spawn_timer.stop()
 
 
 func start() -> void:
@@ -29,4 +40,10 @@ func set_spawn_timeout(value: float) -> void:
 
 
 func _on_endless_spawn_timer_timeout() -> void:
-	spawn_enemy(get_random_spawn_position())
+	var enemy_stats = enemies_wave.pop_back()
+	if enemy_stats == null: return
+	if not spawn_allowed: return
+
+	spawn_enemy(get_random_spawn_position(), enemy_stats)
+	endless_spawn_timer.start()
+	

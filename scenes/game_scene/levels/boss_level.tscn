@@ -15,6 +15,10 @@
 [node name="BossLevel" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_rqs5e")
 
+[node name="LevelManager" type="Node" parent="." unique_id=1046052719 node_paths=PackedStringArray("player")]
+script = ExtResource("10_rqs5e")
+player = NodePath("../Player")
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
 unique_name_in_owner = true
 position = Vector2(576, 324)
@@ -52,10 +56,6 @@ position = Vector2(928, 328)
 arrow_scene = ExtResource("20_gqmmt")
 attack_target = NodePath("../Player")
 
-[node name="BossLevelManager" type="Node" parent="." unique_id=1046052719 node_paths=PackedStringArray("player")]
-script = ExtResource("10_rqs5e")
-player = NodePath("../Player")
-
 [node name="BossMarkers" type="Node2D" parent="." unique_id=1568527764]
 
 [node name="RightBossMarker" type="Marker2D" parent="BossMarkers" unique_id=571013272]
@@ -74,6 +74,7 @@ enemy_scene = ExtResource("11_eb6dy")
 enemy_stats = ExtResource("12_trceg")
 spawn_radius = 300.0
 
+[connection signal="particles_requested" from="LevelManager" to="." method="_emit_particles"]
 [connection signal="destroyed" from="Player" to="." method="_on_player_destroyed"]
 [connection signal="healed" from="Player" to="." method="_on_player_healed"]
 [connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
@@ -82,8 +83,7 @@ spawn_radius = 300.0
 [connection signal="arrow_fired" from="Bow" to="." method="_on_bow_arrow_fired"]
 [connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
 [connection signal="damaged" from="Boss" to="." method="_on_enemy_damaged"]
-[connection signal="damaged" from="Boss" to="BossLevelManager" method="_on_boss_damaged"]
+[connection signal="damaged" from="Boss" to="LevelManager" method="_on_boss_damaged"]
 [connection signal="destroyed" from="Boss" to="." method="_on_level_won"]
-[connection signal="enemy_spawning" from="Boss" to="BossLevelManager" method="_on_boss_enemy_spawning"]
+[connection signal="enemy_spawning" from="Boss" to="LevelManager" method="_on_boss_enemy_spawning"]
 [connection signal="hurt_area_destroyed" from="Boss" to="." method="_emit_enemy_died_particles"]
-[connection signal="particles_requested" from="BossLevelManager" to="." method="_emit_particles"]

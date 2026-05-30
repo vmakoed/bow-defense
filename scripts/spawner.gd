@@ -7,7 +7,7 @@ signal enemy_spawned(enemy: Enemy)
 
 @export var attack_target: Node2D
 @export var enemy_scene: Resource
-@export var enemy_stats: EnemyStats
+@export var default_enemy_stats: EnemyStats
 @export var spawn_radius: float
 
 
@@ -19,7 +19,12 @@ func get_random_spawn_position() -> Vector2:
 		return attack_target.global_position + Vector2(spawn_radius, 0).rotated(randf() * 2 * PI)
 
 
-func spawn_enemy(spawn_position: Vector2) -> Enemy:
+func spawn_enemy(spawn_position: Vector2, enemy_stats := default_enemy_stats) -> Variant:
+	match enemy_stats.spawn_strategy:
+		_: return spawn_base_enemy(spawn_position, enemy_stats)
+
+
+func spawn_base_enemy(spawn_position: Vector2, enemy_stats := default_enemy_stats) -> Enemy:
 	var enemy = enemy_scene.instantiate() as Enemy
 	enemy.enemy_stats = enemy_stats
 	enemy.initial_state = Enemy.State.ATTACKING

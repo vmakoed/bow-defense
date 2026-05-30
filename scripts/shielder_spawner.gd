@@ -4,7 +4,7 @@ extends ContinuousSpawner
 @export var shielder_pair_scene: PackedScene
 
 
-func spawn_enemy(spawn_positon: Vector2) -> Enemy:
+func spawn_enemy(spawn_positon: Vector2, enemy_stats := default_enemy_stats) -> Enemy:
 	var shielder: Enemy = super(spawn_positon)
 	var enemy: Enemy = super(get_random_spawn_position())
 	enemy.add_area_shield(shielder)

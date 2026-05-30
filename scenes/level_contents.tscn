@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://rpj482sk83ri"]
+
+[ext_resource type="Script" uid="uid://bs6jheb4rjdhs" path="res://scripts/level_contents.gd" id="1_kqunx"]
+[ext_resource type="Script" uid="uid://lmlne1n4jqd7" path="res://scripts/camera_2d.gd" id="2_ojjou"]
+[ext_resource type="PackedScene" uid="uid://cqvn1mqtdtgta" path="res://scenes/player.tscn" id="3_rv6jn"]
+[ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="4_5mome"]
+[ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_6gokc"]
+[ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="6_0q3jx"]
+[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="7_ojjou"]
+
+[node name="LevelContents" type="Node2D" unique_id=1592498572]
+script = ExtResource("1_kqunx")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=402097332]
+unique_name_in_owner = true
+position = Vector2(576, 324)
+script = ExtResource("2_ojjou")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=1018597156]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="BackgroundLayer" unique_id=460312175]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Player" parent="." unique_id=1910543735 instance=ExtResource("3_rv6jn")]
+unique_name_in_owner = true
+position = Vector2(576, 324)
+
+[node name="Tower" parent="." unique_id=58816153 instance=ExtResource("4_5mome")]
+position = Vector2(576, 712)
+
+[node name="Bow" parent="." unique_id=304452323 instance=ExtResource("5_6gokc")]
+unique_name_in_owner = true
+position = Vector2(576, 324)
+arrow_speed_baseline = 700.0
+
+[node name="Enemies" type="Node2D" parent="." unique_id=716216514]
+unique_name_in_owner = true
+
+[node name="Spawner" parent="." unique_id=685057716 node_paths=PackedStringArray("attack_target") instance=ExtResource("6_0q3jx")]
+unique_name_in_owner = true
+attack_target = NodePath("../Player")
+default_enemy_stats = ExtResource("7_ojjou")
+
+[node name="SpawnMarkers" type="Node2D" parent="." unique_id=480278377]
+
+[node name="TopLeftSpawnMarker" type="Marker2D" parent="SpawnMarkers" unique_id=273981722]
+unique_name_in_owner = true
+position = Vector2(-128, 192)
+
+[node name="CenterLeftSpawnMarker" type="Marker2D" parent="SpawnMarkers" unique_id=1368013352]
+unique_name_in_owner = true
+position = Vector2(-128, 352)
+
+[node name="BottomLeftSpawnMarker" type="Marker2D" parent="SpawnMarkers" unique_id=1011444144]
+unique_name_in_owner = true
+position = Vector2(-128, 512)
+
+[node name="TopRightSpawnMarker" type="Marker2D" parent="SpawnMarkers" unique_id=2104678517]
+unique_name_in_owner = true
+position = Vector2(1280, 192)
+
+[node name="CenterRightSpawnMarker" type="Marker2D" parent="SpawnMarkers" unique_id=200722188]
+unique_name_in_owner = true
+position = Vector2(1280, 352)
+
+[node name="BottomRightSpawnMarker" type="Marker2D" parent="SpawnMarkers" unique_id=536447082]
+unique_name_in_owner = true
+position = Vector2(1280, 512)
+
+[node name="HomeMarkers" type="Node2D" parent="." unique_id=346678610]
+visible = false
+
+[node name="TopLeftHomeMarker" type="Marker2D" parent="HomeMarkers" unique_id=1503344927]
+unique_name_in_owner = true
+position = Vector2(128, 192)
+
+[node name="CenterLeftHomeMarker" type="Marker2D" parent="HomeMarkers" unique_id=1490119830]
+unique_name_in_owner = true
+position = Vector2(128, 352)
+
+[node name="BottomLeftHomeMarker" type="Marker2D" parent="HomeMarkers" unique_id=1307156714]
+unique_name_in_owner = true
+position = Vector2(128, 512)
+
+[node name="TopRightHomeMarker" type="Marker2D" parent="HomeMarkers" unique_id=72562417]
+unique_name_in_owner = true
+position = Vector2(1024, 192)
+
+[node name="CenterRightHomeMarker" type="Marker2D" parent="HomeMarkers" unique_id=1806255919]
+unique_name_in_owner = true
+position = Vector2(1024, 352)
+
+[node name="BottomRightHomeMarker" type="Marker2D" parent="HomeMarkers" unique_id=1993590581]
+unique_name_in_owner = true
+position = Vector2(1024, 512)
+
+[connection signal="destroyed" from="Player" to="." method="_on_player_destroyed"]
+[connection signal="healed" from="Player" to="." method="_on_player_healed"]
+[connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
+[connection signal="arrow_damaged" from="Bow" to="." method="_on_bow_arrow_damaged"]
+[connection signal="arrow_exploded" from="Bow" to="." method="_on_bow_arrow_exploded"]
+[connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
