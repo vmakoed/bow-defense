@@ -2,7 +2,7 @@ class_name EnemyStats
 extends Resource
 
 
-enum SpawnStrategy { BASE, SHIELD, BOSS }
+enum SpawnStrategy { BASE, SHIELDER, BOSS }
 
 
 @export var attack_cooldown := 5.0

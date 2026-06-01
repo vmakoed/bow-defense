@@ -1,58 +1,16 @@
-[gd_scene format=3 uid="uid://cim2ckpau5efv"]
+[gd_scene format=3 uid="uid://wxqvxfhsjc62"]
 
 [ext_resource type="Script" uid="uid://cqr85x4noxttc" path="res://scenes/game_scene/levels/level.gd" id="1_rehec"]
-[ext_resource type="Script" uid="uid://lmlne1n4jqd7" path="res://scripts/camera_2d.gd" id="2_sq54h"]
-[ext_resource type="PackedScene" uid="uid://cqvn1mqtdtgta" path="res://scenes/player.tscn" id="3_m8np8"]
-[ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="4_iuud6"]
-[ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_w1l0y"]
-[ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="6_au7l0"]
-[ext_resource type="Script" uid="uid://bb4vmxvu6ylpp" path="res://scripts/shielder_spawner.gd" id="6_gymjv"]
-[ext_resource type="PackedScene" uid="uid://eqxfmv3rn6ry" path="res://scenes/shielder_pair.tscn" id="8_krlk0"]
+[ext_resource type="PackedScene" uid="uid://rpj482sk83ri" path="res://scenes/level_contents.tscn" id="2_wiu3p"]
+[ext_resource type="Script" uid="uid://cbfylekssnf7m" path="res://scripts/enemy_stats.gd" id="3_baq5b"]
+[ext_resource type="Resource" uid="uid://decdyg7glacyl" path="res://resources/enemy_stats/shielder_square.tres" id="4_baq5b"]
+[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/enemy_stats/plain_square.tres" id="4_gymjv"]
 
 [node name="ShieldLevel" type="Node2D" unique_id=1153814589]
 script = ExtResource("1_rehec")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1161182900]
-unique_name_in_owner = true
-position = Vector2(576, 324)
-script = ExtResource("2_sq54h")
+[node name="LevelContents" parent="." unique_id=1592498572 instance=ExtResource("2_wiu3p")]
+enemies_wave = Array[ExtResource("3_baq5b")]([ExtResource("4_baq5b"), ExtResource("4_baq5b"), ExtResource("4_gymjv"), ExtResource("4_gymjv"), ExtResource("4_gymjv"), ExtResource("4_baq5b"), ExtResource("4_baq5b"), ExtResource("4_gymjv"), ExtResource("4_gymjv"), ExtResource("4_gymjv"), ExtResource("4_baq5b"), ExtResource("4_baq5b")])
 
-[node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=897506556]
-layer = -1
-
-[node name="ColorRect" type="ColorRect" parent="BackgroundLayer" unique_id=239669578]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="Player" parent="." unique_id=1910543735 instance=ExtResource("3_m8np8")]
-unique_name_in_owner = true
-position = Vector2(576, 324)
-
-[node name="Tower" parent="." unique_id=58816153 instance=ExtResource("4_iuud6")]
-position = Vector2(576, 712)
-
-[node name="Bow" parent="." unique_id=304452323 instance=ExtResource("5_w1l0y")]
-unique_name_in_owner = true
-position = Vector2(576, 324)
-arrow_speed_baseline = 700.0
-
-[node name="Enemies" type="Node2D" parent="." unique_id=220595151]
-unique_name_in_owner = true
-
-[node name="Spawner" parent="." unique_id=274601741 node_paths=PackedStringArray("attack_target") instance=ExtResource("6_au7l0")]
-unique_name_in_owner = true
-script = ExtResource("6_gymjv")
-shielder_pair_scene = ExtResource("8_krlk0")
-attack_target = NodePath("../Player")
-
-[connection signal="destroyed" from="Player" to="." method="_on_player_destroyed"]
-[connection signal="healed" from="Player" to="." method="_on_player_healed"]
-[connection signal="tree_exited" from="Player" to="." method="_on_player_tree_exited"]
-[connection signal="arrow_damaged" from="Bow" to="." method="_on_bow_arrow_damaged"]
-[connection signal="arrow_exploded" from="Bow" to="." method="_on_bow_arrow_exploded"]
-[connection signal="arrow_fired" from="Bow" to="." method="_on_bow_arrow_fired"]
-[connection signal="arrow_healed" from="Bow" to="Player" method="heal"]
+[connection signal="level_lost" from="LevelContents" to="." method="_on_level_lost"]
+[connection signal="level_won" from="LevelContents" to="." method="_on_level_won"]

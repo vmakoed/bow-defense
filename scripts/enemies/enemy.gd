@@ -1,10 +1,7 @@
 class_name Enemy
-extends Area2D
+extends BaseEnemy
 
 
-signal damaged(damage: Damage)
-signal died
-signal killed
 signal moved
 
 
@@ -23,9 +20,8 @@ const HOVERING_SPEED = 50.0
 
 
 
-@export var enemy_stats: EnemyStats
 @export var initial_state: State
-@export var area_shield_scene: PackedScene
+@export var area_shield_scene := preload("res://scenes/enemy_area_shield.tscn")
 
 
 var area_shield: Area2D
@@ -45,16 +41,14 @@ var velocity: Vector2
 
 @onready var attacking_timer: Timer = %AttackingTimer
 @onready var color_rect: ColorRect = %ColorRect
-@onready var health_component: HealthComponent = %HealthComponent
 
 
 func _ready() -> void:
+	super()
 	attacking_speed = enemy_stats.attacking_speed
 	attacking_timer.wait_time = enemy_stats.attack_cooldown
 	color_rect.color = enemy_stats.color
 	damage_amount = enemy_stats.damage
-	health_component.max_health = enemy_stats.max_health
-	health_component.health = enemy_stats.max_health
 	scale = enemy_stats.scale
 	if not enemy_stats.shield: %Shield.queue_free()
 	state = initial_state
@@ -70,10 +64,6 @@ func _process(delta: float) -> void:
 	position += position_change
 	if not position_change == Vector2.ZERO: moved.emit()
 	_move_towards_target(delta)
-
-
-func is_alive() -> float:
-	return health_component.is_alive()
 
 
 func add_area_shield(shielder: Enemy) -> void:

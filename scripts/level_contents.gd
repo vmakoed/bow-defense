@@ -1,7 +1,9 @@
+class_name LevelContents
 extends Node2D
 
 
-signal enemy_died(enemy: Enemy)
+signal enemy_died(enemy: BaseEnemy)
+signal enemy_spawned(enemy: BaseEnemy)
 signal upgrade_reached
 signal game_paused
 signal level_lost
@@ -17,7 +19,6 @@ var enemies_count: int
 var enemy_hurt_particles_scene = preload("res://scenes/enemy_hurt_particles.tscn")
 var enemy_died_particles_scene = preload("res://scenes/enemy_died_particles.tscn")
 var score: int: set = _set_score
-var score_goal: int
 
 
 @onready var bow: Bow = %Bow
@@ -34,7 +35,6 @@ func _ready() -> void:
 	GameUIBridge.virtual_joystick_plus_released.connect(_on_virtual_joystick_plus_released)
 	GameUIBridge.level_started.emit()
 	score = 0
-	score_goal = enemies_wave.size()
 	spawner.enemies_wave = enemies_wave
 	spawner.enemy_spawned.connect(_on_spawner_enemy_spawned)
 	spawner.start()
@@ -43,7 +43,6 @@ func _ready() -> void:
 func _set_score(new_value: int) -> void:
 	if score == new_value: return
 	score = new_value
-	if score >= score_goal: level_won.emit()
 
 
 func _create_explosion(explosion_position: Vector2, damage: float) -> void:
@@ -85,27 +84,33 @@ func _on_player_tree_exited() -> void:
 	bow.queue_free()
 
 
-func _on_spawner_enemy_spawned(enemy: Enemy) -> void:
+func _on_spawner_enemy_spawned(enemy: BaseEnemy) -> void:
 	enemy.damaged.connect(_on_enemy_damaged)
 	enemy.died.connect(func(): _on_enemy_died(enemy))
 	enemy.killed.connect(_on_enemy_killed)
+	enemy_spawned.emit(enemy)
 
 
 func _on_enemy_damaged(damage: Damage) -> void:
 	GameUIBridge.value_display_requested.emit(damage.amount, damage.source_global_position)
 
 
-func _on_enemy_died(enemy: Enemy) -> void:
+func _on_enemy_died(enemy: BaseEnemy) -> void:
 	enemy_died.emit(enemy)
 	SfxSoundController.play_audio(enemy_died_audio_stream)
 	_emit_enemy_died_particles(enemy.global_position, enemy.enemy_stats.color)
 	enemy.queue_free()
 	enemies_count -= 1
 	if enemies_count == 0: _on_wave_finished()
+	
 
 
 func _on_enemy_killed() -> void:
 	score += GameConfig.score_per_enemy
+	# do not use score as a goal. instead check if spawner is empty and enemies group is empty on enemy killed
+	if spawner.any_enemies_left(): return
+	if get_tree().get_nodes_in_group("enemies").any(func(enemy): return enemy.is_alive()): return
+	level_won.emit()
 	# if score >= GameConfig.next_upgrade_goal: upgrade_reached.emit()
 
 
@@ -147,7 +152,7 @@ func _on_tower_damaged() -> void:
 func _on_bow_arrow_damaged(arrow_position: Vector2, area: HurtboxComponent, arrow_velocity: Vector2) -> void:
 	GameUIBridge.controls_label_hide_requested.emit()
 	var arrow_target = area.get_parent()
-	if not (arrow_target is Enemy): return
+	if not ((arrow_target is Enemy) or (arrow_target is Boss)): return
 	if not arrow_target.is_alive(): return
 	
 	_emit_enemy_hit_particles(
@@ -175,4 +180,3 @@ func _on_player_destroyed() -> void:
 
 func _on_level_won() -> void:
 	level_won.emit()
-

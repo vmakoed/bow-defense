@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ccyfs1kg2hmvq" path="res://scenes/tower.tscn" id="4_5mome"]
 [ext_resource type="PackedScene" uid="uid://c5gxrtcm8bbed" path="res://scenes/bow.tscn" id="5_6gokc"]
 [ext_resource type="PackedScene" uid="uid://cv6hqtvnw45qs" path="res://scenes/continuous_spawner.tscn" id="6_0q3jx"]
-[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="7_ojjou"]
+[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/enemy_stats/plain_square.tres" id="7_ojjou"]
 
 [node name="LevelContents" type="Node2D" unique_id=1592498572]
 script = ExtResource("1_kqunx")

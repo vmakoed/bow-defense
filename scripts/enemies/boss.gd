@@ -1,9 +1,8 @@
-extends Node2D
+class_name Boss
+extends BaseEnemy
 
 
 signal enemy_spawning(spawn_position: Vector2)
-signal destroyed
-signal damaged(damage: Damage)
 signal hurt_area_destroyed(hurt_area_position: Vector2)
 
 
@@ -13,7 +12,7 @@ const HURT_AREA_SIZE := Vector2(48, 48)
 
 @export var arrow_scene: Resource
 @export var attack_target: Node
-@export var hurt_area_packed: PackedScene
+@export var hurt_area_packed := preload("res://scenes/boss_hurt_area.tscn")
 
 
 var hurt_areas := 0
@@ -26,6 +25,7 @@ var vulnerable := true: set = _set_vulnerable
 
 func _ready() -> void:
 	GameUIBridge.boss_ready.emit(%HealthComponent)
+	super()
 
 
 func _set_idle(value: bool) -> void:
@@ -115,7 +115,7 @@ func _on_hurt_area_vanished() -> void:
 
 
 func _on_health_component_health_below_minimum() -> void:
-	destroyed.emit()
+	killed.emit()
 	queue_free()
 
 
@@ -124,14 +124,6 @@ func _on_health_component_damaged(value: Damage) -> void:
 	idle = false
 	%VulnerableTimer.stop()
 	vulnerable = false
-
-
-func _on_debug_timer_timeout() -> void:
-	pass
-	# print(%HurtAreas.visible)
-	# print(%HurtAreas.get_children())
-	# for child in %HurtAreas.get_children():
-	# 	print(child.get_children())
 
 
 func _on_spawn_timer_timeout() -> void:

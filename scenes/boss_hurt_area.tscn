@@ -44,6 +44,7 @@ shape = SubResource("RectangleShape2D_1til5")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1462360158]
 script = ExtResource("2_67a3r")
+max_health = 0.01
 metadata/_custom_type_script = "uid://cqb8s71xuwre0"
 
 [node name="ShootTimer" type="Timer" parent="." unique_id=1886818020]

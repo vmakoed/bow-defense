@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_fc1k4")
-max_health = 10.0
 attacking_speed = 20.0
-damage = 5.0
 color = Color(1, 1, 1, 1)
+damage = 5.0
+max_health = 10.0
 metadata/_custom_type_script = "uid://cbfylekssnf7m"

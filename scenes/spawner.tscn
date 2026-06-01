@@ -1,11 +1,7 @@
 [gd_scene format=3 uid="uid://0vfsex5lyt4i"]
 
 [ext_resource type="Script" uid="uid://b8i7io76kaqe" path="res://scripts/spawner.gd" id="1_tx2ig"]
-[ext_resource type="PackedScene" uid="uid://dn1ncqsekomrb" path="res://scenes/enemy.tscn" id="2_6bbd6"]
-[ext_resource type="Resource" uid="uid://tikcocme37vs" path="res://resources/plain_square.tres" id="3_cmhla"]
 
 [node name="Spawner" type="Node" unique_id=650787862]
 script = ExtResource("1_tx2ig")
-enemy_scene = ExtResource("2_6bbd6")
-enemy_stats = ExtResource("3_cmhla")
 spawn_radius = 300.0

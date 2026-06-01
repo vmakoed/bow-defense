@@ -15,6 +15,10 @@ func _ready() -> void:
 	GameConfig.spawn_rate_changed.connect(set_spawn_timeout)
 
 
+func any_enemies_left() -> bool:
+	return enemies_wave.size() > 0
+
+
 func set_spawn_allowed(value: bool) -> void:
 	if value == spawn_allowed: return
 	spawn_allowed = value

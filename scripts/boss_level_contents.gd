@@ -7,11 +7,13 @@ signal particles_requested(particles: CPUParticles2D, instance_position: Vector2
 enum BossPosition { LEFT, RIGHT }
 
 
+var boss: Boss
 var current_boss_position := BossPosition.RIGHT
 var enemy_spawning_particles_scene := preload("res://scenes/enemy_spawn_particles.tscn")
 
 
 @export var player: Node
+@export var spawner: Spawner
 
 
 @onready var boss_position_markers: Dictionary[BossPosition, Marker2D] = {
@@ -20,8 +22,12 @@ var enemy_spawning_particles_scene := preload("res://scenes/enemy_spawn_particle
 }
 
 
-func _ready() -> void:
-	%Boss.global_position = boss_position_markers[current_boss_position].global_position
+func _on_enemy_spawned(enemy: BaseEnemy) -> void:
+	if not enemy is Boss: return
+	boss = enemy
+	boss.damaged.connect(_on_boss_damaged)
+	boss.enemy_spawning.connect(_on_boss_enemy_spawning)
+	boss.global_position = boss_position_markers[current_boss_position].global_position
 
 
 func _on_boss_damaged(_damage: Damage) -> void:
@@ -30,11 +36,11 @@ func _on_boss_damaged(_damage: Damage) -> void:
 	else:
 		current_boss_position = BossPosition.RIGHT
 
-	%Boss.global_position = boss_position_markers[current_boss_position].global_position
+	boss.global_position = boss_position_markers[current_boss_position].global_position
 
 
 func _on_boss_enemy_spawning(spawn_position: Vector2) -> void:
-	var enemy_position = %Spawner.get_random_spawn_position()
+	var enemy_position = spawner.get_random_spawn_position()
 	var particles := enemy_spawning_particles_scene.instantiate() as CPUParticles2D
 	particles_requested.emit(particles, spawn_position, Color.WHITE)
 	var tween = create_tween()
@@ -44,5 +50,5 @@ func _on_boss_enemy_spawning(spawn_position: Vector2) -> void:
 		enemy_position,
 		0.8
 	).from_current()
-	tween.tween_callback(func(): %Spawner.spawn_enemy(enemy_position))
+	tween.tween_callback(func(): spawner.spawn_enemy(enemy_position))
 	
